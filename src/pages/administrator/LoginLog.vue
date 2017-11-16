@@ -1,7 +1,10 @@
 <template>
-  <div>
-  	备用金
-  </div>
+<el-row>
+  <el-col :span='24'>
+    <h3>55555</h3>
+  </el-col>
+</el-row>
+
 </template>
 
 <script>

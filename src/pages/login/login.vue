@@ -35,10 +35,11 @@ export default {
         }
         sessionStorage.setItem('user', JSON.stringify(user));
         this.$router.push({ path: '/AttendanceStatistics' });
+        
       }
     },
     mounted() {
-      
+    
     }
 }
 </script>

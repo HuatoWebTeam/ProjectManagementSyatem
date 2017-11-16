@@ -5,12 +5,12 @@
   	</el-header>
   	<el-container>
   		<el-aside width='185px'>
-	  		<el-menu router :default-active="$route.path" background-color='#232424' text-color='#fff' unique-opened>
+	  		<el-menu router default-active="1-0" background-color='#232424' text-color='#fff' unique-opened>
 	  			<template v-for="(item,idx) in $router.options.routes" v-if='!item.hidden'>
-	  				<el-submenu :key='idx' index='idx' >
-	  					<template slot='title'>{{item.name}}</template>
-	  					<el-menu-item v-for='(childrenRoute, idx) in item.children' :index='childrenRoute.path' :key='childrenRoute.path'>
-	  						{{childrenRoute.name}}
+	  				<el-submenu :key='idx' :index='String(idx)' >
+	  					<template slot='title'>{{item.name}} {{idx}}</template>
+	  					<el-menu-item v-for='(childrenRoute, key) in item.children' :index='String(idx)+"-"+String(key)' :route='{path: childrenRoute.path}' >
+	  						{{childrenRoute.name}}{{key}}
 	  					</el-menu-item>
 	  				</el-submenu>
 	  			</template>
@@ -32,6 +32,7 @@ export default {
   data () {
     return {
 			msg: 'Welcome to Your Vue.js App',
+			routersUrl: [],
 			params: {
 				userName: 'admin',
 				userPass: 'admin',
