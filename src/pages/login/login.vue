@@ -14,6 +14,7 @@
       </el-form>
     </el-col>
   </el-row>
+ 
 </template>
 
 <script>
@@ -37,7 +38,7 @@ export default {
       }
     },
     mounted() {
-
+      
     }
 }
 </script>
