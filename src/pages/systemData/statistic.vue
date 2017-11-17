@@ -3,7 +3,7 @@
   <el-col :span="24" class="main_heard">
   	<div class="procurment_title">考勤统计</div>
   	<div>
-  		<span class="statistic_name">项目</span>
+  		<span class="project_name">项目</span>
 	  	<el-select v-model="value" placeholder="请选择 " >
 	    <el-option
 	      v-for="item in options"
@@ -72,9 +72,7 @@ export default {
 </script>
 
 <style type="text/css"scoped >
-.el-select{
-	width: 180px;	
-}
+
 .entry_block{
 	background: #f2f2f2;
 }
@@ -84,12 +82,9 @@ export default {
 .main_heard{
 	text-align: left;
 }
-.statistic_name{
-	font-size: 16px;
-	font-family:"Hiragino Sans GB";
-}
+
 .procurment_name{
-		margin-top: 30px;
+		margin-top:20px;
 }
 
 .el-button{
@@ -117,7 +112,7 @@ export default {
 	/*content:"更多";*/
 }
 .procurment_title{
-	margin-bottom: 20px;
+	
 	font-size: 16px;
 	font-family: "Microsoft YaHei";
     font-weight: bold;
@@ -126,4 +121,13 @@ export default {
 	.el-button [class*=el-icon-]+span{
 		margin-left: 3px;
 	}
+.project_name{
+	font-size: 16px;
+	font-family:"Hiragino Sans GB";
+	 display: inline-block;
+    margin-top: 30px;
+    margin-bottom:30px;
+}
+
+
 </style>
