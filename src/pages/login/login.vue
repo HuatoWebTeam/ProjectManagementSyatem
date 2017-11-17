@@ -34,7 +34,7 @@ export default {
           name: this.userLoginForm.name
         }
         sessionStorage.setItem('user', JSON.stringify(user));
-        this.$router.push({ path: '/AttendanceStatistics' });
+        this.$router.push({ path: '/Personnel' });
         
       }
     },
