@@ -15,3 +15,22 @@ export const GetJurisdictionData = () => {
            .get("/UserManage/GetJurisdictionData")
            .then(res => res.data);
        };
+// 获取人员信息
+export const GetUserManageData = (params) => {
+         return axios
+           .get("/UserManage/GetUserManageData", {params: params})
+           .then(res => res.data);
+       };
+
+       //  新增用户信息
+export const AddUserManaeg = () => {
+         return axios
+           .get("/UserManage/InserUserManaeg")
+           .then(res => res.data);
+       };  
+       // 修改用户信息
+export const UpdateUserManaeg = () => {
+         return axios
+           .get("/UserManage/UpdateUserManaeg")
+           .then(res => res.data);
+       };  
