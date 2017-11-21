@@ -15,7 +15,7 @@
        <el-button type="primary" icon="el-icon-search">搜索</el-button>
   </div>
     <div class="statistic_procurment">
-    	<div v-for='item in projectData' class="entry_block">
+    	<div v-for='item in projectData' class="entry_block" :key='item.projectName'>
     		<div class="procurment_name">项目:{{item.projectName}} <span class="procurment_start_time">项目发起时间:<span class="get_procument_time">{{item.projectDate}}</span></span></div>
             <el-collapse accordion>
 			  <el-collapse-item>
@@ -93,7 +93,7 @@ export default {
 }
 
 .procurment_start_time{
-	   display: inline-block;
+	   /* display: inline-block; */
 	    margin-right: 80px;
 	    float: right;
 	}
