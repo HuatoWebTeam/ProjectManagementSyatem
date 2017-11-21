@@ -101,11 +101,11 @@ export default new Router({
       name: '系统资料',
       component: Homes,
       children: [
-        { path: '/Statistics', name: '考勤记录', component: Statistics },
-        { path: "/PositionManage", name: '职位管理', component: PositionManage },
-        { path: "/Depmartment", name: '部门管理', component: Depmartment },
-        { path: "/ExpenseList", name: '报销单列表', component: ExpenseList },
-        { path: "/Cash", name: '备用金管理', component: Cash }
+        { path: 'Statistics', name: '考勤记录', component: Statistics },
+        { path: "PositionManage", name: '职位管理', component: PositionManage },
+        { path: "Depmartment", name: '部门管理', component: Depmartment },
+        { path: "ExpenseList", name: '报销单列表', component: ExpenseList },
+        { path: "Cash", name: '备用金管理', component: Cash }
 
       ]
 
