@@ -24,7 +24,6 @@ export default {
 	text-align: left;
 }
 .add_people{
-	display: inline-block;
 	float: right;
 }
 
