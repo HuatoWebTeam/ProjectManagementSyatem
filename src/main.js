@@ -11,7 +11,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  console.log(to);
+  console.log(to.path);
   if(to.path == '/Login') {
     sessionStorage.removeItem('user');
   };
@@ -20,8 +21,10 @@ router.beforeEach((to, from, next) => {
   if(user == 'null' && to.path != '/Login') {
     console.log(user)
     next({ path: '/Login' })
+  } else if (to.path == '/' && user !== 'null' ){
+    console.log('next too')
+    next({path: '/Homes'})
   } else {
-    console.log('next')
     next()
   }
 })

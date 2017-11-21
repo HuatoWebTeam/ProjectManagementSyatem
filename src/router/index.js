@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+import Homes from '@/components/Home'
 import Login from '@/pages/login/login'
 /**
  * administrator 文件夹 是管理员 模块
@@ -54,57 +54,57 @@ export default new Router({
       hidden: true
     },
     {
-      path: '/',
+      path: '/Homes',
       name: '人员管理',
-      component: Home,
+      component: Homes,
       children: [
-      	{ path: "/Personnel", name: '人员管理', component: Personnel },
-        { path: "/AccessConfig", name: "权限配置", component: AccessConfig },
-        { path: "/LoginLog", name: '登录日志', component: LoginLog }
+      	{ path: "Personnel", name: '人员管理', component: Personnel },
+        { path: "AccessConfig", name: "权限配置", component: AccessConfig },
+        { path: "LoginLog", name: '登录日志', component: LoginLog }
         
       ]
     },
     {
-      path: '/',
+      path: '/Homes',
       name: '项目管理',
-      component: Home,
+      component: Homes,
       children: [
-        { path: "/ProjectsList", name: '项目列表', component: ProjectsList },
-        { path: "/ConstructionLog", name: '施工日志', component: ConstructionLog },
-        { path: "/AcceptanceData", name: '验收资料', component: AcceptanceData },
-        { path: "/AfterInfomation", name: '售后信息', component: AfterInfomation }
+        { path: "ProjectsList", name: '项目列表', component: ProjectsList },
+        { path: "ConstructionLog", name: '施工日志', component: ConstructionLog },
+        { path: "AcceptanceData", name: '验收资料', component: AcceptanceData },
+        { path: "AfterInfomation", name: '售后信息', component: AfterInfomation }
       ]
     },
     {
-      path: '/',
+      path: '/Homes',
       name: '采购管理',
-      component: Home,
+      component: Homes,
       children: [
-        { path: "/NewPurchase", name: '新建采购单', component: NewPurchase },
-        { path: "/ProcurementBack", name: '采购待办', component: ProcurementBack },
-        { path: "/PurchaseCare", name: '采购已审', component: PurchaseCare },
-        { path: "/PurchaseGoods", name: '采购备货', component: PurchaseGoods }
+        { path: "NewPurchase", name: '新建采购单', component: NewPurchase },
+        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack },
+        { path: "PurchaseCare", name: '采购已审', component: PurchaseCare },
+        { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods }
       ]
     },
     {
-      path: '/',
+      path: "/Homes",
       name: '备用金管理',
-      component: Home,
+      component: Homes,
       children: [
-        { path: "/ApplySpareCash", name: '申请备用金', component: ApplySpareCash },
-        { path: "/DocumentsList", name: '单据列表', component: DocumentsList },
-        { path: "/ApplyRecord", name: '申请记录', component: ApplyRecord }
+        { path: "ApplySpareCash", name: '申请备用金', component: ApplySpareCash },
+        { path: "DocumentsList", name: '单据列表', component: DocumentsList },
+        { path: "ApplyRecord", name: '申请记录', component: ApplyRecord }
       ]
     },
     {
-      path: '/',
+      path: '/Homes',
       name: '系统资料',
-      component: Home,
+      component: Homes,
       children: [
-        { path: '/Statistics', name: '考勤记录', component: Statistics },
-        { path: "/PositionManage", name: '职位管理', component: PositionManage },
-        { path: "/Depmartment", name: '部门管理', component: Depmartment },
-        { path: "/ExpenseList", name: '报销单列表', component: ExpenseList }
+        { path: 'Statistics', name: '考勤记录', component: Statistics },
+        { path: "PositionManage", name: '职位管理', component: PositionManage },
+        { path: "Depmartment", name: '部门管理', component: Depmartment },
+        { path: "ExpenseList", name: '报销单列表', component: ExpenseList }
       ]
     }
   ]

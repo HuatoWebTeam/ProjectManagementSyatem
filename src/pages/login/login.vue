@@ -3,10 +3,10 @@
     <el-col :span='24'>
       <el-form>
         <el-form-item label="用户名">
-          <el-input v-model="userLoginForm.name"></el-input>
+          <el-input v-model="userLogin.userName"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="userLoginForm.pass"></el-input>
+          <el-input v-model="userLogin.userPass"></el-input>
         </el-form-item>
         <el-form-item >
           <el-button @click='onSubmit'>登录</el-button>
@@ -18,24 +18,31 @@
 </template>
 
 <script>
+import { userLogin } from '@/api/api';
+import qs from 'qs';
 export default {
     data() {
       return {
-        userLoginForm: {
-          name: '',
-          pass: '',
-          ip: ''
+        userLogin: {
+          userName: '',
+          userPass: '',
+          userIp: '123456'
         }
       }
     },
     methods: {
       onSubmit() {
         let user = {
-          name: this.userLoginForm.name
+          name: this.userLogin.userName
         }
-        sessionStorage.setItem('user', JSON.stringify(user));
-        this.$router.push({ path: '/AttendanceStatistics' });
-        
+        console.log(this.userLogin);
+        userLogin(qs.stringify(this.userLogin)).then(res => {
+            console.log(res);
+            if(res == 1) {
+              sessionStorage.setItem('user', JSON.stringify(user));
+              this.$router.push({ path: '/Homes' });
+            }
+        });
       }
     },
     mounted() {

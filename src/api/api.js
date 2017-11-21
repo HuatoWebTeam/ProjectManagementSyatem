@@ -15,22 +15,54 @@ export const GetJurisdictionData = () => {
            .get("/UserManage/GetJurisdictionData")
            .then(res => res.data);
        };
-// 获取人员信息
+// 人员管理---- 获取人员信息
 export const GetUserManageData = (params) => {
          return axios
            .get("/UserManage/GetUserManageData", {params: params})
            .then(res => res.data);
        };
 
-       //  新增用户信息
-export const AddUserManaeg = () => {
+       // 人员管理----- 新增用户信息
+export const AddUserManaeg = (params) => {
          return axios
-           .get("/UserManage/InserUserManaeg")
+           .post("/UserManage/InserUserManaeg", params)
            .then(res => res.data);
        };  
-       // 修改用户信息
-export const UpdateUserManaeg = () => {
+       // 人员管理------修改用户信息
+export const UpdateUserManaeg = (params) => {
          return axios
-           .get("/UserManage/UpdateUserManaeg")
+           .post("/UserManage/UpdateUserManaeg", params)
            .then(res => res.data);
-       };  
+       };
+       // 人员管理-------获取部门信息获取
+export const GetSectionData = () => {
+         return axios
+           .get("/BaseData/GetSectionData")
+           .then(res => res.data);
+       };
+       // 人员管理------ 获取职位信息
+export const GetPositionData = () => {
+         return axios
+           .get("/BaseData/GetPositionData")
+           .then(res => res.data);
+       };
+       // 用户权限配置---获取页面数据
+export const PaddingData = () => {
+         return axios
+           .get("/UserManage/PaddingData")
+           .then(res => res.data);
+       };
+       // 用户权限配置-----  获取成员已有的权限
+export const GetJurisdictionUserNameData = (params) => {
+         return axios
+           .get("/UserManage/GetJurisdictionUserNameData", {params: params})
+           .then(res => res.data);
+       };   
+       // 用户权限配置----- 提交权限数据 
+export const AddConnectUserRelation = params => {
+         return axios
+           .post("/UserManage/AddConnectUserRelation", params)
+           .then(res => res.data);
+       }; 
+
+
