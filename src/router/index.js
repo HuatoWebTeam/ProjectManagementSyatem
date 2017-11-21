@@ -42,7 +42,7 @@ import Statistics from "@/pages/systemData/statistic";    // 考勤管理
 import PositionManage from "@/pages/systemData/positionManagement";    // 职位管理
 import Depmartment from "@/pages/systemData/depmartment";    // 部门管理
 import ExpenseList from "@/pages/systemData/expenseList";    // 报销单列表
-
+import Cash from "@/pages/systemData/cash";    // 报销单列表
 Vue.use(Router)
 
 export default new Router({
@@ -104,8 +104,10 @@ export default new Router({
         { path: '/Statistics', name: '考勤记录', component: Statistics },
         { path: "/PositionManage", name: '职位管理', component: PositionManage },
         { path: "/Depmartment", name: '部门管理', component: Depmartment },
-        { path: "/ExpenseList", name: '报销单列表', component: ExpenseList }
+          { path: "/ExpenseList", name: '报销单列表', component: ExpenseList },
+          { path: "/Cash", name: '备用金管理', component: Cash }
       ]
+
     }
   ]
 })

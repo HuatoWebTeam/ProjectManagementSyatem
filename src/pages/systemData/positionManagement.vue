@@ -15,7 +15,6 @@ export default {
 
 <style scoped>
   .procurment_title{
-	
 	font-size: 16px;
 	font-family: "Microsoft YaHei";
     font-weight: bold;

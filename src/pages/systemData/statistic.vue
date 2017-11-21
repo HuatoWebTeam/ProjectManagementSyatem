@@ -125,8 +125,8 @@ export default {
 	font-size: 16px;
 	font-family:"Hiragino Sans GB";
 	 display: inline-block;
-    margin-top: 30px;
-    margin-bottom:30px;
+    margin-top: 20px;
+    margin-bottom:20px;
 }
 
 

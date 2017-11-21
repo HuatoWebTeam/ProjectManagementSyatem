@@ -34,3 +34,9 @@ export const UpdateUserManaeg = () => {
            .get("/UserManage/UpdateUserManaeg")
            .then(res => res.data);
        };  
+  //备货获取列表
+  export const GetstockManage=(params)=>{
+       return axios
+       .get("/Purchase/GetStockManagementManageData",{params: params})
+       .then(res => res.data)
+  }

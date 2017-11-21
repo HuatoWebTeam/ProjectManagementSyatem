@@ -2,7 +2,7 @@
 <el-row>
   <el-col :span='24' class="main_heard">
     <div class="procurment_title">报销管理</div>
-     	<div>
+     	<div class="seek">
   		<span class="project_name">项目</span>
 	  	<el-select v-model="value" placeholder="请选择 " >
 	    <el-option
@@ -92,8 +92,6 @@ export default {
           date: '深圳博物馆',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-         
-
         }, {
           date: '广州博物馆',
           name: '王小虎',
@@ -113,7 +111,7 @@ export default {
         }]
     }
   },
-      methods: {
+      methods: {///翻页组件
       handleEdit(index, row) {
         console.log(index, row);
       },
@@ -121,15 +119,6 @@ export default {
         console.log(index, row);
       }
     }
-
-
-
-
-
-
-
-
-
 }
 </script>
 
@@ -138,9 +127,7 @@ export default {
   font-size: 12px;
   padding:8px 2px;
 }
-.el-select{
-  width: 180px; 
-}
+
 .main_heard{
   text-align: left;
 }
@@ -154,5 +141,9 @@ export default {
   text-align: center;
   margin-top: 15px;
   font-size: 16px;
+}
+.seek{
+  margin-top:20px;
+  margin-bottom:20px;
 }
 </style>

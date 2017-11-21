@@ -133,14 +133,15 @@ export default {
   },
   methods: {
     getUserData() {
-      console.log(this.pageIndex, this.pageSize)
+      console.log(this.pageIndex, this.pageSize);
       var params = {
         pageIndex: this.pageIndex,
         pageSize: this.pageSize
         
       };
       GetUserManageData(params).then(res => {
-        // console.log(res);
+        console.log("dayin")
+         console.log(res);
         this.total = res[0].TotalNumber;
         this.peronnelData = [];
         for( let item of res[0].DataList) {
@@ -256,7 +257,7 @@ export default {
   }
   
 </style>
-<style lang='scss'>
+<style lang='scss' >
 .peronnelInfoList {
   .cell {
     text-align: center;
@@ -279,15 +280,16 @@ export default {
     }
   }
 }
-
-.el-table--striped .el-table__body tr.el-table__row--striped td {
-  background: #e5e5e5;
-}
 .el-table .el-table__header-wrapper tr{
   background: #e5e5e5;
 }
+/*  .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #e5e5e5;
+}
+*/
 .personnelDialog .el-dialog--center .el-dialog__header {
   padding-top: 15px;
   background: #f5f5f5;
 }
 </style>
+
