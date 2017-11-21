@@ -40,3 +40,9 @@ export const UpdateUserManaeg = () => {
        .get("/Purchase/GetStockManagementManageData",{params: params})
        .then(res => res.data)
   }
+//新增备货信息
+  export const addstockmanage = ()=>{
+    return axios
+    .post("/Purchase/InserUserManaeg")
+    .then(res=>res.data)
+  }

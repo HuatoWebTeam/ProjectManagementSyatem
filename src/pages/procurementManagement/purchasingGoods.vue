@@ -100,8 +100,8 @@
         </el-form-item>
          </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="dialogVisible = false" class="stock_but">取  消</el-button>
+        <el-button type="primary" @click="dialogVisible = false" class="stock_but">确  定</el-button>
       </span>
     </el-dialog>
   </el-col>
@@ -110,7 +110,7 @@
 </template>
      
 <script>
-  import {GetstockManage} from '@/api/api'//引进api
+  import {GetstockManage,addstockmanage} from '@/api/api'//引进api
 export default {
 	data(){
 		return{
@@ -130,9 +130,7 @@ export default {
             value: '选项5',
             label: '北京烤鸭'
       }],
-
-         value: '',
-
+       value: '',
       labelPosition: 'right',
         stock: {
           encipher: '',
@@ -191,7 +189,6 @@ export default {
       console.log(idx);
       console.log(this.stockData)
       this.stocklInfo = {
-
         StockCode: this.stockData[idx].StockCode,             // 序号
         MaterialsName: this.stockData[idx].MaterialsName,  // 名称
         Describe: this.stockData[idx].Describe,        //描述     
@@ -218,17 +215,9 @@ export default {
 //打开添加框
     scockeditOpen(){
        console.log('open');
-    }
-
-
-
-
-
-
-
-
+      }
     },
-   mounted() {//调用方法
+   mounted() {//调用方法获取列表
     this.Getuser();
     }
  
@@ -276,5 +265,8 @@ export default {
   text-align: center;
   margin-top: 15px;
   font-size: 16px;
+}
+.stock_but{
+  width: 60px;
 }
 </style>
