@@ -156,8 +156,7 @@ export default {
           callback(new Error('两次输入的密码不同'));
         } else {
           callback();
-        }
-      
+        }  
     };
     var checkState = (rule, value, callback) => {
       if(value == '') {
@@ -211,7 +210,7 @@ export default {
         UserState: ''     // 成员状态
       },
       total: null,
-      pageSize: 10,      // 每页的条数
+      pageSize: 1,      // 每页的条数
       pageIndex: 1      // 当前页
     }
   },
@@ -318,8 +317,7 @@ export default {
           })
         }
       })
-      } else {           // 编辑 更新
-        
+      } else {           // 编辑 更新 
         this.$refs['personnalRule'].validate((valid) => {
           console.log(valid)
           if(valid) {
