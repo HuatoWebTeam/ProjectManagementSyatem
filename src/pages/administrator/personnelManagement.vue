@@ -157,8 +157,7 @@ export default {
           callback(new Error('两次输入的密码不同'));
         } else {
           callback();
-        }
-      
+        }  
     };
     var checkState = (rule, value, callback) => {
       if(value == '') {
@@ -211,6 +210,9 @@ export default {
         confirmPass: '',       // 确认密码
         UserState: ''     // 成员状态
       },
+      total: null,
+      pageSize: 1,      // 每页的条数
+
       totalNumber: null,
       pageSize: 10,      // 每页的条数
       pageIndex: 1      // 当前页
@@ -300,6 +302,30 @@ export default {
       };
 
       if(this.isAdd) {   // 添加
+
+      this.personnalInfo.LoginName = this.personnalInfo.UserName;
+      this.$refs['personnalRule'].validate((valid) => {
+        if(valid) {
+          AddUserManaeg(params).then(res => {
+            //console.log(res);
+            if(res == 1) {
+              this.$message({
+                  type: 'success',
+                  message: '添加成功！！！'
+              });
+              this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
+              this.editPeraonnlInfo = false;
+            } else {
+              this.$message({
+                  type: 'error',
+                  message: '添加失败！！！'
+              })
+            }
+          })
+        }
+      })
+      } else {           // 编辑 更新 
+
         this.personnalInfo.LoginName = this.personnalInfo.UserName;
         this.$refs['personnalRule'].validate((valid) => {
           if(valid) {
@@ -328,7 +354,6 @@ export default {
           }
         })
       } else {           // 编辑 更新
-        
         this.$refs['personnalRule'].validate((valid) => {
           //console.log(valid)
           if(valid) {

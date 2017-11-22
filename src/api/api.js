@@ -48,12 +48,11 @@ export const UpdateUserManaeg = (params) => {
     .then(res=>res.data)
   }
   //编辑备货信息
-   export const UpdateStock = ()=>{
+   export const UpdateStock = (params)=>{
     return axios
-    .post("/Purchase/UpdateStockManagementManage")
+    .post("/Purchase/UpdateStockManagementManage",params)
     .then(res=>res.data)
   }
-
        // 人员管理-------获取部门信息获取
 export const GetSectionData = () => {
          return axios

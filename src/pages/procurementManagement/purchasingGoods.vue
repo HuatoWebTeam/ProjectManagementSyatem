@@ -62,7 +62,8 @@
       <span class="demonstration"></span>
       <el-pagination
         layout="prev, pager, next"
-        :total="total">
+        :total="total" 
+        @current-change='pageIndexChange'>
       </el-pagination>
     </div>
 
@@ -179,7 +180,7 @@ export default {
                //在rutun定义变量然后求的时候打印
          stockData:[],//定义数组存
          total:null,
-          pageSize: 10,
+          pageSize: 2,
           pageIndex: 1 ,
           condition:'',
           isAdd: true, //ture  为添加用户,false为修改 
@@ -217,6 +218,7 @@ export default {
                 pageSize: this.pageSize,
                 condition:this.condition
               }
+              console.log(params);
               GetstockManage(params).then(res => {
                 console.log(res)
                 this.total=res[0].TotalNumber;
@@ -265,7 +267,7 @@ export default {
                   var params = {
                     stockManagement:this.stocklInfo    //传的值等于列表的对应的值
                    };
-                   console.log(this.$refs['stockaddRule']);
+                   console.log(params);
                    if(this.isAdd){//点击按钮的时候判断是添加的新的,还是编辑已有的
                       this.$refs['stockaddRule'].validate((valid) =>{
                        if(valid){
@@ -292,6 +294,7 @@ export default {
                         console.log(valid)
                         if(valid) {
                           UpdateStock(params).then(res => {
+                           console.log("编辑传的值")
                             console.log(res);
                             if(res == 1) {
                               this.$message({
@@ -299,7 +302,7 @@ export default {
                                 message: '修改成功！！！'
                               });
                               this.$refs['stockaddRule'].resetFields();
-                              this.editPeraonnlInfo = false;
+                              this.dialogVisible = false;
                             } else {
                                this.$message({
                                 type: 'error',
@@ -310,6 +313,11 @@ export default {
                         }
                       })
                    }    
+               },
+               pageIndexChange(){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
+                 this.pageIndex = pageIndex;//传当前页面     
+                this. Getuser()//重新获取一边当前的
+
                }
 },
 
