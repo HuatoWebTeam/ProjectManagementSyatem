@@ -29,7 +29,7 @@ export default {
         userLogin: {
           userName: '',
           userPass: '',
-          userIp: '123456'
+          userIp: ''
         },
         loginRules: {
           userName: [

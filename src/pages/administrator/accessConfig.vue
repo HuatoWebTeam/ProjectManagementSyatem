@@ -119,6 +119,8 @@ export default {
           height: 100%;
           .el-radio {
             width: 40%;
+            height: 30px;
+            line-height: 30px;
           }
           .el-radio+.el-radio {
             margin-left: 0px;
@@ -142,15 +144,4 @@ export default {
     }
   }
 </style>
-<style lang='scss'>
-  .myContainer {
-    .title {
-      height: 50px;
-      line-height: 50px;
-      padding-left: 20px;
-      background: #fff;
-      -webkit-box-shadow: 0px 2px 1px #888888;
-      box-shadow: 0px 2px 1px #888888;
-    }
-  }
-</style>
+

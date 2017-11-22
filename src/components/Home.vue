@@ -116,7 +116,11 @@ export default {
 		min-height: 768px;
 		.el-header {
 			line-height: 65px;
-			background: url('../assets/img/headerBack.png') 100% 100%;
+			//padding: 0 20px 0 0;
+			width: 100%;
+			height: 100%;
+			background: url('../assets/img/headerBack.png') no-repeat;
+			background-size: 100% 100%;
 			.headerLogo {
 				display: inline-block;
 				width: 160px;
