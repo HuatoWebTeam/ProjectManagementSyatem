@@ -295,6 +295,7 @@ export default {
       var params = {
         userManage: this.personnalInfo
       };
+      console.log(this.$refs['personnalRule'])
       if(this.isAdd) {   // 添加
       this.personnalInfo.LoginName = this.personnalInfo.UserName;
       this.$refs['personnalRule'].validate((valid) => {

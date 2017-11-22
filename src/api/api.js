@@ -42,9 +42,15 @@ export const UpdateUserManaeg = (params) => {
        .then(res => res.data)
   }
 //新增备货信息
-  export const addstockmanage = ()=>{
+  export const addstockmanage = (params)=>{
     return axios
-    .post("/Purchase/InserUserManaeg")
+    .post("/Purchase/InsertStockManagementManage",params)
+    .then(res=>res.data)
+  }
+  //编辑备货信息
+   export const UpdateStock = ()=>{
+    return axios
+    .post("/Purchase/UpdateStockManagementManage")
     .then(res=>res.data)
   }
 
@@ -78,6 +84,6 @@ export const AddConnectUserRelation = params => {
            .post("/UserManage/AddConnectUserRelation", params)
            .then(res => res.data);
        }; 
-
+ //
 
 
