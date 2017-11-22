@@ -39,7 +39,8 @@
       <el-col :span='24' class='myPagination'>
         <el-pagination
           layout="prev, pager, next"
-          :total="total"
+          :total="totalNumber"
+          :page-size='pageSize'
           @current-change='pageIndexChange'>
         </el-pagination>
       </el-col>
@@ -74,10 +75,10 @@
             <el-input v-model.number='personnalInfo.UserQq' placeholder='请输入联系QQ'></el-input>
           </el-form-item >
           <el-form-item label='密码:' prop='UserPass'>
-            <el-input type='password' v-model='personnalInfo.UserPass'  placeholder='请输入密码'></el-input>
+            <el-input  v-model='personnalInfo.UserPass' :disabled="!isAdd" placeholder='请输入密码'></el-input>
           </el-form-item >
           <el-form-item label='确认密码:' prop='confirmPass'>
-            <el-input type='password' v-model='personnalInfo.confirmPass'  placeholder='请输入确认密码'></el-input>
+            <el-input  v-model='personnalInfo.confirmPass' :disabled="!isAdd"  placeholder='请输入确认密码'></el-input>
           </el-form-item >
           <el-form-item label='成员状态:' prop='UserState'>
             <el-select v-model='personnalInfo.UserState' placeholder="请选择成员状态">
@@ -145,7 +146,7 @@ export default {
       callback();
     };
     var checkPass = (rule, value, callback) => {
-       console.log(value)
+      //  console.log(value)
         console.log(this.personnalInfo.UserPass);
         if(!this.isAdd ) {
           if( value !== this.personnalInfo.UserPass && value !== '' ) {
@@ -211,6 +212,9 @@ export default {
       },
       total: null,
       pageSize: 1,      // 每页的条数
+
+      totalNumber: null,
+      pageSize: 2,      // 每页的条数
       pageIndex: 1      // 当前页
     }
   },
@@ -224,8 +228,9 @@ export default {
       };
       GetUserManageData(params).then(res => {   // 发送请求
         // console.log(res);
-        this.total = res[0].TotalNumber;   //设置总条数
+        this.totalNumber = res[0].TotalNumber;   //设置总条数
         this.peronnelData = [];            // 清空表格数据
+        console.log(this.totalNumber)
         for( let item of res[0].DataList) {
           item.confirmPass = '';
           //item.UserState = item.UserState == 1 ? '启用成员' : '停用成员';
@@ -271,6 +276,7 @@ export default {
     },
     personnalDialogClose() {    // 关闭弹窗的回调函数
       //console.log('close');
+      this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
       // 对话框关闭的时候清空数据
       this.personnalInfo = {
         LoginName: null,
@@ -294,8 +300,9 @@ export default {
       var params = {
         userManage: this.personnalInfo
       };
-      console.log(this.$refs['personnalRule'])
+
       if(this.isAdd) {   // 添加
+
       this.personnalInfo.LoginName = this.personnalInfo.UserName;
       this.$refs['personnalRule'].validate((valid) => {
         if(valid) {
@@ -318,16 +325,46 @@ export default {
         }
       })
       } else {           // 编辑 更新 
+
+        this.personnalInfo.LoginName = this.personnalInfo.UserName;
         this.$refs['personnalRule'].validate((valid) => {
-          console.log(valid)
+          if(valid) {
+            AddUserManaeg(params).then(res => {
+              //console.log(res);
+              if(res == 1) {
+                this.$message({
+                    type: 'success',
+                    message: '添加成功！！！'
+                });
+                this.getUserData();
+                
+                this.editPeraonnlInfo = false;
+              } else if(res == 2){
+                this.$message({
+                    type: 'error',
+                    message: '用户名重复，请修改！！！'
+                })
+              }else {
+                this.$message({
+                    type: 'error',
+                    message: '添加失败！！！'
+                })
+              }
+            })
+          }
+        })
+      } else {           // 编辑 更新
+        this.$refs['personnalRule'].validate((valid) => {
+          //console.log(valid)
           if(valid) {
             UpdateUserManaeg(params).then(res => {
-              //console.log(res);
+              console.log(res);
               if(res == 1) {
                 this.$message({
                   type: 'success',
                   message: '修改成功！！！'
                 });
+                this.getUserData();
                 this.$refs['personnalRule'].resetFields();
                 this.editPeraonnlInfo = false;
               } else {
