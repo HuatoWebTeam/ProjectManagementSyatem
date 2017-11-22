@@ -44,19 +44,19 @@ export default {
         pageSize: 200
       }
       GetUserManageData(params).then(res => {
-        console.log(res);
+        //console.log(res);
         this.personnalList = res[0].DataList;
       });
       PaddingData().then(res => {
-        console.log(res);
+        //console.log(res);
         this.urlList = res;
       })
     },
     choosePersonnal(value) {   // 选择人员的事件
-      console.log(value);
+      //console.log(value);
       var params = { userName: value };
       GetJurisdictionUserNameData(params).then(res => {
-        console.log(res);
+        //console.log(res);
         this.checkUrlList = [];
         for(let item of res) {
           for(let key of item.ConnectionList) {
@@ -66,8 +66,8 @@ export default {
       })
     },
     addAccessConfig() {   //点击保存按钮
-      console.log(this.checkPersonnal);
-      console.log(this.checkUrlList);
+      //console.log(this.checkPersonnal);
+      //console.log(this.checkUrlList);
       var params = [];
       
       for(let item of this.checkUrlList) {
@@ -76,9 +76,9 @@ export default {
           ConnectionNumber:item
         })
       }
-      console.log(params);
+      //console.log(params);
       AddConnectUserRelation(params).then(res => {
-        console.log(res);
+        //console.log(res);
         if (res == 1) {
           this.$message({
             type:'success',

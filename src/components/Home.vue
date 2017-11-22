@@ -1,13 +1,18 @@
 <template>
   <el-container >
   	<el-header height='65px'>
-  		header
+  		<i class='headerLogo'></i>
+		<span class='headerTitle'>华图项目管理系统</span>
+		<span class='headerUserInfo'>
+			<i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+			<span>{{userName}}</span>
+		</span>
   	</el-header>
   	<el-container>
   		<el-aside width='185px'>
 	  		<el-menu router 
 			  :default-active="$route.path"
-			  background-color='#232424' 
+			  background-color='#232424'
 			  text-color='#fff'
 			  :default-openeds='defaultMenuOpened'
 			  unique-opened
@@ -26,7 +31,7 @@
 	  		</el-menu>
 			<footer class='asideFooter'>
 				<span class='changePass'>修改密码</span>
-				<span class='layout' @click='userLayout'>退出<i class=''></i></span>
+				<span class='layout' @click='userLayout'>退出<i class="fa fa-sign-out" aria-hidden="true"></i></span>
 			</footer>
 	  	</el-aside>
 	  	<el-main>
@@ -45,13 +50,21 @@ export default {
   	data () {
 		return {
 			defaultMenuOpened: ["0"],
-			routersUrl: [{ ConnectionList: [{ ConnectionUrl: '' }] }]
+			routersUrl: [{ ConnectionList: [{ ConnectionUrl: '' }] }],
+			userName: ''
 			
 		}
 	},
+	// beforeRouteEnter(to, from, next){
+	// 	console.log(to);
+	// 	GetJurisdictionData().then(res => {
+	// 		//next({path: '/Homes' + res[0].ConnectionList[0].ConnectionUrl});
+	// 	})
+		
+	// },
 	methods: {
 		openMenu(index, path) {
-			console.log(index, path);
+			//console.log(index, path);
 			this.defaultMenuOpened = path;
 		},
 		getMenuFoucs(){
@@ -75,14 +88,15 @@ export default {
 		}
 	},
 	mounted() {
-		console.log(this.$router.options);
-		
+		//console.log(this.$router.options);
+		let user = JSON.parse(sessionStorage.getItem('user'));
+		this.userName = user.name;
 		GetJurisdictionData().then(res => {
-			console.log(res);
+			//console.log(res);
 			// console.log(this.$route.path)
 			this.routersUrl = res;
 			if(this.$route.path == '/Homes') {
-				this.$router.push({ path: '/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl});
+				this.$router.push('/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl);
 				//$('.el-submenu.is-opened').children('.el-menu').children('li:first').addClass('is-active');
 			}
 			
@@ -101,12 +115,38 @@ export default {
 		min-width: 1280px;
 		min-height: 768px;
 		.el-header {
-			
-			background: #1584eb;
-			background: -webkit-gradient(linear, left, #1584eb,  #33c0bb 95% );
-			background: -webkit-linear-gradient(left, #1584eb,  #33c0bb 95%);
-			background: -moz-linear-gradient(left, #1584eb,  #33c0bb 95%);
-			background: -o-linear-gradient(left, #1584eb,  #33c0bb 95%);
+			line-height: 65px;
+			background: url('../assets/img/headerBack.png') 100% 100%;
+			.headerLogo {
+				display: inline-block;
+				width: 160px;
+				height: 30px;
+				background: url('../assets/img/logo.png') no-repeat;
+				vertical-align: middle
+			}
+			.headerTitle {
+				display: inline-block;
+				color:#fff;
+				height: 30px;
+				line-height: 30px;
+				font-size: 18px;
+				vertical-align: middle;
+			}
+			.headerUserInfo {
+				float: right;
+				//display: inline-block;
+				width: 100px;
+				height: 40px;
+				line-height: 40px;
+				color:#fff;
+				margin-top: 12px;
+				i {
+					vertical-align: middle;
+					margin-right: 10px;
+				}
+
+			}
+
 			
 		}
 		.el-aside {
@@ -124,6 +164,10 @@ export default {
 					display: inline-block;
 					width: 48%;
 					cursor: pointer;
+					text-align: center;
+				}
+				.layout i{
+					margin-left: 10px;
 				}
 			}
 		}
