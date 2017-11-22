@@ -217,7 +217,7 @@ export default {
   },
   methods: {      // 需要用到的方法
     getUserData() {     // 获取成员信息
-      console.log(this.pageIndex, this.pageSize)
+      //console.log(this.pageIndex, this.pageSize)
       var params = {        // 传递的参数
         pageIndex: this.pageIndex,  
         pageSize: this.pageSize
@@ -232,18 +232,18 @@ export default {
           //item.UserState = item.UserState == 1 ? '启用成员' : '停用成员';
           this.peronnelData.push(item);
         }
-        console.log(this.peronnelData);
+        //console.log(this.peronnelData);
       })
     },
     getSectionInfo(){
       GetSectionData().then(res => {
-        console.log(res);
+        //console.log(res);
         this.sectionData = res;
       })
     },
     getPositionInfo() {
       GetPositionData().then(res => {
-        console.log(res);
+        //console.log(res);
         this.positionData = res;
       })
     },
@@ -252,7 +252,7 @@ export default {
       this.editPeraonnlInfo = true;
     },
     UpdateUserData(idx) {   // 打开编辑用户
-      console.log(idx);   // idx 为点击行的索引  
+      //console.log(idx);   // idx 为点击行的索引  
       this.isAdd = false;   //
       this.personnalInfo = {
         LoginName: this.peronnelData[idx].LoginName,             // 名字
@@ -266,12 +266,12 @@ export default {
         confirmPass: this.peronnelData[idx].confirmPass,       // 确认密码
         UserState: this.peronnelData[idx].UserState     // 成员状态
       };
-      console.log(this.personnalInfo);
+      //console.log(this.personnalInfo);
       this.editPeraonnlInfo = true;
       
     },
     personnalDialogClose() {    // 关闭弹窗的回调函数
-      console.log('close');
+      //console.log('close');
       // 对话框关闭的时候清空数据
       this.personnalInfo = {
         LoginName: null,
@@ -287,11 +287,11 @@ export default {
       };
     },
     personnalDialogOpen() {     // 弹窗打开的回调
-      console.log('open');
+      //console.log('open');
       
     },
     updateOrAdd() {     // 添加或者编辑成员
-      console.log(this.personnalInfo)
+      //console.log(this.personnalInfo)
       var params = {
         userManage: this.personnalInfo
       };
@@ -300,19 +300,19 @@ export default {
       this.$refs['personnalRule'].validate((valid) => {
         if(valid) {
           AddUserManaeg(params).then(res => {
-            console.log(res);
+            //console.log(res);
             if(res == 1) {
               this.$message({
                   type: 'success',
                   message: '添加成功！！！'
-                });
-                this.$refs['personnalRule'].resetFields();
-                this.editPeraonnlInfo = false;
+              });
+              this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
+              this.editPeraonnlInfo = false;
             } else {
               this.$message({
                   type: 'error',
                   message: '添加失败！！！'
-                })
+              })
             }
           })
         }
@@ -323,7 +323,7 @@ export default {
           console.log(valid)
           if(valid) {
             UpdateUserManaeg(params).then(res => {
-              console.log(res);
+              //console.log(res);
               if(res == 1) {
                 this.$message({
                   type: 'success',
@@ -343,7 +343,7 @@ export default {
       }
     },
     pageIndexChange(pageIndex) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
-      console.log(pageIndex);
+      //console.log(pageIndex);
       this.pageIndex = pageIndex;
       this.getUserData();      /// 当前页改变时重新加载数据
     }

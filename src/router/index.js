@@ -46,12 +46,19 @@ import Cash from "@/pages/systemData/cash";    // 报销单列表
 Vue.use(Router)
 
 export default new Router({
+  //mode: 'history',
   routes: [
     {
       path: '/Login',
       name: '登录',
       component: Login,
       hidden: true
+    },
+    {
+      path: '*',
+      name:'',
+      hidden: true,
+      redirect: '/Homes'
     },
     {
       path: '/Homes',
