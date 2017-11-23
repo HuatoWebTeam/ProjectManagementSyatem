@@ -4,8 +4,15 @@
    <div class="procurment_title">备货信息管理 </div>
      <div class="seek">
   		<span class="project_name">项目</span>
-      <el-input  placeholder="请输入搜索内容" v-model="condition"  class="seack_input" ></el-input>
-       <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser">搜索</el-button>
+	  	<el-select v-model="value" placeholder="请选择 " >
+	    <el-option
+	      v-for="item in options"
+	      :key="item.value"
+	      :label="item.label"
+	      :value="item.value">
+	    </el-option>
+       </el-select>
+       <el-button type="primary" icon="el-icon-search">搜索</el-button>
        <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
   </div>
    <el-table
@@ -55,8 +62,7 @@
       <span class="demonstration"></span>
       <el-pagination
         layout="prev, pager, next"
-        :total="totalNumber" 
-        :page-size='pageSize'
+        :total="total" 
         @current-change='pageIndexChange'>
       </el-pagination>
     </div>
@@ -141,6 +147,23 @@ export default {
       };
 
 		return{
+		 options: [{
+            value: '选项1',
+            label: '黄金糕'
+          }, {
+            value: '选项2',
+            label: '双皮奶'
+          }, {
+            value: '选项3',
+            label: '蚵仔煎'
+          }, {
+            value: '选项4',
+            label: '龙须面'
+          }, {
+            value: '选项5',
+            label: '北京烤鸭'
+      }],
+       value: '',
       labelPosition: 'right',
 
     //进入页面清空
@@ -151,16 +174,16 @@ export default {
         PurchaseLocation:'',
         Uint:'',
         Price:''
+
       },
          dialogVisible: false,//框显示隐
-         //在rutun定义变量然后求的时候打印
+               //在rutun定义变量然后求的时候打印
          stockData:[],//定义数组存
          total:null,
-         totalNumber:null,
-         pageSize: 6,
-         pageIndex:1,
-         condition:'',
-         isAdd: true, //ture  为添加用户,false为修改 
+          pageSize: 2,
+          pageIndex: 1 ,
+          condition:'',
+          isAdd: true, //ture  为添加用户,false为修改 
       stockaddRules:{//表单验证!如果为空就会显示自定义的词
            MaterialsName:[
              { validator: checkName, trigger: 'blur'}
@@ -198,9 +221,7 @@ export default {
               console.log(params);
               GetstockManage(params).then(res => {
                 console.log(res)
-                this.totalNumber=res[0].TotalNumber;
-                console.log("yema")
-                console.log(this.totalNumber)
+                this.total=res[0].TotalNumber;
                 this.stockData=[];
                 for(let item of res[0].DataList){//遍历列表
                   this.stockData.push(item);//遍历出来的别表添加进去
@@ -292,7 +313,7 @@ export default {
                       })
                    }    
                },
-               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
+               pageIndexChange(){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
                 this. Getuser()//重新获取一边当前的
 
@@ -350,13 +371,5 @@ export default {
 }
 .stock_but{
   width: 60px;
-}
-.seack_input{
-  width: 200px;
-  position: absolute;
-}
-.seack_button{
-  margin-left: 230px
-
 }
 </style>
