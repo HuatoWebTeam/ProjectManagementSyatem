@@ -5,7 +5,7 @@
         <el-form-item label="用户名" prop='userName' :error='showError' >
           <el-input v-model="userLogin.userName" @change='showError = null'></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop='userPass ' :error='showError'>
+        <el-form-item label="密码" prop='userPass' :error='showError'>
           <el-input type='password' v-model="userLogin.userPass" @change='showError = null'></el-input>
         </el-form-item>
         <el-form-item >

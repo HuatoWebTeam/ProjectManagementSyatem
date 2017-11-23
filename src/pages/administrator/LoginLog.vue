@@ -65,17 +65,17 @@ export default {
         pageSize: this.pageSize
       };
       GetLoginLogData(params).then(res => {
-        console.log(res);
+        // console.log(res);
         this.LoginLogData = [];
         this.total = res[0].TotalNumber;
         for (let item of res[0].DataList) {
-          console.log(item);
+          // console.log(item);
           this.LoginLogData.push({
             code: item.LogCode,
             name: item.LoginName,
             userIp: item.LoginIp,
             date: item.LoginDate,
-            state: item.State == 1 ? '是' : '否'
+            state: item.State == 1 ? '启用' : '停用'
           })
           
         }
