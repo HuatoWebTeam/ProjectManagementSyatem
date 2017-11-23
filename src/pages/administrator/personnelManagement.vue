@@ -210,11 +210,9 @@ export default {
         confirmPass: '',       // 确认密码
         UserState: ''     // 成员状态
       },
-      total: null,
-      pageSize: 1,      // 每页的条数
-
+     
       totalNumber: null,
-      pageSize: 10,      // 每页的条数
+      pageSize: 2,      // 每页的条数
       pageIndex: 1      // 当前页
     }
   },
@@ -324,36 +322,7 @@ export default {
           })
         }
       })
-      } else {           // 编辑 更新 
-
-        this.personnalInfo.LoginName = this.personnalInfo.UserName;
-        this.$refs['personnalRule'].validate((valid) => {
-          if(valid) {
-            AddUserManaeg(params).then(res => {
-              //console.log(res);
-              if(res == 1) {
-                this.$message({
-                    type: 'success',
-                    message: '添加成功！！！'
-                });
-                this.getUserData();
-                
-                this.editPeraonnlInfo = false;
-              } else if(res == 2){
-                this.$message({
-                    type: 'error',
-                    message: '用户名重复，请修改！！！'
-                })
-              }else {
-                this.$message({
-                    type: 'error',
-                    message: '添加失败！！！'
-                })
-              }
-            })
-          }
-        })
-      } else {           // 编辑 更新
+      }  else {           // 编辑 更新
         this.$refs['personnalRule'].validate((valid) => {
           //console.log(valid)
           if(valid) {
@@ -427,7 +396,14 @@ export default {
           color: #fff;
           border: 1px solid #248bfe;
         }
-        
+        .el-table__header-wrapper {
+          .el-table__header {
+            .cell {
+              text-align: center;
+            }
+          }
+          
+        }
       }
     }
     .el-form .el-form-item .el-form-item__content {
@@ -442,5 +418,39 @@ export default {
   }
   
 </style>
-
+<style lang='scss' >
+.peronnelInfoList {
+  .cell {
+    text-align: center;
+  }
+}
+.myPagination {
+  height: 70px;
+  line-height: 70px;
+  .el-pagination {
+    height: 32px;
+    margin-top: 16px;
+    text-align: center;
+    button {
+      border: 1px solid #d9d9d9;
+      margin-right: 5px;
+    }
+    .el-pager li {
+      border: 1px solid #d9d9d9;
+      margin-right: 5px;
+    }
+  }
+}
+.el-table .el-table__header-wrapper tr{
+  background: #e5e5e5;
+}
+/*  .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #e5e5e5;
+}
+*/
+.personnelDialog .el-dialog--center .el-dialog__header {
+  padding-top: 15px;
+  background: #f5f5f5;
+}
+</style>
 

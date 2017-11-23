@@ -62,7 +62,7 @@
       <span class="demonstration"></span>
       <el-pagination
         layout="prev, pager, next"
-        :total="total" 
+        :total="totalNumber" 
         @current-change='pageIndexChange'>
       </el-pagination>
     </div>
@@ -174,16 +174,16 @@ export default {
         PurchaseLocation:'',
         Uint:'',
         Price:''
-
       },
          dialogVisible: false,//框显示隐
-               //在rutun定义变量然后求的时候打印
+         //在rutun定义变量然后求的时候打印
          stockData:[],//定义数组存
-         total:null,
-          pageSize: 2,
-          pageIndex: 1 ,
-          condition:'',
-          isAdd: true, //ture  为添加用户,false为修改 
+        
+         totalNumber:null,
+         pageSize: 2,
+         pageIndex:1,
+         condition:'',
+         isAdd: true, //ture  为添加用户,false为修改 
       stockaddRules:{//表单验证!如果为空就会显示自定义的词
            MaterialsName:[
              { validator: checkName, trigger: 'blur'}
@@ -221,7 +221,9 @@ export default {
               console.log(params);
               GetstockManage(params).then(res => {
                 console.log(res)
-                this.total=res[0].TotalNumber;
+                this.totalNumber=res[0].TotalNumber;
+                console.log("yema")
+                console.log(this.totalNumber)
                 this.stockData=[];
                 for(let item of res[0].DataList){//遍历列表
                   this.stockData.push(item);//遍历出来的别表添加进去
