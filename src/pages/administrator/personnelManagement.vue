@@ -160,7 +160,10 @@ export default {
         }  
     };
     var checkState = (rule, value, callback) => {
-      if(value == '') {
+      console.log(value);
+      console.log(value !== 0 || value !== 1 );
+      if(value === '') {
+        console.log('---')
         callback(new Error('请选择成员状态'));
       }
       callback();
@@ -315,10 +318,15 @@ export default {
                 });
                 this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
                 this.editPeraonnlInfo = false;
-              } else {
+              } else if(res == 0) {
                 this.$message({
                     type: 'error',
                     message: '添加失败！！！'
+                })
+              } else if (res == 2) {
+                this.$message({
+                    type: 'error',
+                    message: '用户名重复，请修改！！！'
                 })
               }
             })

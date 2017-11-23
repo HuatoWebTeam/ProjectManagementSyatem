@@ -35,7 +35,11 @@
 			</footer>
 	  	</el-aside>
 	  	<el-main>
-	  		<router-view/>
+			  <!-- 保存组件的状态 -->
+			  <keep-alive>
+				  <router-view/>
+			  </keep-alive>
+	  		
 	  	</el-main>
   	</el-container>
   	
