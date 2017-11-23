@@ -230,7 +230,7 @@ export default {
         // console.log(res);
         this.totalNumber = res[0].TotalNumber;   //设置总条数
         this.peronnelData = [];            // 清空表格数据
-        console.log(this.totalNumber)
+        //console.log(this.totalNumber)
         for( let item of res[0].DataList) {
           item.confirmPass = '';
           //item.UserState = item.UserState == 1 ? '启用成员' : '停用成员';
