@@ -65,7 +65,7 @@ export default new Router({
       name: '人员管理',
       component: Homes,
       children: [
-      	{ path: "Personnel", name: '人员管理', component: Personnel },
+      	{ path: "Personnel", name: '人员列表', component: Personnel },
         { path: "AccessConfig", name: "权限配置", component: AccessConfig },
         { path: "LoginLog", name: '登录日志', component: LoginLog }
         

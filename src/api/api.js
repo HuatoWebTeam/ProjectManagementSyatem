@@ -83,6 +83,10 @@ export const AddConnectUserRelation = params => {
            .post("/UserManage/AddConnectUserRelation", params)
            .then(res => res.data);
        }; 
- //
-
+ //  登录日志
+export const GetLoginLogData = (params) => {
+  return axios
+    .get("/UserManage/GetLoginLogData", { params: params })
+    .then(res => res.data);
+};   
 

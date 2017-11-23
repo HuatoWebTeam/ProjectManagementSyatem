@@ -2,11 +2,11 @@
   <el-row class='loginContainer'>
     <el-col :span='24'>
       <el-form label-width="80px" :model='userLogin' :rules='loginRules' ref='loginForm' >
-        <el-form-item label="用户名" prop='userName' >
-          <el-input v-model="userLogin.userName"></el-input>
+        <el-form-item label="用户名" prop='userName' :error='showError' >
+          <el-input v-model="userLogin.userName" @change='showError = null'></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop='userPass'>
-          <el-input type='password' v-model="userLogin.userPass"></el-input>
+        <el-form-item label="密码" prop='userPass ' :error='showError'>
+          <el-input type='password' v-model="userLogin.userPass" @change='showError = null'></el-input>
         </el-form-item>
         <el-form-item >
           <el-button type='primary' @click='onSubmit' class='submitBtn' >登录</el-button>
@@ -39,11 +39,12 @@ export default {
             { required: true, message: '请输入密码', trigger: 'blur' }
           ]
         },
-        showError: false
+        showError: null
       }
     },
     methods: {
       onSubmit() {
+        this.showError = null;
         let user = {
           name: this.userLogin.userName
         }
@@ -56,7 +57,8 @@ export default {
                   sessionStorage.setItem('user', JSON.stringify(user));
                   this.$router.push({ path: '/Homes' });
                 } else {
-                  console.log(this.$refs['loginForm'].fields)
+                  console.log(this.$refs['loginForm'].fields);
+                  this.showError = '用户名或密码错误';
                   this.$refs['loginForm'].validateField('userName')
                 }
             });

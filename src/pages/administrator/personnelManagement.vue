@@ -160,7 +160,10 @@ export default {
         }  
     };
     var checkState = (rule, value, callback) => {
-      if(value == '') {
+      console.log(value);
+      console.log(value !== 0 || value !== 1 );
+      if(value === '') {
+        console.log('---')
         callback(new Error('请选择成员状态'));
       }
       callback();
@@ -228,7 +231,7 @@ export default {
         // console.log(res);
         this.totalNumber = res[0].TotalNumber;   //设置总条数
         this.peronnelData = [];            // 清空表格数据
-        console.log(this.totalNumber)
+        //console.log(this.totalNumber)
         for( let item of res[0].DataList) {
           item.confirmPass = '';
           //item.UserState = item.UserState == 1 ? '启用成员' : '停用成员';
@@ -301,6 +304,7 @@ export default {
 
       if(this.isAdd) {   // 添加
 
+<<<<<<< HEAD
       this.personnalInfo.LoginName = this.personnalInfo.UserName;
       this.$refs['personnalRule'].validate((valid) => {
         if(valid) {
@@ -323,6 +327,36 @@ export default {
         }
       })
       }  else {           // 编辑 更新
+=======
+        this.personnalInfo.LoginName = this.personnalInfo.UserName;
+        this.$refs['personnalRule'].validate((valid) => {
+          if(valid) {
+            AddUserManaeg(params).then(res => {
+              //console.log(res);
+              if(res == 1) {
+                this.$message({
+                    type: 'success',
+                    message: '添加成功！！！'
+                });
+                this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
+                this.editPeraonnlInfo = false;
+              } else if(res == 0) {
+                this.$message({
+                    type: 'error',
+                    message: '添加失败！！！'
+                })
+              } else if (res == 2) {
+                this.$message({
+                    type: 'error',
+                    message: '用户名重复，请修改！！！'
+                })
+              }
+            })
+          }
+        })
+
+      } else {           // 编辑 更新
+>>>>>>> e53f4fc7c24c4c4f862874cf9ae9e8bdecf4e664
         this.$refs['personnalRule'].validate((valid) => {
           //console.log(valid)
           if(valid) {
