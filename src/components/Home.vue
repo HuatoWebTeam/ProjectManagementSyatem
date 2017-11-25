@@ -12,7 +12,7 @@
   		<el-aside width='185px'>
 	  		<el-menu router 
 			  :default-active="$route.path"
-			  background-color='#232424'
+			  
 			  text-color='#fff'
 			  :default-openeds='defaultMenuOpened'
 			  unique-opened
@@ -89,6 +89,9 @@ export default {
 		userLayout() {     // 退出登录
 			sessionStorage.removeItem('user');
 			this.$router.push('/Login');
+		},
+		setMenuCss() {
+			$('.el-submenu').children('.el-menu').children('.el-menu-item').css({'background-color': '#353535'})
 		}
 	},
 	mounted() {
@@ -105,6 +108,7 @@ export default {
 			}
 			
 			this.getMenuFoucs();
+			//this.setMenuCss();
 		});
 		
 	}
@@ -160,9 +164,21 @@ export default {
 		.el-aside {
 			background: #3c3c3c;
 			color: #fff;
-			.el-submenu, .el-menu-item {
-				min-width: 185px;
+			.el-menu {
+				background-color: #232424;
+				.el-submenu, .el-menu-item {
+					min-width: 184px;
+				}
+				.el-submenu {
+					.el-menu-item {
+						background-color: #353535
+					}
+				}
+				.el-menu-item.is-active {
+					background: #fff;
+				}
 			}
+			
 			.asideFooter {
 				width: 185px;
 				height: 30px;
@@ -187,3 +203,14 @@ export default {
 	
 	
 </style>
+<style lang='scss'>
+	.el-aside {
+		.el-submenu {
+			.el-submenu__title:hover {
+				background-color: rgb(35, 36, 36);
+			}
+		}
+	}
+
+</style>
+
