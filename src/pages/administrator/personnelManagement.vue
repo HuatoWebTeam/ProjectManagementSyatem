@@ -198,7 +198,7 @@ export default {
       isAdd: true,                // true 为添加用户， false 为修改    
       sectionData:[],             // 部门信息
       positionData:[],            // 职位信息
-      personnalInfo: {          // 打开的弹窗内容
+      personnalInfo: {            // 打开的弹窗内容
         LoginName: '',             // 名字
         UserName: '',
         UserCode: '',             // 用户ID
@@ -206,28 +206,27 @@ export default {
         PositionCode: '',             // 职务
         UserPhone: '',            // 联系电话
         UserQq: '',               // 联系QQ
-        UserPass: '',          // 密码
-        confirmPass: '',       // 确认密码
-        UserState: ''     // 成员状态
+        UserPass: '',             // 密码
+        confirmPass: '',          // 确认密码
+        UserState: ''             // 成员状态
       },
-      total: null,
       totalNumber: null,
-      pageSize: 2,      // 每页的条数
-      pageIndex: 1      // 当前页
+      pageSize: 10,               // 每页的条数
+      pageIndex: 1                // 当前页
     }
   },
-  methods: {      // 需要用到的方法
-    getUserData() {     // 获取成员信息
+  methods: {                      // 需要用到的方法
+    getUserData() {               // 获取成员信息
       //console.log(this.pageIndex, this.pageSize)
-      var params = {        // 传递的参数
+      var params = {              // 传递的参数
         pageIndex: this.pageIndex,  
         pageSize: this.pageSize
         
       };
-      GetUserManageData(params).then(res => {   // 发送请求
+      GetUserManageData(params).then(res => {     // 发送请求
         // console.log(res);
-        this.totalNumber = res[0].TotalNumber;   //设置总条数
-        this.peronnelData = [];            // 清空表格数据
+        this.totalNumber = res[0].TotalNumber;    //设置总条数
+        this.peronnelData = [];                   // 清空表格数据
         console.log(this.totalNumber)
         for( let item of res[0].DataList) {
           item.confirmPass = '';
@@ -249,30 +248,30 @@ export default {
         this.positionData = res;
       })
     },
-    addPersonnal(){   // 打开添加用户
+    addPersonnal(){                           // 打开添加用户
       this.isAdd = true; //
       this.editPeraonnlInfo = true;
     },
-    UpdateUserData(idx) {   // 打开编辑用户
-      //console.log(idx);   // idx 为点击行的索引  
+    UpdateUserData(idx) {                     // 打开编辑用户
+      //console.log(idx);                     // idx 为点击行的索引  
       this.isAdd = false;   //
       this.personnalInfo = {
         LoginName: this.peronnelData[idx].LoginName,             // 名字
         UserName: this.peronnelData[idx].UserName,
-        UserCode: this.peronnelData[idx].UserCode,             // 用户ID
-        SectionCode: this.peronnelData[idx].SectionCode,       // 部门
+        UserCode: this.peronnelData[idx].UserCode,                // 用户ID
+        SectionCode: this.peronnelData[idx].SectionCode,          // 部门
         PositionCode: this.peronnelData[idx].PositionCode,             // 职务
-        UserPhone: this.peronnelData[idx].UserPhone,            // 联系电话
-        UserQq: this.peronnelData[idx].UserQq,               // 联系QQ
-        UserPass: this.peronnelData[idx].UserPass,          // 密码
-        confirmPass: this.peronnelData[idx].confirmPass,       // 确认密码
-        UserState: this.peronnelData[idx].UserState     // 成员状态
+        UserPhone: this.peronnelData[idx].UserPhone,              // 联系电话
+        UserQq: this.peronnelData[idx].UserQq,                    // 联系QQ
+        UserPass: this.peronnelData[idx].UserPass,                // 密码
+        confirmPass: this.peronnelData[idx].confirmPass,          // 确认密码
+        UserState: this.peronnelData[idx].UserState               // 成员状态
       };
       //console.log(this.personnalInfo);
       this.editPeraonnlInfo = true;
       
     },
-    personnalDialogClose() {    // 关闭弹窗的回调函数
+    personnalDialogClose() {                      // 关闭弹窗的回调函数
       //console.log('close');
       this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
       // 对话框关闭的时候清空数据
@@ -414,39 +413,5 @@ export default {
   }
   
 </style>
-<style lang='scss' >
-.peronnelInfoList {
-  .cell {
-    text-align: center;
-  }
-}
-.myPagination {
-  height: 70px;
-  line-height: 70px;
-  .el-pagination {
-    height: 32px;
-    margin-top: 16px;
-    text-align: center;
-    button {
-      border: 1px solid #d9d9d9;
-      margin-right: 5px;
-    }
-    .el-pager li {
-      border: 1px solid #d9d9d9;
-      margin-right: 5px;
-    }
-  }
-}
-.el-table .el-table__header-wrapper tr{
-  background: #e5e5e5;
-}
-/*  .el-table--striped .el-table__body tr.el-table__row--striped td {
-  background: #e5e5e5;
-}
-*/
-.personnelDialog .el-dialog--center .el-dialog__header {
-  padding-top: 15px;
-  background: #f5f5f5;
-}
-</style>
+
 
