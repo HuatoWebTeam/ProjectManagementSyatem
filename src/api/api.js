@@ -15,13 +15,12 @@ export const GetJurisdictionData = () => {
            .get("/UserManage/GetJurisdictionData")
            .then(res => res.data);
        };
-// 人员管理---- 获取人员信息
+// 人员管理---- 获取人员信息         //项目管理人员分配的接口也是这个
 export const GetUserManageData = (params) => {
          return axios
            .get("/UserManage/GetUserManageData", {params: params})
            .then(res => res.data);
        };
-
        // 人员管理----- 新增用户信息
 export const AddUserManaeg = (params) => {
          return axios
@@ -33,7 +32,6 @@ export const UpdateUserManaeg = (params) => {
          return axios
            .post("/UserManage/UpdateUserManaeg", params)
            .then(res => res.data);
-
        };  
   //备货获取列表
   export const GetstockManage=(params)=>{
@@ -89,4 +87,33 @@ export const GetLoginLogData = (params) => {
     .get("/UserManage/GetLoginLogData", { params: params })
     .then(res => res.data);
 };   
-
+// 项目列表
+     export const ProjectManage=(params)=>{
+       return axios
+       .get("/ProjectManage/GetProjectManageData",{params: params})
+       .then(res => res.data)
+  }
+//新增项目
+  export const InsertProjectManage = (params)=>{
+    return axios
+    .post("/ProjectManage/InsertProjectManage",params)
+    .then(res=>res.data)
+  }
+   //项目有权限的人操作请求
+    export const AuthorizedList=(params)=>{
+     return axios
+       .get("/ProjectManage/GetPersonnelAssignmentData",{params: params})
+       .then(res => res.data)
+  }
+   //配置项目操作人权限添加
+    export const InsertPersonnelAssignment = (params)=>{
+    return axios
+    .post("/ProjectManage/InsertPersonnelAssignment",params)
+    .then(res=>res.data)
+  }
+   //新增采购订单
+    export const InsertPurchase = (params)=>{
+    return axios
+    .post("/Purchase/InsertPurchase",params)
+    .then(res=>res.data)
+  }

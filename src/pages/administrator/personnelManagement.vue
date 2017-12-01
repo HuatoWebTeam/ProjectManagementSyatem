@@ -209,8 +209,7 @@ export default {
         UserPass: '',          // 密码
         confirmPass: '',       // 确认密码
         UserState: ''     // 成员状态
-      },
-      total: null,
+      }, 
       totalNumber: null,
       pageSize: 2,      // 每页的条数
       pageIndex: 1      // 当前页
@@ -365,12 +364,16 @@ export default {
   .peronelContainer {
     height: 100%;
     .personnelManage {
-
+      // height: 50px;
+      // line-height: 50px;
+      // padding-left: 20px;
+      // background:#fff;
+      // box-shadow: 0px 5px 1px #888888;
       .peronnelTitle {
         display: inline;
       }
       .peronnelButton {
-        
+        //display: inline;
         float: right;
         margin-top: 11px;
         margin-right: 50px;

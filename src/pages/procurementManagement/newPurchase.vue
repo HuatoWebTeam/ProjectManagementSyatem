@@ -1,18 +1,423 @@
 <template>
 <el-row>
-  <el-col :span='24'>
-    <h3>新建采购单</h3>
+   <el-col :span='24' class="NewConstruction" >
+       <div class="procurment_title">新建采购订单 </div>
+   </el-col>
+   <el-col :span='24' class="NewProcurement">
+	   <div class="lineItem">
+	   	   <div  class="projectItem">
+		    <el-form :inline="true" class="demo-form-inline" :label-position="labelPosition" label-width="150px" status-icon :rules="purchasetRules" ref="purchasetRulessuccess" >
+			    	 <el-form-item label="所属项目:">		
+						  <el-select v-model="selectvalue" placeholder="请选择">
+						    <el-option
+						      v-for="item in options"
+						      :key="item.value"
+						      :label="item.label"
+						      :value="item.value"
+						      prop='selectvalue'>
+						    </el-option>
+						  </el-select>
+					   </el-form-item>
+			          <el-form-item label="交货截至日期:">
+					         <el-date-picker
+						      v-model="ExpirationDate"
+						      type="date"
+						      value-format="yyyy-MM-dd"
+						      placeholder="选择日期"
+						      prop="ExpirationDate"
+						          >
+						    </el-date-picker>
+					  </el-form-item>
+			        <div class="requestnote">
+				          <el-form-item label="申请单编号:"
+				          >
+						     <el-input v-model="PurchaseCode"></el-input>
+						  </el-form-item>
+				           <el-form-item label="申请人:">
+						     <el-input v-model="LoginName" prop="LoginName"></el-input>
+						  </el-form-item>
+				     </div>
+			        <div class="pushTitle">
+				           <el-form-item label="订单标题:">
+						     <el-input v-model="PurchaseTitle" prop="PurchaseTitle"></el-input>
+						   </el-form-item> 
+			        </div>
+		            <div class="ChoseStock">
+			           <el-button type="primary" size="small" @click="StockList">选择备货</el-button>
+		            </div>
+			  </el-form>   
+		  </div>
+	  </div>
+   </el-col>
+    <el-col :span='24'  class="NewProcurementList">
+     <div class="tableStock">
+		  <el-table
+		    :data="tableDataList"
+		    border
+		    height='400'
+		    style="width: 100%" >
+			    <el-table-column
+			      prop="StockCode"
+			      label="编号"
+			      width="200">
+			    </el-table-column>
+			    <el-table-column
+			      prop="MaterialsName"
+			      label="名称"
+			      width="180">
+			    </el-table-column>
+			    <el-table-column
+			      prop="Describe"
+			      label="规格与型号">
+			    </el-table-column>
+			     <el-table-column
+			      prop="PurchaseLocation"
+			      label="采购地点">
+			    </el-table-column>
+			    <el-table-column
+			      
+			      label="数量"
+			      width='100'>
+			      <template slot-scope="scope">
+			         <input v-model="tableDataList[scope.$index].Num" class="numberInput" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+			      </template>
+			    </el-table-column>
+			     <el-table-column
+			      prop="Uint"
+			      label="单位"
+			      width='200'>
+			    </el-table-column>
+		  </el-table>
+     </div>
   </el-col>
+        <div class="footer">
+		    <el-button type="primary"  size="small" @click="IssueOrder">提交</el-button>
+	   </div>
+   <el-col :span=24  class="dialogTable">
+	   	<el-dialog title="备货选择" :visible.sync="dialogTableVisible">
+	   		    <el-input
+			    size="mini"
+			    placeholder="请输入物料编号或名称"
+			    suffix-icon="el-icon-search"
+			    v-model="condition"
+			    class="sousuo"
+			    >
+			  </el-input>
+			  <el-table
+			   filter-change='filters'
+			  	ref="multipleTable"
+			     border
+			    :data="tableStockData"
+			    tooltip-effect="dark"
+			    style="width: 100%"
+			    height='450' @selection-change="handleSelectionChange"
+			   >
+			    <el-table-column
+			      type="selection"
+			      width="55"
+			      prop="PurchaseLocation"
+			     >
+			    </el-table-column>
+			    <el-table-column
+			      label="货物编码"
+			       prop="StockCode"
+			       width="120"
+			      >
+			    </el-table-column>
+			    <el-table-column
+			      label="货物名称"
+			      prop="MaterialsName"
+			      width="120">
+			    </el-table-column>
+			    <el-table-column
+			      prop="Uint"
+			      label="货物单位"
+			      width='120'
+			      >
+			    </el-table-column>
+			    <el-table-column
+			      prop="Describe"
+			      label="型号与规格"
+			      show-overflow-tooltip>
+			    </el-table-column>
+			  </el-table>
+	            <div slot="footer" class="dialog-footer">
+				    <el-button size="small" @click="dialogTableVisible = false">取 消</el-button>
+				    <el-button  size="small" type="primary" @click="tableList">确 定</el-button>
+			  </div>
+		</el-dialog>
+   </el-col>
 </el-row>
-
-</template>
-
-<script>
+</template> 
+<script>   //先引进项目列表里面的项目显示在下拉框里面
+	import{ProjectManage,GetstockManage,InsertPurchase}from '@/api/api'//引进api
 export default {
-  
+     data() {
+     	  //提交时候验证表格!
+        var  checkselectvalue=(rule,value,callback)=>{
+        	if(value === ''){
+        		 callback(new Error('选择项目'));
+        	}
+        	callback();
+        }
+        var  checkExpirationDate=(rule,value,callback)=>{
+        	if(value === ''){
+        		 callback(new Error('选择日期'));
+        	}
+        	callback();
+        }
+        var checkLoginName=(rule,value,callback)=>{
+        	if(value === ''){
+        		 callback(new Error('选择申请人'));
+        	}
+        	callback();
+        }
+        var  checkPurchaseTitle=(rule,value,callback)=>{
+        	if(value === ''){
+        		 callback(new Error('选择订单标题'));
+        	}
+        	callback();
+        }
+ 
+      
+
+      return {
+      	inputNumber:'',
+      	dialogTableVisible:false,
+        options:[],
+        condition:'',
+        tableStockData:[],
+      	labelPosition:'right',//表格字体靠右显示!
+        selectvalue: '',//下拉选择框
+        totalNumber:'',
+    	PurchaseCode:"",//申请单编号!
+    	ProjectCode:'',//项目名称
+        PurchaseTitle:'',//采购标题
+        ExpirationDate:'',//截至日期
+        LoginName:'', //申请人
+        ExpirationDate:'',
+        multipleSelection:[], // 备货选中数据
+        tableDataList:[],
+        purchasetRules:{
+          selectvalue:[
+                 { validator: checkselectvalue, trigger: 'blur' }
+                ],
+          ExpirationDate:[
+                 { validator: checkExpirationDate, trigger: 'blur' }
+                ],
+          LoginName:[
+                 { validator: checkLoginName, trigger: 'blur' }
+                ],
+          PurchaseTitle:[
+                 { validator: checkPurchaseTitle, trigger: 'blur' }
+                ],
+          }  
+      }
+    },
+   methods:{
+		toggleSelection(rows,inx) {//点击函数回调选中的
+			if (rows) {
+				rows.forEach(row => {
+					this.$refs.multipleTable.toggleRowSelection(row);
+				});
+			} else {
+				this.$refs.multipleTable.clearSelection();
+			}
+		},
+		handleSelectionChange(val) {
+			this.multipleSelection = val;
+		},
+       getprojectmange(){
+          var parms={//传的参数,项目下拉框!
+               pageIndex: 10000,
+               pageSize:10000
+               
+              }
+           ProjectManage(parms).then( res => {//项目列表
+              let options=[]; 
+              options=this.options
+              for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
+                options.push({
+                   value:res[0].DataList[i].ProjectName,
+	               label:res[0].DataList[i].ProjectName
+                  })   
+                }
+               console.log(options)
+              })
+           },
+           StockList(){
+           	this.dialogTableVisible=true;
+             },
+        Getuser(){//备货管理列表方法
+           var  params={//传递的参数
+                pageIndex: 100000,
+                pageSize: 100000,
+                condition:this.condition
+              }
+                console.log(params);
+                GetstockManage(params).then(res => {
+                console.log(res)
+                console.log("yema")
+                this.totalNumber=res[0].TotalNumber
+                this.tableStockData=[];
+                for(let item of res[0].DataList){//遍历列表
+                  this.tableStockData.push(item);//遍历出来的别表添加进去
+                }
+              })
+           },
+            tableList(){//选中的列表!
+            	for (var i = 0; i < this.multipleSelection.length; i++) {
+            		 this.multipleSelection[i].Num=0;//给默认的数组上面加一个属性number默认值是0;
+            		 this.multipleSelection[i].PurchaseCode='';
+            		 this.multipleSelection[i].CommodityCode=this.multipleSelection[i].StockCode;
+            		  //给下面的表格添加一个属性!
+            		 /* this.multipleSelection[i].UnitPrice=*/
+            	}
+            	this.tableDataList = this.multipleSelection;
+            	console.log(this.tableDataList)
+        	    this.dialogTableVisible=false;//弹框显示!//点击选中的显示到下面的位置
+         }, 
+            IssueOrder(){//发送订单内容给后台!
+		          let purchase={}//定义发送给后台的内容,*/
+		       	  let SlaveList=[]//存发送给后台的物料列表
+              
+               purchase={
+/*                  ProjectCode:this.selectvalue,
+                    PurchaseCode:this.PurchaseCode,
+                    PurchaseTitle:this.PurchaseTitle,
+                    ExpirationDate:this.ExpirationDate,
+                    DeliveryDate:this.ExpirationDate
+                    LoginName:this.LoginName,
+                    SlaveList:this.tableDataList*/
+                    PurchaseCode:"CG100001",
+				    ProjectCode:"深圳博物馆",
+				    PurchaseTitle:"南京博物馆采购需求",
+				    ExpirationDate:"2017/1/21 0:00:00",
+				    DeliveryDate:"2018/1/21 0:00:00",
+				    SlaveList:[
+					        {
+					            SlaveCode:1,
+					            PurchaseCode:"CG100001",
+					            Num:1,
+					            CommodityCode:"0001",
+					            Unit:null,
+					           UnitPrice:6999,
+					            PurchaseLocation:"宝安西乡",
+					            State:1
+					        }
+				    ]
+               }
+/*        this.$refs['purchasetRulessuccess'].validate((valid)=>{
+	            if(valid){
+
+	              }
+         })*/
+         var parms={
+                  purchase:purchase
+              }
+           InsertPurchase(parms).then(res=>{
+	                   //传给后台发送的值!
+	                if(res==1){
+	                  this.$message({
+	                    type:'success',
+	                    message:'新建成功'
+	                  });
+	                  this.jurisdiction=false;
+	                  this.$refs['purchasetRulessuccess'].resetFields()
+	                 }else{
+	                  this.$message({
+	                    type:'error',
+	                    message:"新建失败"
+	                    })
+	                  }	
+	                })
+
+
+               console.log("发给后台的内容菜单")
+               	console.log(purchase)
+            }
+   },
+
+   mounted(){
+      this.getprojectmange();//调用方法
+      this.Getuser();//调用备货列表显示!
+/*       enterToLogin (ev) {
+        ev.keyCode === 13 && this.Getuser()
+    }*/
+   }  
 }
 </script>
 
 <style scoped>
+.NewConstruction{
+    height: 50px;
+   line-height: 50px;
+   padding-left: 20px;
+   background:#fff;
+   box-shadow: 0px 2px 1px #888888;
+}
+.NewProcurement{
+    width: calc(100% - 40px);
+    height: calc(100% - 90px);
+    margin: 20px;
+    background: #fff;
+    border: 1px solid #ccc; 
+}
+.NewProcurementList{
+	margin:0px 20px 20px 20px;
+	background: #fff;
+    border: 1px solid #ccc; 
+    width: calc(100% - 40px);
+    height: calc(100% - 90px);
+    text-align: center;
+}
+  .projectItem{
+    margin-left: 14px;
+    margin-top: 30px;
+  }
+   .dialogTable{
+   	text-align: center;
+   }
+   .ChoseStock{
+  	margin-left: 146px;
+    margin-top: 10px;
+    margin-bottom: 26px;
+    }
+.footer{
+	float: right;
+	margin-right: 40px;
+}
+.el-input, .el-input--mini, .el-input--suffix{
+	width: 300px;
+	
+}
+.el-dialog__header{
+	background: #f2f2f2;
+}
+.el-select{
+	width: 300px;
+}
+.numberInput{
+	width: 50px;
+	height:30px;
+	text-align: center;
+}
+.numberInput[data-v-2b23ff4a] {
+    width: 50px;
+    height: 37px;
+}
+.numberInput[data-v-2b23ff4a][data-v-2b23ff4a] {
+    width: 50px;
+    /*height: 28px;*/
+    outline: none;
+    border-radius: 4px;
+    border: none;
+    border: 1px solid #dbdbdb;
+}
+.sousuo{
+	margin-bottom: 20px;
+}
+</style>
+<style type="text/css">
 
 </style>

@@ -2,19 +2,14 @@
 <el-row>
   <el-col :span='24'  class="main_heard">
    <div class="procurment_title">备货信息管理 </div>
-     <div class="seek">
-  		<span class="project_name">项目</span>
-	  	<el-select v-model="value" placeholder="请选择 " >
-	    <el-option
-	      v-for="item in options"
-	      :key="item.value"
-	      :label="item.label"
-	      :value="item.value">
-	    </el-option>
-       </el-select>
-       <el-button type="primary" icon="el-icon-search">搜索</el-button>
-       <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
-  </div>
+      <div class="seck">
+      		<span class="project_name">项目</span>
+          <el-input  placeholder="请输入搜索内容" v-model="condition"  class="seack_input" ></el-input>
+           <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser">搜索</el-button>
+           <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
+       </div>
+  </el-col>
+  <el-col :span='24' class="projectStockList" >
    <el-table
     :data="stockData"
      stripe
@@ -22,7 +17,7 @@
     style="width: 100%">
     <el-table-column
       prop="StockCode"
-      label="编号"
+      label="货物编号"
       width="140">
     </el-table-column>
     <el-table-column
@@ -32,7 +27,7 @@
     </el-table-column>
     <el-table-column
       prop="Describe"
-      label="描述"
+      label="型号与规格"
       width="380">
     </el-table-column>
      <el-table-column
@@ -56,30 +51,26 @@
        <el-button type="primary"  @click='stockedituser(scope.$index)'>信息编辑</el-button>
       </template>
     </el-table-column>
-
     </el-table>
-    <div class="block"><!-- 组件翻页 -->
-      <span class="demonstration"></span>
+    <div class="myPagination"><!-- 组件翻页 -->
       <el-pagination
         layout="prev, pager, next"
-        :total="total" 
+        :total="totalNumber" 
+        :page-size='pageSize'
         @current-change='pageIndexChange'>
       </el-pagination>
     </div>
-
-
   </el-col>
   <el-col :span='24'>
     <el-dialog
-      title="编辑"
+      title="添加备货"
       :visible.sync="dialogVisible"
-      width="36%"    
+       width="36%"    
       :before-close="handleClose"
-      class="scockedit"
+       class="scockedit"
         @close='scockeditClose'
         @open='scockeditOpen'
-       >
-       
+       >       
 		<el-form :label-position="labelPosition" label-width="80px" :model="stocklInfo" status-icon :rules="stockaddRules" ref='stockaddRule'>
 		  <el-form-item label="编码:" >
 		    <el-input v-model="stocklInfo.StockCode" ></el-input>
@@ -123,7 +114,7 @@ export default {
       };
      var checkDescribe=(rule,value,callback)=>{
       if(value === '') {
-        callback(new Error('描述不能为空'));
+        callback(new Error('规格不能为空'));
       }
       callback();
       };
@@ -140,30 +131,15 @@ export default {
       callback();
       };
        var checkprice=(rule,value,callback)=>{
-      if(value === '') {
-        callback(new Error('价格不能为空'));
+      if(!(/^[0-9]*$/).test(value) && value !== '') {
+        callback(new Error('价格为数字'));
+      }else if(value==''){
+        callback(new Error('请输入价格'));
       }
       callback();
       };
 
 		return{
-		 options: [{
-            value: '选项1',
-            label: '黄金糕'
-          }, {
-            value: '选项2',
-            label: '双皮奶'
-          }, {
-            value: '选项3',
-            label: '蚵仔煎'
-          }, {
-            value: '选项4',
-            label: '龙须面'
-          }, {
-            value: '选项5',
-            label: '北京烤鸭'
-      }],
-       value: '',
       labelPosition: 'right',
 
     //进入页面清空
@@ -174,16 +150,16 @@ export default {
         PurchaseLocation:'',
         Uint:'',
         Price:''
-
       },
          dialogVisible: false,//框显示隐
-               //在rutun定义变量然后求的时候打印
+         //在rutun定义变量然后求的时候打印
          stockData:[],//定义数组存
          total:null,
-          pageSize: 2,
-          pageIndex: 1 ,
-          condition:'',
-          isAdd: true, //ture  为添加用户,false为修改 
+         totalNumber:null,
+         pageSize: 6,
+         pageIndex:1,
+         condition:'',
+         isAdd: true, //ture  为添加用户,false为修改 
       stockaddRules:{//表单验证!如果为空就会显示自定义的词
            MaterialsName:[
              { validator: checkName, trigger: 'blur'}
@@ -221,7 +197,9 @@ export default {
               console.log(params);
               GetstockManage(params).then(res => {
                 console.log(res)
-                this.total=res[0].TotalNumber;
+                this.totalNumber=res[0].TotalNumber;
+                console.log("yema")
+                console.log(this.totalNumber)
                 this.stockData=[];
                 for(let item of res[0].DataList){//遍历列表
                   this.stockData.push(item);//遍历出来的别表添加进去
@@ -232,7 +210,7 @@ export default {
             console.log(idx);
             this.isAdd = false;//如果是编辑就为false
             console.log(this.stockData)
-          this.stocklInfo = {
+            this.stocklInfo = {
             StockCode: this.stockData[idx].StockCode,             // 序号
             MaterialsName: this.stockData[idx].MaterialsName,  // 名称
             Describe: this.stockData[idx].Describe,        //描述     
@@ -302,40 +280,61 @@ export default {
                               });
                               this.$refs['stockaddRule'].resetFields();
                               this.dialogVisible = false;
-                            } else {
+                            } else if (res ==2) {
                                this.$message({
                                 type: 'error',
-                                message: '修改失败！！！'
+                                message: '项目名重复！！！'
                               })
+                            }else{
+                               this.$message({
+                                 type: 'error',
+                                message: '添加失败！！！'
+                               })
                             }
                           })
                         }
                       })
                    }    
                },
-               pageIndexChange(){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
+               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
                 this. Getuser()//重新获取一边当前的
-
                }
 },
-
    mounted() {//调用方法获取列表//立马调用
     this.Getuser();
     }
- 
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+ .projectStockList{
+    text-align: center;
+ }
   .procurment_title{
 	font-size: 16px;
 	font-family: "Microsoft YaHei";
   font-weight: bold;
 }
+ .seck{
+    margin-top: 20px;
+  }
 .main_heard{
-	text-align: left;
+   height: 50px;
+   line-height: 50px;
+   padding-left: 20px;
+   background:#fff;
+   box-shadow: 0px 2px 1px #888888;
 }
+.projectStockList{
+    width: calc(100% - 40px);
+    height: calc(100% - 90px);
+    margin: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: 100px;
+}
+
 .add_people{
 	display: inline-block;
 	float: right;
@@ -345,11 +344,10 @@ export default {
   display: inline-block;
 	float: right;
 	margin-right: 50px;
+  width: 80px;
+  height: 30px;
 }
-.seek{
-	margin-bottom: 20px;
-	margin-top: 20px;
-}
+
 .el-dialog__body{
  padding: 50px 0px 50px 0px;
 }
@@ -371,5 +369,20 @@ export default {
 }
 .stock_but{
   width: 60px;
+}
+.seack_input{
+  width: 200px;
+  position: absolute;
+}
+.seack_button{
+  margin-left: 230px;
+}
+.el-table__header-wrapper {
+  .el-table__header {
+    .cell {
+      text-align: center;
+    }
+  }
+  
 }
 </style>
