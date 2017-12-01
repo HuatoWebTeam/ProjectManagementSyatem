@@ -46,15 +46,15 @@
       </template>
     </el-table-column>
     </el-table>
-        <div class="myPagination"><!-- 组件翻页 -->
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="totalNumber" 
-        :page-size='pageSize'
-        @current-change='pageIndexChange'>
-      </el-pagination>
-    </div>
+       <div class="myPagination"><!-- 组件翻页 -->
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="totalNumber" 
+          :page-size='pageSize'
+          @current-change='pageIndexChange'>
+        </el-pagination>
+      </div>
   </el-col>
     <el-col :span='24'>
     <el-dialog

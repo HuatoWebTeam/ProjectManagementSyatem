@@ -117,3 +117,9 @@ export const GetLoginLogData = (params) => {
     .post("/Purchase/InsertPurchase",params)
     .then(res=>res.data)
   }
+   //得到采购待审的列表
+       export const GetPurchaseProcessed=(params)=>{
+     return axios
+       .get("/Purchase/GetPurchaseUntreated",{params: params})
+       .then(res => res.data)
+  }
