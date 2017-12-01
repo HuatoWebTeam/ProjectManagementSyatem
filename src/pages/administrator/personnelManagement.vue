@@ -209,8 +209,7 @@ export default {
         UserPass: '',          // 密码
         confirmPass: '',       // 确认密码
         UserState: ''     // 成员状态
-      },
-      total: null,
+      }, 
       totalNumber: null,
       pageSize: 2,      // 每页的条数
       pageIndex: 1      // 当前页
@@ -365,12 +364,16 @@ export default {
   .peronelContainer {
     height: 100%;
     .personnelManage {
-
+      // height: 50px;
+      // line-height: 50px;
+      // padding-left: 20px;
+      // background:#fff;
+      // box-shadow: 0px 5px 1px #888888;
       .peronnelTitle {
         display: inline;
       }
       .peronnelButton {
-        
+        //display: inline;
         float: right;
         margin-top: 11px;
         margin-right: 50px;
@@ -413,5 +416,40 @@ export default {
     }
   }
   
+</style>
+<style lang='scss' >
+.peronnelInfoList {
+  .cell {
+    text-align: center;
+  }
+}
+.myPagination {
+  height: 70px;
+  line-height: 70px;
+  .el-pagination {
+    height: 32px;
+    margin-top: 16px;
+    text-align: center;
+    button {
+      border: 1px solid #d9d9d9;
+      margin-right: 5px;
+    }
+    .el-pager li {
+      border: 1px solid #d9d9d9;
+      margin-right: 5px;
+    }
+  }
+}
+.el-table .el-table__header-wrapper tr{
+  background: #e5e5e5;
+}
+/*  .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #e5e5e5;
+}
+*/
+.personnelDialog .el-dialog--center .el-dialog__header {
+  padding-top: 15px;
+  background: #f5f5f5;
+}
 </style>
 

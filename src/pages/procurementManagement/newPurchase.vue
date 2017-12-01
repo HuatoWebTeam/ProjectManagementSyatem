@@ -75,7 +75,6 @@
 			      label="采购地点">
 			    </el-table-column>
 			    <el-table-column
-			      
 			      label="数量"
 			      width='100'>
 			      <template slot-scope="scope">
@@ -178,9 +177,6 @@ export default {
         	}
         	callback();
         }
- 
-      
-
       return {
       	inputNumber:'',
       	dialogTableVisible:false,
@@ -254,10 +250,7 @@ export default {
                 pageSize: 100000,
                 condition:this.condition
               }
-                console.log(params);
                 GetstockManage(params).then(res => {
-                console.log(res)
-                console.log("yema")
                 this.totalNumber=res[0].TotalNumber
                 this.tableStockData=[];
                 for(let item of res[0].DataList){//遍历列表
@@ -267,12 +260,13 @@ export default {
            },
             tableList(){//选中的列表!
             	for (var i = 0; i < this.multipleSelection.length; i++) {
-            		 this.multipleSelection[i].Num=0;//给默认的数组上面加一个属性number默认值是0;
-            		 this.multipleSelection[i].PurchaseCode='';
+            		 this.multipleSelection[i].Num=1;//给默认的数组上面加一个属性number默认值是1;
+            		 this.multipleSelection[i].PurchaseCode=this.PurchaseCode;//下面表格加一个属性
             		 this.multipleSelection[i].CommodityCode=this.multipleSelection[i].StockCode;
             		  //给下面的表格添加一个属性!
-            		 /* this.multipleSelection[i].UnitPrice=*/
-            	}
+            		 this.multipleSelection[i].UnitPrice=this.multipleSelection[i].Price
+                     this.multipleSelection[i].Unit=this.multipleSelection[i].Uint
+            	}                              
             	this.tableDataList = this.multipleSelection;
             	console.log(this.tableDataList)
         	    this.dialogTableVisible=false;//弹框显示!//点击选中的显示到下面的位置
@@ -282,14 +276,14 @@ export default {
 		       	  let SlaveList=[]//存发送给后台的物料列表
               
                purchase={
-/*                  ProjectCode:this.selectvalue,
+                    ProjectCode:this.selectvalue,
                     PurchaseCode:this.PurchaseCode,
                     PurchaseTitle:this.PurchaseTitle,
                     ExpirationDate:this.ExpirationDate,
-                    DeliveryDate:this.ExpirationDate
+                    DeliveryDate:this.ExpirationDate,
                     LoginName:this.LoginName,
-                    SlaveList:this.tableDataList*/
-                    PurchaseCode:"CG100001",
+                    SlaveList:this.tableDataList
+/*                   PurchaseCode:"CG100001",
 				    ProjectCode:"深圳博物馆",
 				    PurchaseTitle:"南京博物馆采购需求",
 				    ExpirationDate:"2017/1/21 0:00:00",
@@ -301,11 +295,11 @@ export default {
 					            Num:1,
 					            CommodityCode:"0001",
 					            Unit:null,
-					           UnitPrice:6999,
+					            UnitPrice:6999,
 					            PurchaseLocation:"宝安西乡",
 					            State:1
 					        }
-				    ]
+				    ]*/
                }
 /*        this.$refs['purchasetRulessuccess'].validate((valid)=>{
 	            if(valid){
@@ -323,7 +317,7 @@ export default {
 	                    message:'新建成功'
 	                  });
 	                  this.jurisdiction=false;
-	                  this.$refs['purchasetRulessuccess'].resetFields()
+	                  /*this.$refs['purchasetRulessuccess'].resetFields()*/
 	                 }else{
 	                  this.$message({
 	                    type:'error',

@@ -5,7 +5,7 @@
       <div class="seck">
       		<span class="project_name">项目</span>
           <el-input  placeholder="请输入搜索内容" v-model="condition"  class="seack_input" ></el-input>
-           <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser">搜索</el-button>
+           <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser" size="medium">搜索</el-button>
            <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
        </div>
   </el-col>
@@ -375,7 +375,7 @@ export default {
   position: absolute;
 }
 .seack_button{
-  margin-left: 230px;
+  margin-left: 220px;
 }
 .el-table__header-wrapper {
   .el-table__header {
