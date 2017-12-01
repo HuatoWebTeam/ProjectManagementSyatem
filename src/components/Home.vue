@@ -30,9 +30,35 @@
 	  			</template>
 	  		</el-menu>
 			<footer class='asideFooter'>
-				<span class='changePass'>修改密码</span>
+				<span class='changePass' @click='changePassword'>修改密码</span>
 				<span class='layout' @click='userLayout'>退出<i class="fa fa-sign-out" aria-hidden="true"></i></span>
 			</footer>
+			<el-dialog
+			title='修改密码'
+			width='400px'
+			:visible.sync="changePwdDialog">
+				<el-form :model='passwordForm' :rules='passwordRule' ref='passwordRefForm' label-width='100px'>
+					<el-form-item
+						label='旧密码：'
+						peop='oldPass'>
+							<el-input type='text' v-model='passwordForm.oldPass' ></el-input>
+					</el-form-item>
+					<el-form-item
+						label='新密码：'
+						prop='newPass'>
+							<el-input type='password' v-model='passwordForm.newPass' ></el-input>
+					</el-form-item>
+					<el-form-item
+						label='确认密码：'
+						prop='confirmPass'>
+							<el-input type='password' v-model='passwordForm.confirmPass' ></el-input>
+					</el-form-item>
+				</el-form>
+				<span slot="footer" class="dialog-footer">
+					<el-button @click="changePwdDialog = false">取 消</el-button>
+					<el-button type="primary" @click="changePwdDialog = false">确 定</el-button>
+				</span>
+			</el-dialog>
 	  	</el-aside>
 	  	<el-main>
 			  <!-- 保存组件的状态 -->
@@ -44,6 +70,7 @@
   	</el-container>
   	
   </el-container>
+  
 </template>
 
 <script>
@@ -52,10 +79,32 @@ import qs from 'qs';
 export default {
   	name: 'Home',
   	data () {
+		// let checkOldPass = (rule, value, callback) => {
+		// 	if(value == '' || value == null){
+		// 		callback(new Error('请输入旧密码'))
+		// 	} else if (value !== '' && )
+		// }
 		return {
 			defaultMenuOpened: ["0"],
 			routersUrl: [{ ConnectionList: [{ ConnectionUrl: '' }] }],
-			userName: ''
+			userName: '',
+			changePwdDialog: false,
+			passwordForm: {
+				lodPass: null,
+				newPass: null,
+				confirmPass: null
+			},
+			passwordRule: {
+				lodPass: {
+
+				},
+				newPass: [
+
+				],
+				confirmPass: [
+
+				]
+			}
 			
 		}
 	},
@@ -92,6 +141,9 @@ export default {
 		},
 		setMenuCss() {
 			$('.el-submenu').children('.el-menu').children('.el-menu-item').css({'background-color': '#353535'})
+		},
+		changePassword() {
+			this.changePwdDialog = true;
 		}
 	},
 	mounted() {
@@ -111,6 +163,9 @@ export default {
 			//this.setMenuCss();
 		});
 		
+	},
+	deactivated() {
+		this.$destroy(true);
 	}
 
 }

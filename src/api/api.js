@@ -106,7 +106,7 @@ export const GetLoginLogData = (params) => {
        .then(res => res.data)
   }
    //配置项目操作人权限添加
-    export const InsertPersonnelAssignment = (params)=>{
+  export const InsertPersonnelAssignment = (params)=>{
     return axios
     .post("/ProjectManage/InsertPersonnelAssignment",params)
     .then(res=>res.data)
@@ -117,3 +117,21 @@ export const GetLoginLogData = (params) => {
     .post("/Purchase/InsertPurchase",params)
     .then(res=>res.data)
   }
+// 备用金申请
+export const InsertPettyCash = params => {
+  return axios
+    .post("/AmountManage/InsertPettyCash", params)
+    .then(res => res.data);
+}; 
+// 备用金申请----我的申请列表
+export const GetMyPettyCash = params => {
+  return axios
+    .get("/AmountManage/GetMyPettyCash", {params: params})
+    .then(res => res.data);
+}; 
+// 备用金申请----单据列表
+export const GetPettyCash = params => {
+  return axios
+    .get("/AmountManage/GetPettyCash", { params: params })
+    .then(res => res.data);
+}; 
