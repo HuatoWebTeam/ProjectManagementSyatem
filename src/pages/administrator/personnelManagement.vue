@@ -300,27 +300,27 @@ export default {
 
       if(this.isAdd) {   // 添加
 
-      this.personnalInfo.LoginName = this.personnalInfo.UserName;
-      this.$refs['personnalRule'].validate((valid) => {
-        if(valid) {
-          AddUserManaeg(params).then(res => {
-            //console.log(res);
-            if(res == 1) {
-              this.$message({
-                  type: 'success',
-                  message: '添加成功！！！'
-              });
-              this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
-              this.editPeraonnlInfo = false;
-            } else {
-              this.$message({
-                  type: 'error',
-                  message: '添加失败！！！'
-              })
-            }
-          })
-        }
-      })
+        this.personnalInfo.LoginName = this.personnalInfo.UserName;
+        this.$refs['personnalRule'].validate((valid) => {
+          if(valid) {
+            AddUserManaeg(params).then(res => {
+              //console.log(res);
+              if(res == 1) {
+                this.$message({
+                    type: 'success',
+                    message: '添加成功！！！'
+                });
+                this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
+                this.editPeraonnlInfo = false;
+              } else {
+                this.$message({
+                    type: 'error',
+                    message: '添加失败！！！'
+                })
+              }
+            })
+          }
+        })
       }  else {           // 编辑 更新
         this.$refs['personnalRule'].validate((valid) => {
           //console.log(valid)
