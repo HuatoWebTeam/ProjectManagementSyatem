@@ -11,6 +11,9 @@ export default {
   },
   mounted() {
       console.log(this.$route.params.id)
+  },
+  deactivated() {
+    this.$destroy(true);
   }
 }
 </script>

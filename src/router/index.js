@@ -89,10 +89,14 @@ export default new Router({
       component: Homes,
       children: [
         { path: "NewPurchase", name: '新建采购单', component: NewPurchase },
-        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack },
+        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack,
+          // children: [
+          //   { path: 'ProcurementBack:id', name: '详情', component: PurchaseChild}
+          // ] 
+        },
         { path: "PurchaseCare", name: '采购已审', component: PurchaseCare },
         { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods },
-        { path: 'PurchaseGoods/:id', name: '详情', component: PurchaseChild }
+        { path: 'Details/:id', name: 'Details', component: PurchaseChild }
       ]
     },
     {
