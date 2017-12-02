@@ -106,7 +106,7 @@ export const GetLoginLogData = (params) => {
        .then(res => res.data)
   }
    //配置项目操作人权限添加
-    export const InsertPersonnelAssignment = (params)=>{
+  export const InsertPersonnelAssignment = (params)=>{
     return axios
     .post("/ProjectManage/InsertPersonnelAssignment",params)
     .then(res=>res.data)
@@ -117,15 +117,39 @@ export const GetLoginLogData = (params) => {
     .post("/Purchase/InsertPurchase",params)
     .then(res=>res.data)
   }
+  
+// 备用金申请
+export const InsertPettyCash = params => {
+  return axios
+    .post("/AmountManage/InsertPettyCash", params)
+    .then(res => res.data);
+}; 
+// 备用金申请----我的申请列表
+export const GetMyPettyCash = params => {
+  return axios
+    .get("/AmountManage/GetMyPettyCash", {params: params})
+    .then(res => res.data);
+}; 
+// 备用金申请----单据列表
+export const GetPettyCash = params => {
+  return axios
+    .get("/AmountManage/GetPettyCash", { params: params })
+    .then(res => res.data);
+}; 
+
    //得到采购待审的列表
        export const GetPurchaseProcessed=(params)=>{
      return axios
        .get("/Purchase/GetPurchaseUntreated",{params: params})
        .then(res => res.data)
   }
+<<<<<<< HEAD
    //得到采购已待审的列表
        export const ChaseProcessed=(params)=>{
      return axios
        .get("/Purchase/GetPurchaseProcessed",{params: params})
        .then(res => res.data)
   }
+=======
+
+>>>>>>> 21b165848fb8cd2eb0a7510d1740175feb1285fe

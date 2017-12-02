@@ -67,6 +67,7 @@
 		      width="180">
 		 <template slot-scope="scope">
 	       <el-button type="primary" size="small" @click='Editingpermissions(scope.$index)'>详情</el-button>
+				 
 	      </template>
 		    </el-table-column>
 	    </el-table>
@@ -125,38 +126,41 @@ export default {
 	                }
 	               console.log(options)
 	              })
-	           },
-	           GetUntreated(){
-                 var parms={
-                     projectCode:this.selectvalue,
-                     condition:this.condition,
-                     staDate:this.staDate,
-                     endDate:this.endDate,
-                     pageIndex:this.pageIndex,
-                     pageSize:this.pageSize
-                 }
-	           	 GetPurchaseProcessed(parms).then(res=>{
-	           	 	console.log("列表")
-	           	 	console.log(res)
-	           	 	this.tablepending=[];
-	           	 	this.totalNumber=res[0].TotalNumber
-	           	 	console.log(this.totalNumber) 
-	           	 	for(let item of res[0].DataList){
-	           	 		this.tablepending.push(item)
-	           	 	}
-	           	 	console.log(this.tablepending)
-	           	 })
-	           },
-	           Link(index){//点击下载时候下载相应的文档!
-	           	  FileUrl:this.FileUrl;
-	           	    for(let i=0; i<this.totalNumber;i++){
-                         FileUrl:window.open(this.tablepending[index].FileUrl)
-	           	    } 	
-	           },
-	           pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
-                 this.pageIndex = pageIndex;//传当前页面     
-                this. GetUntreated()//重新获取一边当前的
-               }
+	      },
+				GetUntreated(){
+						var parms={
+								projectCode:this.selectvalue,
+								condition:this.condition,
+								staDate:this.staDate,
+								endDate:this.endDate,
+								pageIndex:this.pageIndex,
+								pageSize:this.pageSize
+				}
+				GetPurchaseProcessed(parms).then(res=>{
+					console.log("列表")
+					console.log(res)
+					this.tablepending=[];
+					this.totalNumber=res[0].TotalNumber
+					console.log(this.totalNumber) 
+					for(let item of res[0].DataList){
+						this.tablepending.push(item)
+					}
+					console.log(this.tablepending)
+					})
+				},
+				Link(index){//点击下载时候下载相应的文档!
+					FileUrl:this.FileUrl;
+						for(let i=0; i<this.totalNumber;i++){
+										FileUrl:window.open(this.tablepending[index].FileUrl)
+						} 	
+				},
+				pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
+						this.pageIndex = pageIndex;//传当前页面     
+					this. GetUntreated()//重新获取一边当前的
+				},
+				Editingpermissions(index) {
+					this.$router.push({name:'Details', params: {id: 2} })
+				}
            
        },
        mounted(){

@@ -25,9 +25,10 @@ import ConstructionLog from '@/pages/projectsManager/constructionLog';  // 施�
  */
 
  import NewPurchase from "@/pages/procurementManagement/newPurchase"; // 新建采购单
- import ProcurementBack from "@/pages/procurementManagement/procurementBacklog";; // 采购待办
- import PurchaseCare from "@/pages/procurementManagement/purchasingCareFul";;      // 采购已审
- import PurchaseGoods from "@/pages/procurementManagement/purchasingGoods";;      // 采购备货
+ import ProcurementBack from "@/pages/procurementManagement/procurementBacklog"; // 采购待办
+ import PurchaseCare from "@/pages/procurementManagement/purchasingCareFul";      // 采购已审
+ import PurchaseGoods from "@/pages/procurementManagement/purchasingGoods";      // 采购备货
+ import PurchaseChild from '@/pages/procurementManagement/purchaseChild'
 
  /**
   * reserveFund  备用金管理
@@ -88,9 +89,14 @@ export default new Router({
       component: Homes,
       children: [
         { path: "NewPurchase", name: '新建采购单', component: NewPurchase },
-        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack },
+        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack,
+          // children: [
+          //   { path: 'ProcurementBack:id', name: '详情', component: PurchaseChild}
+          // ] 
+        },
         { path: "PurchaseCare", name: '采购已审', component: PurchaseCare },
-        { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods }
+        { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods },
+        { path: 'Details/:id', name: 'Details', component: PurchaseChild }
       ]
     },
     {
