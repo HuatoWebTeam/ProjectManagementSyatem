@@ -362,11 +362,7 @@ export default {
 .el-dialog__header{
 	background: #f2f2f2;
 }
-.el-pagination{
-  text-align: center;
-  margin-top: 15px;
-  font-size: 16px;
-}
+
 .stock_but{
   width: 60px;
 }

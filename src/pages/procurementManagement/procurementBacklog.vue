@@ -196,7 +196,5 @@ export default {
     	color: blue;
     	cursor:Pointer;
     }
-    .el-pagination{
-    	text-align: center;
-    }
+
 </style>

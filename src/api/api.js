@@ -87,6 +87,18 @@ export const GetLoginLogData = (params) => {
     .get("/UserManage/GetLoginLogData", { params: params })
     .then(res => res.data);
 };   
+// 修改密码 
+export const UpdateUserPass = params => {
+  return axios
+    .post("/UserManage/UpdateUserPass", params)
+    .then(res => res.data);
+}; 
+// 管理员和领导 提交审批
+export const UpdatePettyCash = params => {
+  return axios
+    .post("/AmountManage/UpdatePettyCash", params)
+    .then(res => res.data);
+}; 
 // 项目列表
      export const ProjectManage=(params)=>{
        return axios

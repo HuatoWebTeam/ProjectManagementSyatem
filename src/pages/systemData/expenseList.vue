@@ -137,11 +137,7 @@ export default {
   .el-input__inner{
     height: 30px;
   }
-.el-pagination{
-  text-align: center;
-  margin-top: 15px;
-  font-size: 16px;
-}
+
 .seek{
   margin-top:20px;
   margin-bottom:20px;

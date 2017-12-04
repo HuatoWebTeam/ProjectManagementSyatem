@@ -83,7 +83,8 @@ export default {
           this.$message({
             type:'success',
             message: '保存成功！！！'
-          })
+          });
+          this.$emit('updateSubMenu');
         } else {
           this.$message({
             type:'error',
