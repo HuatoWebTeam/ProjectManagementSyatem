@@ -9,29 +9,37 @@
       border
       stripe>
       <el-table-column
-        label='序列'>
+        label='序列'
+        width='100px'>
         <template slot-scope="scope">
           {{ (pageIndex-1) * pageIndex + (scope.$index + 1) }}
         </template>
       </el-table-column>
       <el-table-column
         label='申请人'
+        width='150px'
         prop='LoginName'>
       </el-table-column>
       <el-table-column
         label='申请描述'
+
         prop='Remark'>
       </el-table-column>
       <el-table-column
         label='申请流程'
+        width='150px'
         >
         <template slot-scope="scope">
-          {{scope.$index}}
+          <span class='documentListState'>{{dataLists[scope.$index].State == 1 ? '申请' : (dataLists[scope.$index].State == 2 ? '领导' : '管理员')}}</span>
         </template>
       </el-table-column>
       <el-table-column
         label='打款凭证'
+        width='200px'
         prop='ImgUrl'>
+        <template slot-scope="scope">
+          <img style='width:180px;height:50px;' :src="dataLists[scope.$index].ImgUrl" alt="">
+        </template>
       </el-table-column>
     </el-table>
     <el-col :span='24' class='myPagination'>
@@ -93,6 +101,16 @@ export default {
     padding: 20px;
     .el-table {
       text-align: center;
+      
+      .documentListState {
+        display: inline-block;
+        width: 75px;
+        height: 100%;
+        color: #fff;
+        background: url(../../assets/img/liuchengBack.png) no-repeat;
+        background-size: 100%;
+      }
+    
     }
   }
 }

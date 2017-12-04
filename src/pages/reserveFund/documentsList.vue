@@ -36,10 +36,10 @@
       </el-table-column>
       <el-table-column
         label='打款凭证'
-        width='150px'
+        width='200px'
         >
         <template slot-scope="scope" >
-          <img src="" alt="">
+          <img style='width:180px;height:50px;' :src="dataList[scope.$index].ImgUrl" alt="">
         </template>
 
       </el-table-column>
@@ -54,7 +54,7 @@
           @click='applyApproval(scope.$index)'>
             申请批准
           </el-button>
-          <el-button style='background:#a0a0a0' size='mini' v-if='dataList[scope.$index].State == 3' disabled >已批准</el-button>
+          <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == 3' disabled >已批准</el-button>
           
         </template>
       </el-table-column>
@@ -80,7 +80,7 @@
         :auto-upload="false"
         :on-preview="handlePictureCardPreview"
         :limit='1'
-        accept='image'
+        accept='image/jpeg,image/png'
         :on-exceed='uploadMessage'
         :disabled="fileList.length !== 0"
         :on-change='imgFileChange'
@@ -127,6 +127,7 @@ export default {
   },
   methods: {
     getDocumentList() {
+      
       var params = {
         pageIndex: this.pageIndex,
         pageSize: this.pageSize
@@ -211,6 +212,20 @@ export default {
         console.log(params);
         UpdatePettyCash(params).then(res => {
           console.log(res);
+          if(res == 1) {
+            this.$message({
+              type: 'success',
+              message: '批准成功！！！'
+            });
+            this.addVoucher = false;
+            this.$refs['imgUpload'].clearFiles();
+            this.getDocumentList();
+          } else {
+            this.$message({
+              type: 'error',
+              message: '批准失败！！！'
+            })
+          }
         })
       }
       
