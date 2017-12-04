@@ -155,13 +155,11 @@ export const GetPettyCash = params => {
        .get("/Purchase/GetPurchaseUntreated",{params: params})
        .then(res => res.data)
   }
-<<<<<<< HEAD
+
    //得到采购已待审的列表
        export const ChaseProcessed=(params)=>{
      return axios
        .get("/Purchase/GetPurchaseProcessed",{params: params})
        .then(res => res.data)
   }
-=======
-
->>>>>>> 21b165848fb8cd2eb0a7510d1740175feb1285fe
+  
