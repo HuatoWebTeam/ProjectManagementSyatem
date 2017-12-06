@@ -1,46 +1,46 @@
 <template>
 <el-row>
+   <el-col :span='24' class="Reimbursement">
+     <div class="procurment_title">报销管理</div>
+   </el-col>
+   <el-col :span="24" class="projectSelect">
+      <el-form :inline="true"  class="demo-form-inline">
+        <el-form-item label="项目:">
+          <el-input placeholder="请输入查询项目" v-model="condition" ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="small" icon="el-icon-search" @click='expenses' >查询</el-button>
+        </el-form-item>
+      </el-form>
+   </el-col>
   <el-col :span='24' class="main_heard">
-    <div class="procurment_title">报销管理</div>
-     	<div class="seek">
-  		<span class="project_name">项目</span>
-	  	<el-select v-model="value" placeholder="请选择 " >
-	    <el-option
-	      v-for="item in options"
-	      :key="item.value"
-	      :label="item.label"
-	      :value="item.value">
-	    </el-option>
-       </el-select>
-       <el-button type="primary" icon="el-icon-search">搜索</el-button>
-  </div>
       <el-table
     :data="tableData"
      stripe
      border
     style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="ProjectName"
       label="项目名称"
       width="160">
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="Date"
       label="发起时间"
       width="160">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="LoginName"
       label="项目经理">
     </el-table-column>
      <el-table-column
-      prop="address"
+      prop="Money"
       label="汇报金额">
     </el-table-column>
-    <el-table-column 
-    label="操作"
-    width="120"
-    >
+      <el-table-column 
+      label="操作"
+      width="180"
+      >
       <template slot-scope="scope">
         <el-button
             size="mini"
@@ -57,80 +57,95 @@
         <span class="demonstration"></span>
         <el-pagination
           layout="prev, pager, next"
-          :total="1000">
+          :total="totalNumber"
+          :page-size='pageSize'
+          @current-change='pageIndexChange'>
         </el-pagination>
      </div>
   </el-col>
 </el-row>
-
+ 
 </template>
 
 <script>
+  import{GetReimburseData}from'@/api/api'//引进列表
+
 export default {
   data(){
     return{
-
-         options: [{
-            value: '选项1',
-            label: '黄金糕'
-          }, {
-            value: '选项2',
-            label: '双皮奶'
-          }, {
-            value: '选项3',
-            label: '蚵仔煎'
-          }, {
-            value: '选项4',
-            label: '龙须面'
-          }, {
-            value: '选项5',
-            label: '北京烤鸭'
-      }],
-
-         value: '',
-     tableData: [{
-          date: '深圳博物馆',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        }, {
-          date: '广州博物馆',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          operation:'上传'
-
-        }, {
-          date: '北京博物馆',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-         
-        }, {
-          date: '南京博物馆',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-         
-        }]
+      condition:'', 
+      pageIndex:1,
+      pageSize:2,
+      tableData: [],
+      totalNumber:null
     }
   },
-      methods: {///翻页组件
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      }
+      methods: {//报销列表显示
+           expenses(){
+               var parms={
+                   pageIndex:this.pageIndex,
+                   pageSize:this.pageSize,
+                   condition:this.condition
+               }
+               GetReimburseData(parms).then(res=>{
+                    console.log("xianshi")
+                      console.log(res)
+                      this.totalNumber=res.TotalNumber
+                       this.tableData=[];
+                       for(let item of res.DataList){
+                             this.tableData.push(item)
+                        }
+                        console.log( this.totalNumber)
+                  }) 
+                   
+                },
+              pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
+                 this.pageIndex = pageIndex;//传当前页面     
+                 this. expenses()//重新获取一边当前的
+               }
+             
+
+
+
+
+    },
+    mounted(){
+      this.expenses()//列表请求显示
     }
+
 }
 </script>
 
 <style scoped>
+.Reimbursement{
+   height: 50px;
+   line-height: 50px;
+   padding-left: 20px;
+   background:#fff;
+   box-shadow: 0px 2px 1px #888888;
+}
+.main_heard{
+     width: calc(100% - 40px);
+    height: calc(100% - 90px);
+    margin: 0px 20px 20px 20px;
+    background: #fff;
+    border: 1px solid #ccc; 
+    text-align: center;
+
+}
+
+.projectSelect{
+    width: calc(100% - 40px);
+    height: calc(100% - 90px);
+    margin: 20px 20px 0px 20px;  
+}
+
 .el-button{
   font-size: 12px;
   padding:8px 2px;
 }
 
-.main_heard{
-  text-align: left;
-}
+
 </style>
 <style type="text/css">
   

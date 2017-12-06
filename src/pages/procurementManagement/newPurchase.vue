@@ -191,7 +191,6 @@ export default {
         PurchaseTitle:'',//采购标题
         ExpirationDate:'',//截至日期
         LoginName:'', //申请人
-        ExpirationDate:'',
         multipleSelection:[], // 备货选中数据
         tableDataList:[],
         purchasetRules:{
@@ -283,29 +282,7 @@ export default {
                     DeliveryDate:this.ExpirationDate,
                     LoginName:this.LoginName,
                     SlaveList:this.tableDataList
-/*                   PurchaseCode:"CG100001",
-				    ProjectCode:"深圳博物馆",
-				    PurchaseTitle:"南京博物馆采购需求",
-				    ExpirationDate:"2017/1/21 0:00:00",
-				    DeliveryDate:"2018/1/21 0:00:00",
-				    SlaveList:[
-					        {
-					            SlaveCode:1,
-					            PurchaseCode:"CG100001",
-					            Num:1,
-					            CommodityCode:"0001",
-					            Unit:null,
-					            UnitPrice:6999,
-					            PurchaseLocation:"宝安西乡",
-					            State:1
-					        }
-				    ]*/
                }
-/*        this.$refs['purchasetRulessuccess'].validate((valid)=>{
-	            if(valid){
-
-	              }
-         })*/
          var parms={
                   purchase:purchase
               }

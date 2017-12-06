@@ -53,6 +53,21 @@
 		      label="订单标题"
 		      width="180">
 		    </el-table-column>
+            <el-table-column
+		      prop="LoginName"
+		      label="申请人"
+		      width="180">
+		    </el-table-column>
+		     <el-table-column
+		      prop="ProjectCode"
+		      label="所属项目"
+		      width="180">
+		    </el-table-column>
+		     <el-table-column
+		      prop="ExpirationDate"
+		      label="交货时间"
+		      width="180">
+		    </el-table-column>
 		    <el-table-column
 		      label="供货详说明">
 		  <template slot-scope="scope">
@@ -147,17 +162,19 @@ export default {
 	           	 	console.log(this.tablepending)
 	           	 })
 	           },
+             Editingpermissions(index) {//点击详情
+					this.$router.push({name:'Details', params: {id:this.tablepending[index].PurchaseCode}})//传编号给路由
+				},
 	           Link(index){//点击下载时候下载相应的文档!
 	           	  FileUrl:this.FileUrl;
 	           	    for(let i=0; i<this.totalNumber;i++){
-                         FileUrl:window.open(this.tablepending[index].FileUrl)
+                         FileUrl:window.open(this.tablepending[index].FileUrl)//链接绑定
 	           	    } 	
 	           },
 	           pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
-                this. GetUntreated()//重新获取一边当前的
-               }
-           
+                 this. GetUntreated()//重新获取一边当前的
+               }   
        },
        mounted(){
        	     this.getprojectmange();//调用方法.项目名称显示!

@@ -287,7 +287,6 @@ export default {
                  }
             })         
         },
-
         Unprivilegedlist(){//
             var parms={
                 pageIndex: 1,
@@ -324,7 +323,7 @@ export default {
 
               }
            ProjectManage(parms).then( res => {//项目列表
-             console.log("liebiao")
+             console.log("liebiao22222")
                console.log(res)
             if(res[0].IsTrue==0){//请求过来判定是不是有权限添加项目!如果没有权限添加项目就把添加按钮给隐藏了.
               this.add=false;
@@ -334,7 +333,8 @@ export default {
               for(let item of res[0].DataList){
               this.projectData.push(item)//遍历出来的数组放进去
                }
-               
+                console.log( this.totalNumber)
+                console.log(res[0].DataList)
              })
              },
         pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~

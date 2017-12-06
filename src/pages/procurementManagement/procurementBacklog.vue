@@ -35,7 +35,7 @@
 				       value-format="yyyy-MM-dd">
 				    </el-date-picker>
 			 </el-form-item>
-			  <el-button size="medium" type="primary" @click='GetUntreated'>查询</el-button>
+			  <el-button size="small" type="primary" @click='GetUntreated'>查询</el-button>
         </el-form>  
        </el-col>
    <el-col :span='24' class="PendingOrdermain">
@@ -54,10 +54,25 @@
 		      width="180">
 		    </el-table-column>
 		    <el-table-column
+		      prop="LoginName"
+		      label="申请人"
+		      width="180">
+		    </el-table-column>
+		     <el-table-column
+		      prop="ProjectCode"
+		      label="所属项目"
+		      width="180">
+		    </el-table-column>
+		     <el-table-column
+		      prop="ExpirationDate"
+		      label="交货时间"
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
 		      label="供货详说明">
 		  <template slot-scope="scope">
-	          <a  @click="Link(scope.$index)"  class="underline">
-					  {{tablepending[scope.$index].FileName}}	 
+	          <a @click="Link(scope.$index)"  class="underline">
+				 {{tablepending[scope.$index].FileName}}	 
 			   </a>
 	      </template>
 		    </el-table-column>
@@ -127,17 +142,17 @@ export default {
 	               console.log(options)
 	              })
 	      },
-				GetUntreated(){
-						var parms={
-								projectCode:this.selectvalue,
-								condition:this.condition,
-								staDate:this.staDate,
-								endDate:this.endDate,
-								pageIndex:this.pageIndex,
-								pageSize:this.pageSize
-				}
+		GetUntreated(){
+				var parms={
+						projectCode:this.selectvalue,
+						condition:this.condition,
+						staDate:this.staDate,
+						endDate:this.endDate,
+						pageIndex:this.pageIndex,
+						pageSize:this.pageSize
+				  }
 				GetPurchaseProcessed(parms).then(res=>{
-					console.log("列表")
+					console.log("创建列表显示")
 					console.log(res)
 					this.tablepending=[];
 					this.totalNumber=res[0].TotalNumber
@@ -159,7 +174,7 @@ export default {
 					this. GetUntreated()//重新获取一边当前的
 				},
 				Editingpermissions(index) {
-					this.$router.push({name:'Details', params: {id: 2} })
+					this.$router.push({name:'Details', params: {id:this.tablepending[index].PurchaseCode}})
 				}
            
        },

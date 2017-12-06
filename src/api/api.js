@@ -138,18 +138,34 @@ export const GetPettyCash = params => {
 }; 
 
    //得到采购待审的列表
-       export const GetPurchaseProcessed=(params)=>{
+  export const GetPurchaseProcessed=(params)=>{
      return axios
        .get("/Purchase/GetPurchaseUntreated",{params: params})
        .then(res => res.data)
   }
-<<<<<<< HEAD
+
    //得到采购已待审的列表
-       export const ChaseProcessed=(params)=>{
+   export const ChaseProcessed=(params)=>{
      return axios
        .get("/Purchase/GetPurchaseProcessed",{params: params})
        .then(res => res.data)
   }
-=======
-
->>>>>>> 21b165848fb8cd2eb0a7510d1740175feb1285fe
+//得到列表里面的详情,以及已经审的详情!
+     export const PurchaseSingleInformation=(params)=>{
+     return axios
+       .get("/Purchase/GetPurchaseSingleInformation",{params: params})
+       .then(res => res.data)
+  }
+//考勤列表请求显示接口
+     export const GetSigningInData=(params)=>{
+     return axios
+       .get("/BaseData/GetSigningInData",{params: params})
+       .then(res => res.data)
+  }
+    
+  //报销管理列表数据显示.
+     export const GetReimburseData=(params)=>{
+     return axios
+       .get("/AmountManage/GetReimburseData",{params: params})
+       .then(res => res.data)
+  }
