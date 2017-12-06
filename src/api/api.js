@@ -87,6 +87,18 @@ export const GetLoginLogData = (params) => {
     .get("/UserManage/GetLoginLogData", { params: params })
     .then(res => res.data);
 };   
+// 修改密码 
+export const UpdateUserPass = params => {
+  return axios
+    .post("/UserManage/UpdateUserPass", params)
+    .then(res => res.data);
+}; 
+// 管理员和领导 提交审批
+export const UpdatePettyCash = params => {
+  return axios
+    .post("/AmountManage/UpdatePettyCash", params)
+    .then(res => res.data);
+}; 
 // 项目列表
      export const ProjectManage=(params)=>{
        return axios
@@ -150,6 +162,7 @@ export const GetPettyCash = params => {
        .get("/Purchase/GetPurchaseProcessed",{params: params})
        .then(res => res.data)
   }
+
 //得到列表里面的详情,以及已经审的详情!
      export const PurchaseSingleInformation=(params)=>{
      return axios
@@ -169,3 +182,6 @@ export const GetPettyCash = params => {
        .get("/AmountManage/GetReimburseData",{params: params})
        .then(res => res.data)
   }
+
+  
+

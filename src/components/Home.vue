@@ -30,17 +30,18 @@
 	  			</template>
 	  		</el-menu>
 			<footer class='asideFooter'>
-				<span class='changePass' @click='changePassword'>修改密码</span>
+				<span class='changePass' @click='openUpdatePass'>修改密码</span>
 				<span class='layout' @click='userLayout'>退出<i class="fa fa-sign-out" aria-hidden="true"></i></span>
 			</footer>
 			<el-dialog
 			title='修改密码'
 			width='400px'
+			@close='closeUpdatePass'
 			:visible.sync="changePwdDialog">
 				<el-form :model='passwordForm' :rules='passwordRule' ref='passwordRefForm' label-width='100px'>
 					<el-form-item
 						label='旧密码：'
-						peop='oldPass'>
+						prop='oldPass'>
 							<el-input type='text' v-model='passwordForm.oldPass' ></el-input>
 					</el-form-item>
 					<el-form-item
@@ -55,15 +56,15 @@
 					</el-form-item>
 				</el-form>
 				<span slot="footer" class="dialog-footer">
-					<el-button @click="changePwdDialog = false">取 消</el-button>
-					<el-button type="primary" @click="changePwdDialog = false">确 定</el-button>
+					<el-button @click="closeUpdatePass">取 消</el-button>
+					<el-button type="primary" @click="updatePass">确 定</el-button>
 				</span>
 			</el-dialog>
 	  	</el-aside>
 	  	<el-main>
 			  <!-- 保存组件的状态 -->
 			  <keep-alive>
-				  <router-view/>
+				  <router-view @updateSubMenu='updateSubMenu'/>
 			  </keep-alive>
 	  		
 	  	</el-main>
@@ -74,35 +75,40 @@
 </template>
 
 <script>
-import { GetJurisdictionData } from '@/api/api';
+import { GetJurisdictionData, UpdateUserPass } from '@/api/api';
 import qs from 'qs';
 export default {
   	name: 'Home',
   	data () {
-		// let checkOldPass = (rule, value, callback) => {
-		// 	if(value == '' || value == null){
-		// 		callback(new Error('请输入旧密码'))
-		// 	} else if (value !== '' && )
-		// }
+		let checkNewPass = (rule, value, callback) => {
+			if (value !== '' && value !== this.passwordForm.newPass) {
+				callback(new Error('两次输入的密码不同'))
+			} else {
+				callback();
+			}
+			
+		}
+		
 		return {
 			defaultMenuOpened: ["0"],
 			routersUrl: [{ ConnectionList: [{ ConnectionUrl: '' }] }],
 			userName: '',
 			changePwdDialog: false,
 			passwordForm: {
-				lodPass: null,
+				oldPass: null,
 				newPass: null,
 				confirmPass: null
 			},
 			passwordRule: {
-				lodPass: {
-
-				},
+				oldPass: [
+					{  required: true, message: '请输入旧密码', trigger: 'blur' },
+				],
 				newPass: [
-
+					{  required: true, message: '请输入新密码', trigger: 'blur' },
 				],
 				confirmPass: [
-
+					{  required: true, message: '请输入确认密码', trigger: 'blur' },
+					{  validator: checkNewPass, trigger: 'blur' }
 				]
 			}
 			
@@ -142,26 +148,68 @@ export default {
 		setMenuCss() {
 			$('.el-submenu').children('.el-menu').children('.el-menu-item').css({'background-color': '#353535'})
 		},
-		changePassword() {
+		openUpdatePass() {
 			this.changePwdDialog = true;
+		},
+		closeUpdatePass() {
+			this.changePwdDialog = false;
+			this.$refs['passwordRefForm'].resetFields();
+		},
+		updateSubMenu() {
+			this.getSubmenuData();
+		},
+		updatePass() {
+			this.$refs['passwordRefForm'].validate((valid) => {
+				if (valid) {
+					var params = `newPassword=${this.passwordForm.newPass}&oldPassword=${this.passwordForm.oldPass}`;
+					console.log(params);
+					UpdateUserPass(params).then(res => {
+						console.log(res);
+						if(res == 0) {
+							this.$message({
+								type: 'error',
+								message:'修改失败！！！'
+							})
+						} else if (res == 2) {
+							this.$message({
+								type: 'error',
+								message: '旧密码填写错误！！！'
+							})
+						} else if (res == 1) {
+							this.$message({
+								type: 'success',
+								message: '修改成功,请重新登录！！！'
+							});
+							this.closeUpdatePass();
+							setTimeout(function() {
+								this.$router.push('/Login');
+							}, 2000);
+							
+						}
+					})
+				}
+			})
+		},
+		getSubmenuData() {
+			GetJurisdictionData().then(res => {
+				//console.log(res);
+				// console.log(this.$route.path)
+				this.routersUrl = res;
+				if(this.$route.path == '/Homes') {
+					this.$router.push('/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl);
+					//$('.el-submenu.is-opened').children('.el-menu').children('li:first').addClass('is-active');
+				}
+				
+				this.getMenuFoucs();
+				//this.setMenuCss();
+			});
 		}
 	},
 	mounted() {
 		//console.log(this.$router.options);
 		let user = JSON.parse(sessionStorage.getItem('user'));
 		this.userName = user.name;
-		GetJurisdictionData().then(res => {
-			//console.log(res);
-			// console.log(this.$route.path)
-			this.routersUrl = res;
-			if(this.$route.path == '/Homes') {
-				this.$router.push('/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl);
-				//$('.el-submenu.is-opened').children('.el-menu').children('li:first').addClass('is-active');
-			}
-			
-			this.getMenuFoucs();
-			//this.setMenuCss();
-		});
+		this.getSubmenuData();
 		
 	},
 	deactivated() {
@@ -219,12 +267,15 @@ export default {
 		.el-aside {
 			background: #3c3c3c;
 			color: #fff;
+			
 			.el-menu {
 				background-color: #232424;
+				height: 100%;
 				.el-submenu, .el-menu-item {
 					min-width: 184px;
 				}
 				.el-submenu {
+					border-bottom: 1px solid #3c3c3c;
 					.el-menu-item {
 						background-color: #353535
 					}

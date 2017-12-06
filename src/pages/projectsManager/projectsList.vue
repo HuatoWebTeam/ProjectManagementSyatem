@@ -419,10 +419,7 @@ export default {
 .procurment_title{
   margin-bottom: 30px;
 }
-.el-pagination{
-  margin-top: 20px;
-  text-align: center;
-}
+
 .el-date-editor.el-input, .el-date-editor.el-input__inner{
   width: 100%;
 }

@@ -173,9 +173,5 @@ export default {
     padding-right: 0;
     color: white;
 }
-.el-pagination{
-  text-align: center;
-  margin-top: 15px;
-  font-size: 16px;
-}
+
 </style>
