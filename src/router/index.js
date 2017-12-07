@@ -15,6 +15,7 @@ import Personnel from "@/pages/administrator/personnelManagement"; // 人员管�
  * projectsManager   项目管理
  */
 import ProjectsList from '@/pages/projectsManager/projectsList';  // 项目管理
+import ProjectsListDetails from '@/pages/projectsManager/projectsListDetails';  // 项目管理
 import AcceptanceData from '@/pages/projectsManager/acceptanceData';  // 验收资料
 import AfterInfomation from '@/pages/projectsManager/afterInformation';  // 售后信息
 import ConstructionLog from '@/pages/projectsManager/constructionLog';  // 施工日志
@@ -80,7 +81,8 @@ export default new Router({
         { path: "ProjectsList", name: '项目列表', component: ProjectsList },
         { path: "ConstructionLog", name: '施工日志', component: ConstructionLog },
         { path: "AcceptanceData", name: '验收资料', component: AcceptanceData },
-        { path: "AfterInfomation", name: '售后信息', component: AfterInfomation }
+        { path: "AfterInfomation", name: '售后信息', component: AfterInfomation },
+        { path: '/ProjectsListDetails/:id', name: 'ProjectsListDetails', component: ProjectsListDetails }
       ]
     },
     {
@@ -89,11 +91,7 @@ export default new Router({
       component: Homes,
       children: [
         { path: "NewPurchase", name: '新建采购单', component: NewPurchase },
-        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack
-          // children: [
-          //   { path: 'ProcurementBack:id', name: '详情', component: PurchaseChild}
-          // ] 
-        },
+        { path: "ProcurementBack", name: '采购待办', component: ProcurementBack },
         { path: "PurchaseCare", name: '采购已审', component: PurchaseCare },
         { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods },
         { path: 'Details/:id', name: 'Details', component: PurchaseChild }
