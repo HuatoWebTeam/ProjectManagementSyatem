@@ -88,11 +88,14 @@
            <div slot="tip" class="el-upload__tip">只能上传xlsx文件</div>
          </el-upload> -->
         <el-upload
+          ref='uploadFile'
           class="upload-demo"
-           :on-remove="handleRemove"
+          :on-remove="handleRemove"
           drag
-          action="TextActionURL"
+          :action="TextActionURL"
+          :name='upLoadName'
           accpet='xlsx'
+          :auto-upload="false"
           :limit="1">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -121,6 +124,7 @@ export default {
       tableData: [],
       totalNumber:null,
       TextActionURL:'/AmountManage/RelicUpload',
+      upLoadName: '',
       fileList:[{name:'',url:''}],
        
     }
@@ -144,7 +148,7 @@ export default {
                 },
 
               submitUpload() {
-                            this.$refs.upload.submit();
+                            this.$refs['uploadFile'].submit();
                           },
 
               UploadFile(index){
@@ -154,6 +158,8 @@ export default {
                 }*/
                    this.AddText=true;//点击的时候添加文档弹框显示出来
                    console.log(this.tableData[index])
+                   this.upLoadName = String(this.tableData[index].ProjectCode);
+                   console.log(this.upLoadName);
 /*                   RelicUpload(parms).then(res=>{
                      console.log("xianshi文件上传")
                       console.log(res)
