@@ -183,5 +183,10 @@ export const GetPettyCash = params => {
        .then(res => res.data)
   }
 
-  
+  //报销数据上传文件
+   export const RelicUpload=(params)=>{
+      return axios
+      .post("/AmountManage/RelicUpload",params)
+      .then(res=>res.data)
+   }
 
