@@ -12,10 +12,10 @@
   		<el-aside width='185px'>
 	  		<el-menu router 
 			  :default-active="$route.path"
-			  
+			  ref='HomeMenu'
 			  text-color='#fff'
 			  :default-openeds='defaultMenuOpened'
-			  unique-opened
+			  :unique-opened='true'
 			  @open='openMenu'>
 	  			<template v-for="(item,idx) in routersUrl" v-if='!item.hidden'>
 	  				<el-submenu :key='idx' :index='String(idx)' >
@@ -29,6 +29,33 @@
 	  				</el-submenu>
 	  			</template>
 	  		</el-menu>
+			<!-- <el-menu
+			:unique-opened='true'
+			default-active='1-1'
+			>
+				
+				<el-submenu index='1'>
+					<template slot='title'>一</template>
+					<el-submenu-item index='1-1'>
+						导航一
+					</el-submenu-item>
+					
+				</el-submenu>
+				<el-submenu index='2'>
+					<template slot='title'>一</template>
+					<el-submenu-item index='2-1'>
+						导航二
+					</el-submenu-item>
+					
+				</el-submenu>
+				<el-submenu index='3'>
+					<template slot='title'>一</template>
+					<el-submenu-item index='3-1'>
+						导航三
+					</el-submenu-item>
+					
+				</el-submenu>
+			</el-menu> -->
 			<footer class='asideFooter'>
 				<span class='changePass' @click='openUpdatePass'>修改密码</span>
 				<span class='layout' @click='userLayout'>退出<i class="fa fa-sign-out" aria-hidden="true"></i></span>
@@ -123,8 +150,9 @@ export default {
 	// },
 	methods: {
 		openMenu(index, path) {
-			//console.log(index, path);
+			console.log(index, path);
 			this.defaultMenuOpened = path;
+			this.$refs['HomeMenu'].open(String(index));
 		},
 		getMenuFoucs(){
 			let path = this.$route.path;

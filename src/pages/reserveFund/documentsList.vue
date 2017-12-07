@@ -28,10 +28,12 @@
       </el-table-column>
       <el-table-column
         label='流程'
-        width='150px'
-        prop='State'>
-        <template slot-scope="scope">
-          <span class='documentListState'>{{dataList[scope.$index].State == 1 ? '申请' : (dataList[scope.$index].State == 2 ? '领导' : '管理员')}}</span>
+        width='250px'
+        >
+        <template slot-scope="scope" >
+          <span class='documentListState'>申请</span>
+          <span :class='{"documentListState": dataList[scope.$index].State >= 2, "noApproveState": dataList[scope.$index].State < 2}' >领导</span>
+          <span :class='{"documentListState": dataList[scope.$index].State >= 3, "noApproveState": dataList[scope.$index].State < 3 }' >管理员</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -261,10 +263,18 @@ export default {
       text-align: center;
       .documentListState {
         display: inline-block;
-        width: 75px;
+        width: 70px;
         height: 100%;
         color: #fff;
         background: url(../../assets/img/liuchengBack.png) no-repeat;
+        background-size: 100%;
+      }
+      .noApproveState {
+        display: inline-block;
+        width: 70px;
+        height: 100%;
+        color: #fff;
+        background: url(../../assets/img/liuchengNo.png) no-repeat;
         background-size: 100%;
       }
     }
