@@ -96,6 +96,7 @@
           :name='upLoadName'
           accpet='xlsx'
           :auto-upload="false"
+          :on-success='fileSuccess'
           :limit="1">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -148,9 +149,16 @@ export default {
                 },
 
               submitUpload() {
-                            this.$refs['uploadFile'].submit();
-                          },
-
+                this.$refs['uploadFile'].submit();
+              },
+              fileSuccess(res) {
+                console.log(res);
+                //this.$refs['uploadFile'].clearFiles(); 
+                if(res == 1) {
+                  this.$refs['uploadFile'].clearFiles();  //清空
+                }
+                
+              },
               UploadFile(index){
 
 /*                var parms{
