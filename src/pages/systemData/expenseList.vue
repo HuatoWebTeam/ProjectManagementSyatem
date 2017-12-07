@@ -31,25 +31,25 @@
     </el-table-column>
     <el-table-column
       prop="LoginName"
-      label="项目经理">
+      label="项目经理"
+     >
     </el-table-column>
      <el-table-column
       prop="Money"
-      label="汇报金额">
+      label="汇报金额"
+      width='180'>
     </el-table-column>
       <el-table-column 
       label="操作"
-      width="180"
       >
       <template slot-scope="scope">
-        <el-button
-            size="mini"
-            type="primary"
-          @click="handleEdit(scope.$index, scope.row)">上传</el-button>
+
+            <el-button size="small" type="primary" @click="UploadFile(scope.$index, scope.row)">点击上传</el-button>
+         
         <el-button
           size="mini"
           type="primary"
-          @click="handleDelete(scope.$index, scope.row)">下载</el-button>
+          @click="UploadFile(scope.$index, scope.row)">点击下载</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -59,25 +59,70 @@
           layout="prev, pager, next"
           :total="totalNumber"
           :page-size='pageSize'
-          @current-change='pageIndexChange'>
+          @current-change='pageIndexChange'
+          :show-file-list='true'
+          :on-change="handleChange"
+          >
         </el-pagination>
      </div>
   </el-col>
+  <el-dialog
+   :visible.sync="AddText" 
+   title='上传报销详细清单'
+    @close='closeAddText'
+    width='24%'
+    >
+<!--          <el-upload
+             class="upload-demo"
+             action="TextActionURL"
+             accpet='xlsx'
+            
+            :on-error='fileError'
+            :on-preview="handlePreview"
+            :on-change="handleChange"
+            :file-list="fileList"
+            :limit="2"
+            ref="upload"
+            >
+           <el-button slot="trigger" size="small" type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+           <div slot="tip" class="el-upload__tip">只能上传xlsx文件</div>
+         </el-upload> -->
+        <el-upload
+          class="upload-demo"
+           :on-remove="handleRemove"
+          drag
+          action="TextActionURL"
+          accpet='xlsx'
+          :limit="1">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
+      </el-upload>
+      <span slot="footer" class="dialog-footer">
+        <el-button   size="medium"  @click="closeAddText">取 消</el-button>
+        <el-button   size="medium" type="primary" @click="submitUpload">确 定</el-button>
+      </span>
+  </el-dialog>
 </el-row>
  
 </template>
 
 <script>
-  import{GetReimburseData}from'@/api/api'//引进列表
+  import{GetReimburseData,RelicUpload}from'@/api/api'//引进列表
 
 export default {
   data(){
     return{
+      fileList:[],
+      AddText:false,
       condition:'', 
       pageIndex:1,
       pageSize:2,
       tableData: [],
-      totalNumber:null
+      totalNumber:null,
+      TextActionURL:'/AmountManage/RelicUpload',
+      fileList:[{name:'',url:''}],
+       
     }
   },
       methods: {//报销列表显示
@@ -87,9 +132,7 @@ export default {
                    pageSize:this.pageSize,
                    condition:this.condition
                }
-               GetReimburseData(parms).then(res=>{
-                    console.log("xianshi")
-                      console.log(res)
+               GetReimburseData(parms).then(res=>{//列表显示请求
                       this.totalNumber=res.TotalNumber
                        this.tableData=[];
                        for(let item of res.DataList){
@@ -99,21 +142,50 @@ export default {
                   }) 
                    
                 },
+
+              submitUpload() {
+                            this.$refs.upload.submit();
+                          },
+
+              UploadFile(index){
+
+/*                var parms{
+
+                }*/
+                   this.AddText=true;//点击的时候添加文档弹框显示出来
+                   console.log(this.tableData[index])
+/*                   RelicUpload(parms).then(res=>{
+                     console.log("xianshi文件上传")
+                      console.log(res)
+                    })*/
+              },
+              handleRemove(file, fileList) {//删除
+                  console.log(file, fileList);
+                },
+
+             handlePreview(file) {
+                  console.log(file);
+                },
+
+               handleChange(file, fileList){
+                      this.fileList = fileList.slice(-3);
+                    },
+              closeAddText(){//关闭添加弹框
+                this.AddText=false;
+              },
+             fileError(error){
+                 console.log(error)//上传失败的额函数
+             },
               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
-                 this. expenses()//重新获取一边当前的
+                 this.expenses()//重新获取一边当前的
                }
-             
+          },
+          mounted(){
+                 this.expenses()//列表请求显示
+          }
 
-
-
-
-    },
-    mounted(){
-      this.expenses()//列表请求显示
-    }
-
-}
+   }
 </script>
 
 <style scoped>
@@ -157,4 +229,20 @@ export default {
   margin-top:20px;
   margin-bottom:20px;
 }
+.upload-demo{
+  display: inline-block;
+}
+.el-upload-dragger{
+   height: 100%;
+    width: 100%;
+}
+.el-upload, .el-upload--text{
+  width: 100%;
+   height: 100%;
+}
+.upload-demo{
+  width: 100%;
+   height: 100%;
+}
+
 </style>
