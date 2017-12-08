@@ -160,7 +160,7 @@ export default {
                       console.log(res)
                     })*/
               },
-              submitUpload() {
+              submitUpload() {//点击提交.
                 this.$refs['uploadFile'].submit();
                 },
               handleRemove(file, fileList) {//删除
@@ -180,10 +180,6 @@ export default {
               //       console.log(res)
               //      })
               // },
-
-
-
-
               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                this.pageIndex = pageIndex;//传当前页面     
                   this.expenses()//重新获取一边当前的
