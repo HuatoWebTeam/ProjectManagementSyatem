@@ -43,11 +43,11 @@
       label="操作"
       >
       <template slot-scope="scope">
-            <el-button size="small" type="primary" @click="UploadFile(scope.$index, scope.row)">点击上传</el-button>
+            <el-button size="small" type="primary" @click="UploadFile(scope.$index, scope.row)">上传报销报表</el-button>
         <el-button
           size="mini"
           type="primary"
-          @click="UploadFile(scope.$index, scope.row)">点击下载</el-button>
+          @click="UploadFile(scope.$index, scope.row)">下载报销报表</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -77,7 +77,8 @@
           :name='upLoadName'
           accpet='xlsx'
           :auto-upload="false"
-          
+          :on-success="uploadsuccess"
+          :on-error="Uperror"
           :limit="1">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -93,7 +94,7 @@
 </template>
 
 <script>
-  import{GetReimburseData,RelicUpload}from'@/api/api'//引进列表
+  import{GetReimburseData,RelicUpload,ExeclReimburseData}from'@/api/api'//引进列表
 
 export default {
   data(){
@@ -107,8 +108,7 @@ export default {
       totalNumber:null,
       TextActionURL:'/AmountManage/RelicUpload',
       upLoadName: '',
-      fileList:[{name:'',url:''}],
-       
+      reimburseCode:'',
     }
   },
       methods: {//报销列表显示
@@ -128,16 +128,29 @@ export default {
                   }) 
                    
                 },
+             uploadsuccess(res){
+                    console.log(res)
+                    if(res==1){
+                      this.$refs['uploadFile'].clearFiles()//清空函数
+                    }
+               },
+               Uperror(res){
+                if(res==2){
+                       this.$message({
+                        type:'error',
+                        message:'文件名重复'
+                       })
 
-              submitUpload() {
-                            this.$refs['uploadFile'].submit();
-                          },
+                    }else{
+                       this.$message({
+                        type:'error',
+                        message:"上传失败"
+                       })
+                    }
+               },
+
 
               UploadFile(index){
-
-/*                var parms{
-
-                }*/
                    this.AddText=true;//点击的时候添加文档弹框显示出来
                    console.log(this.tableData[index])
                    this.upLoadName = String(this.tableData[index].ProjectCode);
@@ -147,27 +160,38 @@ export default {
                       console.log(res)
                     })*/
               },
+              submitUpload() {
+                this.$refs['uploadFile'].submit();
+                },
               handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
-                },
-
-             handlePreview(file) {
-                  console.log(file);
                 },
 
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
               },
-             fileError(error){
-                 console.log(error)//上传失败的额函数
-             },
+              // Download(){
+              //    var parms={
+              //     reimburseCode:this.reimburseCode
+              //    }
+
+
+              //      ExeclReimburseData(parms).then(res=>{
+              //       console.log(res)
+              //      })
+              // },
+
+
+
+
               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
-                 this.pageIndex = pageIndex;//传当前页面     
-                 this.expenses()//重新获取一边当前的
-               }
-          },
+               this.pageIndex = pageIndex;//传当前页面     
+                  this.expenses()//重新获取一边当前的
+                }
+              },
           mounted(){
                  this.expenses()//列表请求显示
+               /*  this.Download()//下载数据*/
           }
 
    }

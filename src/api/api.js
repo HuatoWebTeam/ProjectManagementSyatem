@@ -190,3 +190,9 @@ export const GetPettyCash = params => {
       .then(res=>res.data)
    }
 
+ //下载报销数据
+      export const ExeclReimburseData=(params)=>{
+     return axios
+       .get("/AmountManage/ExeclReimburseData",{params: params})
+       .then(res => res.data)
+  }
