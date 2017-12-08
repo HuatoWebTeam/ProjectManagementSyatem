@@ -43,9 +43,7 @@
       label="操作"
       >
       <template slot-scope="scope">
-
             <el-button size="small" type="primary" @click="UploadFile(scope.$index, scope.row)">点击上传</el-button>
-         
         <el-button
           size="mini"
           type="primary"
@@ -60,8 +58,6 @@
           :total="totalNumber"
           :page-size='pageSize'
           @current-change='pageIndexChange'
-          :show-file-list='true'
-          :on-change="handleChange"
           >
         </el-pagination>
      </div>
@@ -72,31 +68,20 @@
     @close='closeAddText'
     width='24%'
     >
-<!--          <el-upload
-             class="upload-demo"
-             action="TextActionURL"
-             accpet='xlsx'
-            
-            :on-error='fileError'
-            :on-preview="handlePreview"
-            :on-change="handleChange"
-            :file-list="fileList"
-            :limit="2"
-            ref="upload"
-            >
-           <el-button slot="trigger" size="small" type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
-           <div slot="tip" class="el-upload__tip">只能上传xlsx文件</div>
-         </el-upload> -->
         <el-upload
           ref='uploadFile'
           class="upload-demo"
           :on-remove="handleRemove"
-          drag
+           drag
           :action="TextActionURL"
           :name='upLoadName'
           accpet='xlsx'
           :auto-upload="false"
+<<<<<<< HEAD
           :on-success='fileSuccess'
+=======
+          
+>>>>>>> cf90248e5236e35c789a444144c0b6ef161c4201
           :limit="1">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -181,9 +166,6 @@ export default {
                   console.log(file);
                 },
 
-               handleChange(file, fileList){
-                      this.fileList = fileList.slice(-3);
-                    },
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
               },
