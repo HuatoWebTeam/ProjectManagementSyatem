@@ -151,8 +151,6 @@ export default {
                      pageSize:this.pageSize
                  }
 	           	 ChaseProcessed(parms).then(res=>{
-	           	 	console.log("已经列表")
-	           	 	console.log(res)
 	           	 	this.tablepending=[];
 	           	 	this.totalNumber=res[0].TotalNumber
 	           	 	console.log(this.totalNumber) 

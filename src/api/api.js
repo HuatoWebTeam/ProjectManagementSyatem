@@ -196,3 +196,16 @@ export const GetPettyCash = params => {
        .get("/AmountManage/ExeclReimburseData",{params: params})
        .then(res => res.data)
   }
+  //售后资料数据加载
+   export const  GetAfterSaleData=(params)=>{
+          return axios
+          .get('/AfterSaleManage/GetAfterSaleData',{params:params})
+          .then(res=>res.data)
+   }
+   //售后数据添加
+
+       export const Upload=(params)=>{
+      return axios
+      .post("/AfterSaleManage/RelicUpload",{params:params})
+      .then(res=>res.data)
+   }

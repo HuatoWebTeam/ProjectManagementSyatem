@@ -47,7 +47,7 @@
         <el-button
           size="mini"
           type="primary"
-          @click="UploadFile(scope.$index, scope.row)">下载报销报表</el-button>
+          @click="DownloadFile(scope.$index, scope.row)">下载报销报表</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -73,6 +73,7 @@
           class="upload-demo"
           :on-remove="handleRemove"
            drag
+           :on-error="errorfile"
           :action="TextActionURL"
           :name='upLoadName'
           accpet='xlsx'
@@ -107,7 +108,8 @@ export default {
       totalNumber:null,
       TextActionURL:'/AmountManage/RelicUpload',
       upLoadName: '',
-      reimburseCode:'',
+      reimburseCode:''
+
     }
   },
       methods: {//报销列表显示
@@ -123,53 +125,63 @@ export default {
                        for(let item of res.DataList){
                              this.tableData.push(item)
                         }
-                        console.log( this.totalNumber)
+                        console.log(res)
                   }) 
                    
                 },
-             uploadsuccess(res){
-                    console.log(res)
-                    if(res==1){
-                      this.$refs['uploadFile'].clearFiles()//清空函数
-                    }
-               },
-
-              submitUpload() {
+              submitUpload() {//提交给数据库
                 this.$refs['uploadFile'].submit();
               },
               fileSuccess(res) {
                 console.log(res);
-                //this.$refs['uploadFile'].clearFiles(); 
-                if(res == 1) {
-                  this.$refs['uploadFile'].clearFiles();  //清空
-                }
+                this.$refs['uploadFile'].clearFiles();
+                  this.AddText=false;
                 
+              },
+              errorfile(res){
+                  if(res==0){
+                     this.$message.error('上传失败!');
+                     this. handleRemove()//上传失败直接删除
+                  }
+
               },
               UploadFile(index){
                    this.AddText=true;//点击的时候添加文档弹框显示出来
                    console.log(this.tableData[index])
-                   this.upLoadName = String(this.tableData[index].ProjectCode);
+                   this.upLoadName = String(this.tableData[index].ReimburseCode);
                    console.log(this.upLoadName);
-                 RelicUpload(parms).then(res=>{
-                     console.log("xianshi文件上传")
-                      console.log(res)
-                    })
               },
               handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
                 },
+  
+            DownloadFile(index){
+                 var parms={
+                          reimburseCode:this.tableData[index].ReimburseCode
+                       };
+                    window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
+                 // ExeclReimburseData(parms).then(res=>{
+                 //           console.log(this.tableData[index].ReimburseCode)  
+                             
+                 //          /* window.open(res)*/
+                 //          for(var i=0;i<this.totalNumber.length;i++){
+                 //                 this.tableData.reimburseCode[i]=this.tableData[index].ReimburseCode
+                 //           }
 
+                 //     })    
+                
+             },
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
               },
               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                this.pageIndex = pageIndex;//传当前页面     
-                  this.expenses()//重新获取一边当前的
+                  this.expenses()//调函数
                 }
               },
           mounted(){
                  this.expenses()//列表请求显示
-               
+                 /* this.DownText()//下载报表.*/
           }
 
    }
