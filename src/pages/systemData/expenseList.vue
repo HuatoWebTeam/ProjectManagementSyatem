@@ -77,8 +77,7 @@
           :name='upLoadName'
           accpet='xlsx'
           :auto-upload="false"
-          :on-success="uploadsuccess"
-          :on-error="Uperror"
+          :on-success="fileSuccess"
           :limit="1">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -134,35 +133,28 @@ export default {
                       this.$refs['uploadFile'].clearFiles()//清空函数
                     }
                },
-               Uperror(res){
-                if(res==2){
-                       this.$message({
-                        type:'error',
-                        message:'文件名重复'
-                       })
 
-                    }else{
-                       this.$message({
-                        type:'error',
-                        message:"上传失败"
-                       })
-                    }
-               },
-
-
+              submitUpload() {
+                this.$refs['uploadFile'].submit();
+              },
+              fileSuccess(res) {
+                console.log(res);
+                //this.$refs['uploadFile'].clearFiles(); 
+                if(res == 1) {
+                  this.$refs['uploadFile'].clearFiles();  //清空
+                }
+                
+              },
               UploadFile(index){
                    this.AddText=true;//点击的时候添加文档弹框显示出来
                    console.log(this.tableData[index])
                    this.upLoadName = String(this.tableData[index].ProjectCode);
                    console.log(this.upLoadName);
-/*                   RelicUpload(parms).then(res=>{
+                 RelicUpload(parms).then(res=>{
                      console.log("xianshi文件上传")
                       console.log(res)
-                    })*/
+                    })
               },
-              submitUpload() {//点击提交.
-                this.$refs['uploadFile'].submit();
-                },
               handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
                 },
@@ -170,16 +162,6 @@ export default {
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
               },
-              // Download(){
-              //    var parms={
-              //     reimburseCode:this.reimburseCode
-              //    }
-
-
-              //      ExeclReimburseData(parms).then(res=>{
-              //       console.log(res)
-              //      })
-              // },
               pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                this.pageIndex = pageIndex;//传当前页面     
                   this.expenses()//重新获取一边当前的
@@ -187,7 +169,7 @@ export default {
               },
           mounted(){
                  this.expenses()//列表请求显示
-               /*  this.Download()//下载数据*/
+               
           }
 
    }
