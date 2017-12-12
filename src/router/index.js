@@ -19,6 +19,7 @@ import ProjectsListDetails from '@/pages/projectsManager/projectsListDetails';  
 import AcceptanceData from '@/pages/projectsManager/acceptanceData';  // 验收资料
 import AfterInfomation from '@/pages/projectsManager/afterInformation';  // 售后信息
 import ConstructionLog from '@/pages/projectsManager/constructionLog';  // 施工日志
+import VerifyDetails from '@/pages/projectsManager/VerifyDetails';//验收项目详情
 
 /**
  *   procurementManagement  采购管理
@@ -82,7 +83,8 @@ export default new Router({
         { path: "ConstructionLog", name: '施工日志', component: ConstructionLog },
         { path: "AcceptanceData", name: '验收资料', component: AcceptanceData },
         { path: "AfterInfomation", name: '售后信息', component: AfterInfomation },
-        { path: '/ProjectsListDetails/:id', name: 'ProjectsListDetails', component: ProjectsListDetails }
+        { path: '/ProjectsListDetails/:id', name: 'ProjectsListDetails', component: ProjectsListDetails },
+        {path:'/VerifyDetails/:id',name: 'VerifyDetails',component: VerifyDetails }
       ]
     },
     {

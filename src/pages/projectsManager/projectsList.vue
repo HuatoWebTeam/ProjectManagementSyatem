@@ -64,7 +64,7 @@
       title="添加备货"
       :visible.sync="dialogVisible"
        width="26%"    
-      :before-close="handleClose"
+    
        class="projectedit"
         @close='projecteditClose'
         @open='projecteditOpen'
@@ -113,7 +113,6 @@
        title="人员分配"
       :visible.sync="jurisdiction"
        width="30%"    
-      :before-close="handleClose"
        class="personnelAssignment"
         @close='personnelAssignmentClose'
         @open='personnelAssignmentOpen'
@@ -243,7 +242,6 @@ export default {
                 }               
              }
     },
-  
       methods:{
         Editingpermissions(idx){//点击对应的!拿到对应的人员分配
            this.ProjectCode = this.projectData[idx].ProjectCode//项目编码
@@ -312,25 +310,17 @@ export default {
         personnelAssignmentClose(){
           //关闭穿梭框
         },
-       personnelAssignmentOpen(){
+        personnelAssignmentOpen(){
         //打开穿梭框函数
        },
-       handleClose(done) {
-           this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-             })
-            .catch(_ => {});
-      },
-      getprojectmange(){
+        getprojectmange(){
           var parms={//传的参数
                pageIndex: this.pageIndex,
                pageSize: this.pageSize,
-
               }
           ProjectManage(parms).then( res => {//项目列表
-            //  console.log("liebiao22222")
-              //  console.log(res)
+             console.log("liebiao22222")
+              console.log(res)
               if(res[0].IsTrue==0){//请求过来判定是不是有权限添加项目!如果没有权限添加项目就把添加按钮给隐藏了.
                 this.add=false;
               }
@@ -403,10 +393,10 @@ export default {
 <style scoped lang='scss'>
 .projectList{
     height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
+    line-height: 50px;
+    padding-left: 20px;
+    background:#fff;
+    box-shadow: 0px 2px 1px #888888;
 }
 .projectDataList{
      width: calc(100% - 40px);
@@ -425,7 +415,6 @@ export default {
 .procurment_title{
   margin-bottom: 30px;
 }
-
 .el-date-editor.el-input, .el-date-editor.el-input__inner{
   width: 100%;
 }

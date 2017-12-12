@@ -6,10 +6,10 @@
   <el-col :span='24' class='InformationCheck'>
            <el-form :inline="true"  class="demo-form-inline">
         <el-form-item label="项目:">
-          <el-input placeholder="请输入查询项目" ></el-input>
+          <el-input placeholder="请输入查询项目" v-model="condition"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="small" icon="el-icon-search" >查询</el-button>
+          <el-button type="primary" size="small" icon="el-icon-search" @click="DataList">查询</el-button>
         </el-form-item>      
 	   <el-button type="primary" size="small" class="AfterSales" @click="dialogVisible = true">新建售后</el-button>    
       </el-form>
@@ -37,17 +37,41 @@
 		    <el-table-column
 		      prop="address"
 		      label="售后外派单">
+         <template slot-scope="scope">
+            <a  @click="linkAfterSale(scope.$index)"  class="underline">
+            {{tableData[scope.$index].AfterSaleFlieName}}  
+         </a>
+        </template>  
 		    </el-table-column>
           <el-table-column
           prop="address"
           label="保修期内(维修换货单)">
+             <template slot-scope="scope">
+                <a  @click="linkExpira(scope.$index)"  class="underline">
+                {{tableData[scope.$index].ExpirationDateFlieName}}  
+             </a>
+            </template> 
         </el-table-column>
        <el-table-column
           prop="address"
           label="保修期内(需求单)">
+             <template slot-scope="scope">
+                <a  @click="linkInWarranty(scope.$index)"  class="underline">
+                {{tableData[scope.$index].InWarrantyFlieName}}  
+             </a>
+            </template>
+
         </el-table-column>
 		  </el-table>  
   </el-col>
+   <el-col :span='24' class='myPagination'>
+        <el-pagination
+          layout="prev, pager, next"
+          :total="totalNumber"
+          :page-size='pageSize'
+           @current-change='pageIndexChange'>
+        </el-pagination>
+      </el-col>
   <el-col :span='24'>
   	<el-dialog
 	  title="新建售后"
@@ -55,12 +79,21 @@
 	  width="35%">
 	<el-form  label-width="100px" class="demo-ruleForm">
 	  <el-form-item label="项目名称">
-        <el-input ></el-input>
+         <el-select v-model="selectvalue" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  prop='selectvalue'>
+                </el-option>
+        </el-select>
 	  </el-form-item>
 	  <el-form-item label="售后外派单" >
         <el-upload
           class="upload-demo"
           drag
+          :limit="1"
           :on-success="filesuccessAssignment"
           :action="fileAdd"
           :name="filename"
@@ -73,6 +106,7 @@
 	        <el-upload
           class="upload-demo"
           drag
+          :limit="1"
            :name="filename"
           :action="fileAdd"
            :on-success="filesuccessrequisition"
@@ -84,7 +118,8 @@
    <el-form-item label="保修期外(需求单)" >
            <el-upload
           class="upload-demo"
-          drag
+            drag
+            :limit="1"
            :name="filename"
           :action="fileAdd"
           :on-success="filesuccessreplacement"
@@ -96,7 +131,7 @@
 	</el-form>
 	  <span slot="footer" class="dialog-footer">
 	    <el-button @click="dialogVisible = false">取 消</el-button>
-	    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+	    <el-button type="primary" @click="Addfile">确 定</el-button>
 	  </span>
 </el-dialog>
   </el-col>
@@ -105,51 +140,132 @@
 </template>
 
 <script>
-  import{GetAfterSaleData,Upload}from'@/api/api'//引进列表
+  import{GetAfterSaleData,Upload,InsertAfterSale,ProjectManage}from'@/api/api'//引进列表
 export default {
     data(){
     	return{
     		dialogVisible:false,
+        totalNumber:null,
         tableData: [],
+         options:[],
+         selectvalue: '',//下拉选择框
          condition:'',
          pageIndex:1,
          pageSize:1,
          filename:'',
-         fileAdd:'/AfterSaleManage/RelicUpload'
-
+         fileAdd:'/AfterSaleManage/RelicUpload',
+         AfterSaleFlieName:'',//售后外派单文件名
+         AfterSaleFlieUrl:'',
+         InWarrantyFlieName:'', //维修换货单文件名
+         InWarrantyFlieUrl:'',
+         ExpirationDateFlieName:'', //需求单文件名
+         ExpirationDateFlieUrl:'',
+         ProjectName:"",
+         afterSale:[]
     	   }
     },
      methods:{
         DataList(){//列表请求显示!
+          this.tableData=[]//调用前清空.
           var parms={
-             condition:this.condition,
-             pageIndex:this.pageIndex,
-             pageSize:this.pageSize 
+                 condition:this.condition,
+                 pageIndex:this.pageIndex,
+                 pageSize:this.pageSize 
               }
            GetAfterSaleData(parms).then(res=>{
-                    console.log(res)
-
+            console.log("dayinqingqiuliebiaoxianshi ")
+               console.log(res)
+               this.totalNumber=res.TotalNumber
+                  for(let item of res.DataList){
+                     this.tableData.push(item)
+                        }
+                      console.log(this.tableData)
                      })
+
              },
-             filesuccessAssignment(res){
-              console.log("shangchuan")
-                 console.log(res)
-             },
-           filesuccessreplacement(res){
-                 console.log("维修换货单")
-                 console.log(res)
+       getprojectmange(){
+          var parms={//传的参数,项目下拉框!
+               pageIndex: 10000,
+               pageSize:10000   
+              }
+           ProjectManage(parms).then( res => {//项目列表
+              let options=[]; 
+              options=this.options
+              for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
+                options.push({
+                   value:res[0].DataList[i].ProjectCode,
+                   label:res[0].DataList[i].ProjectName
+                  })   
+                }
+               console.log(options)
+              })
            },
-            filesuccessrequisition(res){
-                  console.log("需求单")
-                  console.log(res)
+             filesuccessAssignment(res){//售后外派单
+              console.log(res)
+               this.AfterSaleFlieName=res.FileName;
+               this.AfterSaleFlieUrl=res.FileUrl
+             },
+           filesuccessrequisition(res){//保修期维修换货单
+                this.InWarrantyFlieName=res.FileName;
+                this.InWarrantyFlieUrl=res.FileUrl  
+                console.log(res)
+           },
+            filesuccessreplacement(res){//保修期/需求单
+                this.ExpirationDateFlieName=res.FileName;
+                this.ExpirationDateFlieUrl=res.FileUrl
+                console.log(res)
             },
+           Addfile(){
+            let afterSale =[];
+                afterSale={
+                    ProjectCode:this.selectvalue,
+                    AfterSaleFlieName:this.AfterSaleFlieName,
+                    AfterSaleFlieUrl:this.AfterSaleFlieUrl,
+                    InWarrantyFlieName:this.InWarrantyFlieName,
+                    InWarrantyFlieUrl:this.InWarrantyFlieUrl,
+                    ExpirationDateFlieName:this.ExpirationDateFlieName,
+                    ExpirationDateFlieUrl:this.ExpirationDateFlieUrl
+                }
+                   var parms={
+                        afterSale:afterSale
+                   }
+                  InsertAfterSale(parms).then(res=>{
+                                    if(res==1){
+                                  this.$message({
+                                    type:'success',
+                                    message:'新建成功'
+                                  });
+                                  this.dialogVisible=false;
+                                 }else{
+                                    this.$message({
+                                      type:'error',
+                                      message:'新建失败'
+                                    })
 
-
-
+                                 }
+                              })
+               },
+        linkAfterSale(index){
+                     window.open(this.tableData[index].AfterSaleFlieUrl)//链接绑定
+            },
+       
+        linkExpira(index){
+          window.open(this.tableData[index].ExpirationDateFlieUrl)
+        },
+        InWarranty(index){
+          window.open(this.tableData[index].InWarrantyFlieUrl)
+        },
+        pageIndexChange(index) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
+              //console.log(pageIndex);
+              this.pageIndex = index;
+              this.DataList()   /// 当前页改变时重新加载数据
+            }
        },
        
        mounted(){
+
            this.DataList()//函数调用.
+           this.getprojectmange()//项目下拉框选择.
        }
 }
 </script>
@@ -214,5 +330,12 @@ export default {
   width: 100%;
    height: 100%;
 }
-
+.el-select{
+  width: 100%
+}
+.underline{
+    text-decoration: underline;
+    color: blue;
+    cursor:Pointer;
+}
 </style>

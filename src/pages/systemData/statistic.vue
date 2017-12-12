@@ -44,7 +44,7 @@ export default {
     data() {
       return {
          SelectCheck:"",//输入时候搜索的值!
-         pageSize:2,
+         pageSize:3,
          pageIndex:1,
          projectName:'', 
          ListsSigningIns:[],

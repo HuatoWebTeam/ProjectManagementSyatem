@@ -202,10 +202,16 @@ export const GetPettyCash = params => {
           .get('/AfterSaleManage/GetAfterSaleData',{params:params})
           .then(res=>res.data)
    }
-   //售后数据添加
+   //售后数据添加返回
 
-       export const Upload=(params)=>{
+  export const Upload=(params)=>{
       return axios
       .post("/AfterSaleManage/RelicUpload",{params:params})
       .then(res=>res.data)
    }
+//新增售后资料操作
+  export const InsertAfterSale = params => {
+  return axios
+    .post("/AfterSaleManage/InsertAfterSale", params)
+    .then(res => res.data);
+}; 
