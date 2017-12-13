@@ -29,8 +29,7 @@
 						    </el-date-picker>
 					  </el-form-item>
 			        <div class="requestnote">
-				          <el-form-item label="申请单编号:"
-				          >
+				          <el-form-item label="申请单编号:">
 						     <el-input v-model="PurchaseCode"></el-input>
 						  </el-form-item>
 				           <el-form-item label="申请人:">

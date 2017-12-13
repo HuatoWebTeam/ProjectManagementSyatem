@@ -87,7 +87,6 @@ export default {
 		              for(let item of res[0].DataList){
 		                this.projectData.push(item)//遍历出来的数组放进去
 		              }
-		               
 		                // console.log(res[0].DataList)
 		          })
 		        },
@@ -97,6 +96,7 @@ export default {
 	           },
               routerToDetails(index){//点击项目详情跳转路由.要在路由router里面配置动态路由
                     this.$router.push({name:'VerifyDetails',params: { id:this.projectData[index].ProjectCode}});  
+                    console.log(this.projectData[index].ProjectCode)
               },
 
        },
@@ -106,7 +106,7 @@ export default {
        }
 }
 </script>
-
+      
 <style scoped>
     .projectList{
 		   height: 50px;
@@ -116,6 +116,8 @@ export default {
 		   box-shadow: 0px 2px 1px #888888;
 		}
     .projectDataList{
+        width: calc(100% - 40px);
+        height: calc(100% - 90px);
 	     margin: 20px;
 	     background: #fff;
 	     border: 1px solid #ccc;

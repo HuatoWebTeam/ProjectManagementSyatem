@@ -68,22 +68,22 @@
     @close='closeAddText'
     width='24%'
     >
-        <el-upload
-          ref='uploadFile'
-          class="upload-demo"
-          :on-remove="handleRemove"
-           drag
-           :on-error="errorfile"
-          :action="TextActionURL"
-          :name='upLoadName'
-          accpet='xlsx'
-          :auto-upload="false"
-          :on-success="fileSuccess"
-          :limit="1">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
-      </el-upload>
+    <el-upload
+      ref='uploadFile'
+      class="upload-demo"
+      :on-remove="handleRemove"
+      drag
+      :on-error="errorfile"
+      :action="TextActionURL"
+      :name='upLoadName'
+      accpet='xlsx'
+      :auto-upload="false"
+      :on-success="fileSuccess"
+      :limit="1">
+    <i class="el-icon-upload"></i>
+    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+    <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
+  </el-upload>
       <span slot="footer" class="dialog-footer">
         <el-button   size="medium"  @click="closeAddText">取 消</el-button>
         <el-button   size="medium" type="primary" @click="submitUpload">确 定</el-button>

@@ -85,7 +85,6 @@
 	      </template>
 		    </el-table-column>
 	    </el-table>
-	
          <div class="myPagination"><!-- 组件翻页 -->
 	        <el-pagination
 	          background
@@ -164,9 +163,7 @@ export default {
 					this.$router.push({name:'Details', params: {id:this.tablepending[index].PurchaseCode}})//传编号给路由
 				},
 	           Link(index){//点击下载时候下载相应的文档!
-
                         window.open(this.tablepending[index].FileUrl)//链接绑定
-	          	
 	           },
 	           pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     

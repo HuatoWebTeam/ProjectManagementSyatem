@@ -11,7 +11,7 @@
         <el-form-item>
           <el-button type="primary" size="small" icon="el-icon-search" @click="DataList">查询</el-button>
         </el-form-item>      
-	   <el-button type="primary" size="small" class="AfterSales" @click="dialogVisible = true">新建售后</el-button>    
+	   <el-button type="primary" size="small" class="AfterSales" @click="EmptyData">新建售后</el-button>    
       </el-form>
   </el-col>
   <el-col :span='24' class="tableList">
@@ -77,9 +77,9 @@
 	  title="新建售后"
 	  :visible.sync="dialogVisible"
 	  width="35%">
-	<el-form  label-width="100px" class="demo-ruleForm">
+	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo>
 	  <el-form-item label="项目名称">
-         <el-select v-model="selectvalue" placeholder="请选择">
+         <el-select v-model="formInfo.selectvalue" placeholder="请选择">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -96,7 +96,7 @@
           :limit="1"
           :on-success="filesuccessAssignment"
           :action="fileAdd"
-          :name="filename"
+          :name="formInfo.filename"
           >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -107,7 +107,7 @@
           class="upload-demo"
           drag
           :limit="1"
-           :name="filename"
+           :name="formInfo.filename"
           :action="fileAdd"
            :on-success="filesuccessrequisition"
          >
@@ -120,7 +120,7 @@
           class="upload-demo"
             drag
             :limit="1"
-           :name="filename"
+           :name="formInfo.filename"
           :action="fileAdd"
           :on-success="filesuccessreplacement"
           >
@@ -147,22 +147,24 @@ export default {
     		dialogVisible:false,
         totalNumber:null,
         tableData: [],
-         options:[],
-         selectvalue: '',//下拉选择框
-         condition:'',
-         pageIndex:1,
-         pageSize:1,
-         filename:'',
+        options:[],
+        condition:'',
+        pageIndex:1,
+        pageSize:10,
+        formInfo:{
+        selectvalue: '',//下拉选择框
+        filename:'',
+        AfterSaleFlieName:'',//售后外派单文件名
+        AfterSaleFlieUrl:'',
+        InWarrantyFlieName:'', //维修换货单文件名
+        InWarrantyFlieUrl:'',
+        ExpirationDateFlieName:'', //需求单文件名
+        ExpirationDateFlieUrl:'',
+         },
          fileAdd:'/AfterSaleManage/RelicUpload',
-         AfterSaleFlieName:'',//售后外派单文件名
-         AfterSaleFlieUrl:'',
-         InWarrantyFlieName:'', //维修换货单文件名
-         InWarrantyFlieUrl:'',
-         ExpirationDateFlieName:'', //需求单文件名
-         ExpirationDateFlieUrl:'',
          ProjectName:"",
-         afterSale:[]
-    	   }
+         afterSale:[],
+        }
     },
      methods:{
         DataList(){//列表请求显示!
@@ -183,6 +185,21 @@ export default {
                      })
 
              },
+     EmptyData(){
+             this.formInfo={
+             selectvalue: '',//下拉选择框
+             filename:'',
+             AfterSaleFlieName:'',//售后外派单文件名
+             AfterSaleFlieUrl:'',
+             InWarrantyFlieName:'', //维修换货单文件名
+             InWarrantyFlieUrl:'',
+             ExpirationDateFlieName:'', //需求单文件名
+             ExpirationDateFlieUrl:'',
+           }
+         this.dialogVisible=true;
+     },
+
+
        getprojectmange(){
           var parms={//传的参数,项目下拉框!
                pageIndex: 10000,
@@ -217,8 +234,8 @@ export default {
             },
            Addfile(){
             let afterSale =[];
-                afterSale={
-                    ProjectCode:this.selectvalue,
+               this.formInfo={
+                    ProjectCode:this.formInfo.selectvalue,
                     AfterSaleFlieName:this.AfterSaleFlieName,
                     AfterSaleFlieUrl:this.AfterSaleFlieUrl,
                     InWarrantyFlieName:this.InWarrantyFlieName,
@@ -227,9 +244,10 @@ export default {
                     ExpirationDateFlieUrl:this.ExpirationDateFlieUrl
                 }
                    var parms={
-                        afterSale:afterSale
+                        afterSale:this.formInfo
                    }
                   InsertAfterSale(parms).then(res=>{
+                                console.log(parms)
                                     if(res==1){
                                   this.$message({
                                     type:'success',
@@ -250,10 +268,10 @@ export default {
             },
        
         linkExpira(index){
-          window.open(this.tableData[index].ExpirationDateFlieUrl)
+          window.open(this.tableData[index].InWarrantyFlieUrl)
         },
         InWarranty(index){
-          window.open(this.tableData[index].InWarrantyFlieUrl)
+          window.open(this.tableData[index].ExpirationDateFlieUrl)
         },
         pageIndexChange(index) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
               //console.log(pageIndex);

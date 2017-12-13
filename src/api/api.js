@@ -221,7 +221,7 @@ export const GetPettyCash = params => {
 
   export const Upload=(params)=>{
       return axios
-      .post("/AfterSaleManage/RelicUpload",{params:params})
+      .post("/AfterSaleManage/RelicUpload",params)
       .then(res=>res.data)
    }
 //新增售后资料操作
@@ -230,3 +230,15 @@ export const GetPettyCash = params => {
     .post("/AfterSaleManage/InsertAfterSale", params)
     .then(res => res.data);
 }; 
+//验收详情接口
+   export const Particulars=(params)=>{
+      return axios
+      .get("/Business/BusinessParticulars",{params:params})
+      .then(res=>res.data)
+   }
+   //验资料管理证上传
+   export const VerifyUpload=(params)=>{
+      return axios
+      .post("/Business/RelicUpload",params)
+      .then(res=>res.data)
+   }
