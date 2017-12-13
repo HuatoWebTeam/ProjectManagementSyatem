@@ -119,7 +119,24 @@ export const ExportZipFile = params => {
            .get("/Business/ExportZipFile", { params: params })
            .then(res => res.data);
        };
-
+    // 项目列表---项目详情 --- 备货订单
+export const TheGoodsOrders = params => {
+         return axios
+           .get("/ProjectManage/TheGoodsOrders", { params: params })
+           .then(res => res.data);
+       };
+    // 项目列表---项目详情 --- 施工日志
+export const ConstructionLog = params => {
+         return axios
+           .get("/ProjectManage/ConstructionLog", { params: params })
+           .then(res => res.data);
+       };
+  // 项目列表---项目详情 --- 售后信息
+export const AfterTheDetails = params => {
+         return axios
+           .get("/ProjectManage/AfterTheDetails", { params: params })
+           .then(res => res.data);
+       };
 //新增项目
   export const InsertProjectManage = (params)=>{
     return axios

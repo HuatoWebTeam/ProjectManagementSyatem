@@ -29,13 +29,13 @@
       <el-table-column
         prop="ProjectStaDate"
         label="项目计划时间"
-       
+        width='200'
         >
       </el-table-column>
       <el-table-column
         prop="ProjectStates"
         label="项目状态"
-        width='200'
+        
         >
         <template slot-scope="scope" v-if='projectData[scope.$index].ProjectStates.length > 0'>
           <span class='projectBeyondSpan' v-for='item in projectData[scope.$index].ProjectStates' :key='item.ProjectCode' >{{item.State}}</span>

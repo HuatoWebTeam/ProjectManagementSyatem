@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class='goodsContent'>
-                <template v-for='(item, idx) in allData.PurchaseList'>
+                <template v-for='(item, idx) in orderData'>
                     <div :key='idx'>
                         <span class='ordinalNum '>{{ Number((orderpageIndex-1) * orderpageSize) + Number(idx + 1) }}. </span>
                         <span class='info'>编号: {{ item.PurchaseCode }}</span>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class='goodsContent'>
-                <template v-for='(item, idx) in allData.ConstructionLogList'>
+                <template v-for='(item, idx) in construData'>
                     <div :key='idx'>
                         <span class='ordinalNum '>{{ Number((construpageIndex-1) * construpageSize) + Number(idx + 1) }}. </span>
                         <span class='info'>项目: {{ allData.ProjectName }}</span>
@@ -111,8 +111,8 @@
                 </el-pagination>
                 </div>
             </div>
-            <div class='acceptance'>
-                <template v-for='(item, idx) in allData.AfterSaleList'>
+            <div class='acceptance afterInfo'>
+                <template v-for='(item, idx) in afterData'>
                     <div :key='idx'>
                         <span> {{ Number((afterpageIndex-1) * afterpageSize) + Number(idx + 1) }}. </span>
                         <span class="info">需求单：<span class='isData' title='点击下载' @click='exportAcceptData(item.ExpirationDateFlieUrl)'>{{ item.ExpirationDateFlieName }}</span></span>
@@ -127,7 +127,7 @@
   </el-row>
 </template>
 <script>
-import { GetProjectTableManage, ExportZipFile } from '@/api/api'
+import { GetProjectTableManage, ExportZipFile, TheGoodsOrders, ConstructionLog, AfterTheDetails } from '@/api/api'
 export default {
   data() {
       return {
@@ -149,9 +149,11 @@ export default {
               State: '',
               UserPhone: ''
           },
+          orderData: [],        // 备货数据
           orderNumber: null,    // 备货订单条数
           orderpageSize: 6,
           orderpageIndex: 1,
+          construData: [],       // 施工数据
           construNumber: null,   // 施工日期条数
           construpageSize: 6,
           construpageIndex: 1,
@@ -173,9 +175,11 @@ export default {
               {name: null, url:null, title: '审核报告'}            // 审核报告
 
           ],
+          afterData: [],        // 售后数据
           afterNumber: null,    // 售后详情条数
           afterpageSize: 6,     // 
-          afterpageIndex: 1 
+          afterpageIndex: 1,
+          projectCode: null 
 
 
       }
@@ -210,10 +214,15 @@ export default {
               this.allData = res.DataList;
               // 备货订单 总条数
               this.orderNumber = res.DataList.PurchaseCount;
+              this.orderData = res.DataList.PurchaseList;
               // 施工日志 总条数
               this.construNumber = res.DataList.ConstructionCount;
+              this.construData = res.DataList.ConstructionLogList;
               // 售后总条数
               this.afterNumber = res.DataList.AfterSaleCount;
+              this.afterData = res.DataList.AfterSaleList;
+
+
               let acceptanceInfo = res.DataList.RidrTableList;
               for(let item of acceptanceInfo) {
                     switch (item.FlieType) {
@@ -331,17 +340,46 @@ export default {
       },
       orderpageIndexChange (idx) {  // 备货订单
         this.orderpageIndex = idx;
+        this.orderData = [];
+        let params = {
+            projectCode: this.projectCode,
+            pageIndex: idx,
+            pageSize: this.orderpageSize
+        }
+        TheGoodsOrders(params).then(res =>{
+            this.orderData = res.DataList;
+        })
       },
       construpageIndexChange(idx) {   // 施工日志
             console.log(idx)
           this.construpageIndex = idx;
+          this.construData = [];
+          let params = {
+            projectCode: this.projectCode,
+            pageIndex: idx,
+            pageSize: this.construpageSize
+        }
+        ConstructionLog(params).then(res => {
+            console.log(res);
+            this.construData = res.DataList;
+        })
       },
       afterpageIndexChange (idx) {
           this.afterpageIndex = idx;
+          this.afterData = [];
+          let params = {
+            projectCode: this.projectCode,
+            pageIndex: idx,
+            pageSize: this.afterpageSize
+        }
+        AfterTheDetails(params).then(res => {
+            this.afterData = res.DataList;
+        })
       }
   },
   mounted() {
       console.log(this.$route.params.id);
+      this.projectCode = this.$route.params.id;
       this.getData();
   },
   deactivated() {
@@ -407,8 +445,10 @@ export default {
                     border-bottom: 1px solid #ccc;
                     
                 }
+                .afterInfo { height: 184px;}
                 .goodsContent {
                     padding: 5px 0;
+                    height: 184px;
                     div {
                         padding: 5px 20px;
                         .info {
