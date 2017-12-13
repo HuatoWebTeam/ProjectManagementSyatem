@@ -152,8 +152,6 @@ export default {
 						pageSize:this.pageSize
 				  }
 				GetPurchaseProcessed(parms).then(res=>{
-					console.log("创建列表显示")
-					console.log(res)
 					this.tablepending=[];
 					this.totalNumber=res[0].TotalNumber
 					console.log(this.totalNumber) 
