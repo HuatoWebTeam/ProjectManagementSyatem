@@ -100,11 +100,26 @@ export const UpdatePettyCash = params => {
     .then(res => res.data);
 }; 
 // 项目列表
-     export const ProjectManage=(params)=>{
+export const ProjectManage=(params)=>{
        return axios
        .get("/ProjectManage/GetProjectManageData",{params: params})
        .then(res => res.data)
   }
+  // 项目列表---项目详情
+  export const GetProjectTableManage = params => {
+      return axios
+        .get("/ProjectManage/GetProjectTableManage", {
+          params: params
+        })
+        .then(res => res.data);
+    };
+    // 项目列表---项目详情 --- 导出数据
+export const ExportZipFile = params => {
+         return axios
+           .get("/Business/ExportZipFile", { params: params })
+           .then(res => res.data);
+       };
+
 //新增项目
   export const InsertProjectManage = (params)=>{
     return axios
