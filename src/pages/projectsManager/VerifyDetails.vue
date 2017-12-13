@@ -112,7 +112,7 @@
  </el-row>	
 </template>
  <script >
-      import{Particulars}from'@/api/api'//引进api
+      import{Particulars,VerifyUpload}from'@/api/api'//引进api
  	 export default {
             data(){
             	return{
