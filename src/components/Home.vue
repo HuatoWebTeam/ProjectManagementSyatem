@@ -153,8 +153,17 @@ export default {
 			}
 		},
 		userLayout() {     // 退出登录
-			sessionStorage.removeItem('user');
-			this.$router.push('/Login');
+			this.$confirm('确定退出吗？', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				sessionStorage.removeItem('user');
+				this.$router.push('/Login');
+			}).catch(() => {
+				return false;
+			})
+			
 		},
 		setMenuCss() {
 			$('.el-submenu').children('.el-menu').children('.el-menu-item').css({'background-color': '#353535'})
