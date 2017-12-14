@@ -23,96 +23,291 @@
 <el-col :span="24" class="AcceptanceMaterial">
       <div class="AddTextorientation">
         <span>合同:</span>
-        <div class="AdddoCument" @click="AddText" ><i class="el-icon-plus"></i></div>      
+            <div class="AdddoCument">
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="TextActionURL"
+                 accpet='xlsx'
+                 :limit="1"
+                 :on-success="fileSuccess"
+                 :name='upLoadName + "#合同"'
+                 >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+          </div>
+            <div class="projectshow" ><a :href="linprojectUrl">{{this.linkprojectname}}</a></div>    
       </div>
       <div class="AddTextorientation">
          <span>采购清单:</span>
-         <div class="AdddoCument"><i class="el-icon-plus"></i></div>      
+            <div class="AdddoCument">
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="TextActionURL"
+                 accpet='xlsx'
+                :limit="1"
+                 :on-success="fileSuccess"
+                :name='upLoadName +"#采购清单"'
+                 >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+          </div>  
+             <div class="projectshow" ><a :href="linprojectUrl">{{this.linkprojectname}}</a></div> 
       </div>
        <div class="AddTextorientation">
          <span>开工申请文件:</span>
-         <div class="AdddoCument"><i class="el-icon-plus"></i></div>      
+           <div class="AdddoCument">
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="TextActionURL"
+                 accpet='xlsx'
+                 :limit="1"
+                 :on-success="fileSuccess"
+                  :name='upLoadName+"#开工申请文件"'
+                 >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+          </div>  
+            <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
        <div class="AddTextorientation">
          <span>施工组织设计:</span>
-         <div class="AdddoCument" ><i class="el-icon-plus"></i></div>      
+           <div class="AdddoCument">
+              <el-upload
+                class="upload-demo"
+                drag
+                 :action="TextActionURL"
+                 accpet='xlsx'
+                :limit="1"
+                 :on-success="fileSuccess"
+                :name='upLoadName+"#施工组织设计"'
+                 >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+          </div> 
+            <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>       
       </div>
       <div class="AddTextorientation">
          <span>图纸会审技术交流:</span>
-         <div class="AdddoCument" ><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="TextActionURL"
+                 accpet='xlsx'
+                :limit="1"
+                 :on-success="fileSuccess"
+                :name='upLoadName+"#图纸会审技术交流"'
+                  >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+          </div>   
+            <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>      
       </div>
        <div class="AddTextorientation">
          <span>监工日志,工程要记:</span>
-         <div class="AdddoCument" ><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                   :on-success="fileSuccess"
+                  :name='upLoadName+"#监工日志,工程要记"'
+                   >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>    
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
        <div class="AddTextorientation">
          <span>签收单:</span>
-         <div class="AdddoCument" ><i class="el-icon-plus"></i></div>      
+            <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                   :on-success="fileSuccess"
+                  :name='upLoadName+"#签收单"'
+                   >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>  
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
        <div class="AddTextorientation">
          <span>培训单:</span>
-         <div class="AdddoCument"><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                   :on-success="fileSuccess"
+                  :name='upLoadName+"#培训单"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>   
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
        <div class="AddTextorientation">
          <span>竣工报告:</span>
-         <div class="AdddoCument" ><i class="el-icon-plus"></i></div>      
+              <div class="AdddoCument">
+                  <el-upload
+                    class="upload-demo"
+                    drag
+                    :action="TextActionURL"
+                     accpet='xlsx'
+                    :limit="1"
+                    :on-success="fileSuccess"
+                    :name='upLoadName+"#竣工报告"'
+                     >
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+              </div>  
+                <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
       <div class="AddTextorientation">
          <span>竣工结算书:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                  :on-success="fileSuccess"
+                  :name='upLoadName+"#竣工结算书"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div> 
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>       
       </div>
      <div class="AddTextorientation">
          <span>竣工图纸:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                   :on-success="fileSuccess"
+                  :name='upLoadName+ "#竣工图纸"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>       
       </div>
        <div class="AddTextorientation">
          <span>安装信息表:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+           <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                   :on-success="fileSuccess"
+                  :name='upLoadName+ "#安装信息表"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>   
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>     
       </div>
       <div class="AddTextorientation">
          <span>监控报告:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+           <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                   accpet='xlsx'
+                  :limit="1"
+                  :on-success="fileSuccess"
+                  :name='upLoadName+"#监控报告"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div> 
+               <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div>      
       </div>
 
       <div class="AddTextorientation">
          <span>验收文本:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+            <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                  accpet='xlsx'
+                  :limit="1"
+                  :on-success="fileSuccess"
+                  :name='upLoadName+"#验收文本"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+             </div>  
+              <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div> 
       </div>
        <div class="AddTextorientation">
          <span>审核报告:</span>
-         <div class="AdddoCument" @click="AddText"><i class="el-icon-plus"></i></div>      
+             <div class="AdddoCument">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  :action="TextActionURL"
+                  accpet='xlsx'
+                  :limit="1"
+                  :on-success="fileSuccess"
+                  :name='upLoadName+"#审核报告"'
+                    >
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+
+             </div>  
+            <div class="projectshow" ><a :href="linprojectUrl">{{linkprojectname}}</a></div> 
       </div>
 </el-col>
-    <el-dialog
-   :visible.sync="AddTextdialog" 
-   title='上传报销详细清单'
-    width='24%'
-    >
-        <el-upload
-          ref='uploadFile'
-          class="upload-demo"
-          :on-remove="handleRemove"
-           drag
-           :on-error="errorfile"
-          :action="TextActionURL"
-          :name='upLoadName'
-          accpet='xlsx'
-          :auto-upload="false"
-          :on-success="fileSuccess"
-          :limit="1">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
-      </el-upload>
-      <span slot="footer" class="dialog-footer">
-        <el-button   size="medium"  @click="closeAddText">取 消</el-button>
-        <el-button   size="medium" type="primary" >确 定</el-button>
-      </span>
-  </el-dialog>   
+<!--     <el-dialog
+         :visible.sync="AddTextdialog" 
+         title='上传验收资料'
+         width='24%'>
+          <el-upload
+             ref='uploadFile'
+             class="upload-demo"
+             :on-remove="handleRemove"
+              drag
+              :on-error="errorfile"
+              :action="TextActionURL"
+              :name='upLoadName'
+               accpet='xlsx'
+              :auto-upload="false"
+              :on-success="fileSuccess"
+              :limit="1">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
+        </el-upload>
+        <span slot="footer" class="dialog-footer">
+          <el-button   size="medium"  @click="closeAddText">取 消</el-button>
+          <el-button   size="medium" type="primary" @click="submitUpload">确 定</el-button>
+        </span>
+    </el-dialog>  -->  
  </el-row>	
 </template>
  <script >
-      import{Particulars}from'@/api/api'//引进api
+      import{Particulars,VerifyUpload}from'@/api/api'//引进api
  	 export default {
             data(){
             	return{
@@ -127,7 +322,9 @@
                 ProjectStates:[],
                 AddTextdialog:false,
                 upLoadName:'',
-                TextActionURL:'/Business/RelicUpload'
+                TextActionURL:'/Business/RelicUpload',
+                linkprojectname:'',
+                linprojectUrl:''
             	 }
             },
             methods:{
@@ -145,7 +342,9 @@
                          this.ScheduledTime=res.DataList.ScheduledTime;
                          this.CustomerName=res.DataList.CustomerName;
                          this.CustomerPhone=res.DataList.CustomerPhone;
-                         this.ProjectStates=res.DataList.ProjectStates;        
+                         this.ProjectStates=res.DataList.ProjectStates;  
+                         this.upLoadName=res.DataList.ProjectName ;// 提交时候的要发项目名称过去        
+                         console.log( this.upLoadName)                                      
                   })
               },
                routerGoBack() {//点击上一页.返回路由上一页
@@ -157,6 +356,12 @@
                closeAddText(){//关闭添加弹框
                 this.AddTextdialog=false;
                 },
+            submitUpload() {//提交给数据库
+
+                  console.log(this.$refs['uploadFile'])    
+
+                this.$refs['uploadFile'].submit();
+              },
              handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
                 },
@@ -168,9 +373,12 @@
               },
              fileSuccess(res) {
                 console.log(res);
-                this.$refs['uploadFile'].clearFiles();
-                  this.AddTextdialog=false;  
+                 this.$message.success('上传成功!');
+                 this.linkprojectname=res.FileName;
+                 this.linprojectUrl=res.FileUrl;
+                 console.log(this.linprojectUrl)
               },
+
             },
             mounted(){
                 console.log(this.$route.params.id)
@@ -179,7 +387,6 @@
             deactivated() {//每次都销毁//不缓存,保证是最新的数据,
 			        this.$destroy(true);
 			     }
- 
  	 }
  </script>
 <style scoped>
@@ -239,21 +446,41 @@
   .AcceptanceMaterial{
       width: calc(100% - 40px);
       height: calc(100% - 90px);
-      height: 600px;
+      height: 650px;
       margin: 20px;
       background: #FFF;
       border: 1px solid #ccc;
   }
   .AddTextorientation{
       display: inline-block;
-      height: 120px;
       width:11%;
       margin:40px  20px;
+      height: 140px;
+
   }
   .AdddoCument{
       border: 1px solid #ccc;
-      height: 120px;
+      height: 80px;
       text-align: center;
-     line-height: 120px;
+      line-height: 80px;
+    }
+  .upload-demo{
+    height: 100%;
+  }
+ .projectshow{
+  overflow: hidden;
+ }
+
+</style>
+<style type="text/css">
+  .el-upload-dragger{
+        width: 100%;
+        height: 100%;
+      }
+    .el-upload{
+      width: 100%;
+    }
+  .el-upload-list{
+    display: none;
   }
 </style>

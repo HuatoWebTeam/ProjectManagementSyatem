@@ -126,24 +126,21 @@ export default {
                              this.tableData.push(item)
                         }
                         console.log(res)
-                  }) 
-                   
+                  })   
                 },
               submitUpload() {//提交给数据库
                 this.$refs['uploadFile'].submit();
               },
               fileSuccess(res) {
                 console.log(res);
-                this.$refs['uploadFile'].clearFiles();
-                  this.AddText=false;
-                
+                  this.$refs['uploadFile'].clearFiles();
+                  this.AddText=false;  
               },
               errorfile(res){
                   if(res==0){
                      this.$message.error('上传失败!');
-                     this. handleRemove()//上传失败直接删除
+                     this. handleRemove()//上传失败直接删除.
                   }
-
               },
               UploadFile(index){
                    this.AddText=true;//点击的时候添加文档弹框显示出来
@@ -160,15 +157,6 @@ export default {
                           reimburseCode:this.tableData[index].ReimburseCode
                        };
                     window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
-                 // ExeclReimburseData(parms).then(res=>{
-                 //           console.log(this.tableData[index].ReimburseCode)  
-                             
-                 //          /* window.open(res)*/
-                 //          for(var i=0;i<this.totalNumber.length;i++){
-                 //                 this.tableData.reimburseCode[i]=this.tableData[index].ReimburseCode
-                 //           }
-
-                 //     })    
                 
              },
               closeAddText(){//关闭添加弹框
@@ -181,9 +169,7 @@ export default {
               },
           mounted(){
                  this.expenses()//列表请求显示
-                 /* this.DownText()//下载报表.*/
-          }
-
+           }
    }
 </script>
 
