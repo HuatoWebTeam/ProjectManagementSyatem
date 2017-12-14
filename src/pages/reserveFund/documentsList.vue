@@ -87,7 +87,7 @@
         :disabled="fileList.length !== 0"
         :on-change='imgFileChange'
         :on-success='fileUploadSuccess'
-        name='PettyCashFile'
+        name='PettyCashFile1'
         :data='fileData'
         :on-error="fileError"
         :before-upload="beforeUplpad"

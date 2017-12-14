@@ -30,7 +30,7 @@
                 </div>
             </el-col>
             <el-col :span='4' class='projectInfoContainer'>
-
+                <span class='projectState' v-for='item in allData.ProjectStates' :key='item.Code' >{{ item.State }}</span>
             </el-col>
             
         </el-col>
@@ -54,6 +54,11 @@
                         <span class='info'>订单标题: {{ item.PurchaseTitle }}</span>
                         <span class='info'>申请人: {{ item.LoginName }}</span>
                         <span class='info'>申请时间: {{ item.ApplyForDate.replace(' 0:00:00', '') }}</span>
+                        <span class='goodsState'>
+                            <span v-if='item.TheActualDeliveryDate == null' style='background: red'>未到货</span>
+                            <span v-else-if='Date.parse(new Date(item.TheActualDeliveryDate)) < Date.parse(new Date(item.DeliveryDate))' style='background: #07c167' >已到货</span>
+                            <span v-else style='background: #f5c128'>超期</span>
+                        </span>
                     </div>
                 </template>  
             </div>
@@ -118,6 +123,7 @@
                         <span class="info">需求单：<span class='isData' title='点击下载' @click='exportAcceptData(item.ExpirationDateFlieUrl)'>{{ item.ExpirationDateFlieName }}</span></span>
                         <span class="info">外派单：<span class='isData' title='点击下载' @click='exportAcceptData(item.AfterSaleFlieUrl)'>{{ item.AfterSaleFlieName }}</span></span>
                         <span class="info">维修换货单：<span class='isData' title='点击下载' @click='exportAcceptData(item.InWarrantyFlieUrl)'>{{ item.InWarrantyFlieName }}</span></span>
+                        <span class='rightDate'>{{ item.AfterSaleDate }}</span>
                     </div>
                 
                 </template>
@@ -404,6 +410,19 @@ export default {
             .prejectInfo {
                 height: 120px;
                 background: #fff;
+                .projectState {
+                    width: 90px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    color: red;
+                    font-size: 18px;
+                    display: block;
+                    margin-left: 50%;
+                    margin-bottom: 3px;
+                    background: url('../../assets/img/projectsBeyond.png') no-repeat;
+                    background-size: 100% 100%;
+                }
                 .projectInfoContainer {
                     padding: 15px 20px;
                     .projectName {
@@ -458,6 +477,17 @@ export default {
                             float: right;
                         }
                     }
+                    .goodsState {
+                        
+                        float: right;
+                        span {
+                            display: inline-block;
+                            width: 60px;
+                            text-align: center;
+                            color: #fff;
+                            border-radius: 3px;
+                        }
+                    }
                 }
                 
                 .acceptance {
@@ -468,6 +498,9 @@ export default {
                     }
                     .info {
                        margin-right: 20px; 
+                    }
+                    .rightDate {
+                        float: right;
                     }
                     .appeptDetail {
                         display: inline-block;
