@@ -22,6 +22,11 @@
 
       </el-table-column>
       <el-table-column
+        label='申请金额'
+        width='150px'
+        prop='AppliedAmount'>
+      </el-table-column>
+      <el-table-column
         label='申请描述'
         prop='Remark'>
 
@@ -41,7 +46,7 @@
         width='200px'
         >
         <template slot-scope="scope" >
-          <img style='width:180px;height:50px;' :src="dataList[scope.$index].ImgUrl" alt="">
+          <img style='width:180px;height:50px;cursor: pointer;' @click='amplification(scope.$index)' :src="dataList[scope.$index].ImgUrl" alt="">
         </template>
 
       </el-table-column>
@@ -70,6 +75,7 @@
         @current-change='pageIndexChange'>
       </el-pagination>
     </el-col>
+
     <el-dialog 
       :visible.sync="addVoucher"
       title='上传打款凭证'
@@ -87,7 +93,7 @@
         :disabled="fileList.length !== 0"
         :on-change='imgFileChange'
         :on-success='fileUploadSuccess'
-        name='PettyCashFile'
+        name='PettyCashFile1'
         :data='fileData'
         :on-error="fileError"
         :before-upload="beforeUplpad"
@@ -152,6 +158,11 @@ export default {
     },
     handlePictureCardPreview(file) {
       this.dialogImgUrl = file.url;
+      this.dialogPreview = true;
+    },
+    amplification(idx) {
+      // console.log(this.dataList)
+      this.dialogImgUrl = this.dataList[idx].ImgUrl;
       this.dialogPreview = true;
     },
     uploadMessage() {

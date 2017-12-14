@@ -21,6 +21,11 @@
         prop='LoginName'>
       </el-table-column>
       <el-table-column
+        label='申请金额'
+        width='150px'
+        prop='AppliedAmount'>
+      </el-table-column>
+      <el-table-column
         label='申请描述'
         prop='Remark'>
       </el-table-column>
@@ -39,7 +44,7 @@
         width='200px'
         prop='ImgUrl'>
         <template slot-scope="scope">
-          <img style='width:180px;height:50px;' :src="dataLists[scope.$index].ImgUrl" alt="">
+          <img style='width:180px;height:50px;cursor: pointer;' @click='amplification(scope.$index)' :src="dataLists[scope.$index].ImgUrl" alt="">
         </template>
       </el-table-column>
     </el-table>
@@ -51,6 +56,11 @@
         @current-change='pageIndexChange'>
       </el-pagination>
     </el-col>
+    <el-dialog
+      :visible.sync='dialogPreview'
+      size='tiny'>
+      <img width="100%" :src="dialogImgUrl" alt="">
+    </el-dialog>
   </el-col>
 </el-row>
 
@@ -64,7 +74,9 @@ export default {
       dataLists: [],
       pageIndex: 1,
       pageSize: 10,
-      totalNumber: 0
+      totalNumber: 0,
+      dialogImgUrl: null,
+      dialogPreview: false
     }
   },
   methods: {
@@ -85,6 +97,10 @@ export default {
     },
     pageIndexChange() {
       this.getPettyCashList();
+    },
+    amplification(idx) {
+      this.dialogImgUrl = this.dataLists[idx].ImgUrl;
+      this.dialogPreview = true;
     }
   },
   mounted() {
