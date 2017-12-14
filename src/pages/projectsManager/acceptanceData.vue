@@ -34,6 +34,7 @@
       <el-table-column
         prop="ProjectStates"
         label="项目状态"
+        width='500'
         >
         <template slot-scope="scope" v-if='projectData[scope.$index].ProjectStates.length > 0'>
           <span class='projectBeyondSpan' v-for='item in projectData[scope.$index].ProjectStates' :key='item.ProjectCode' >{{item.State}}</span>
@@ -77,17 +78,13 @@ export default {
 		          var parms={//传的参数
 		               pageIndex: this.pageIndex,
 		               pageSize: this.pageSize,
-
 		              }
 		          ProjectManage(parms).then( res => {//项目列表
-		             console.log("liebiao22222")
-		              console.log(res)
 		              this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
 		              this.projectData=[]; 
 		              for(let item of res[0].DataList){
 		                this.projectData.push(item)//遍历出来的数组放进去
 		              }
-		                // console.log(res[0].DataList)
 		          })
 		        },
 	          pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
@@ -98,11 +95,9 @@ export default {
                     this.$router.push({name:'VerifyDetails',params: { id:this.projectData[index].ProjectCode}});  
                     console.log(this.projectData[index].ProjectCode)
               },
-
        },
        mounted(){
          this.getprojectmange();//调用函数列表
-
        }
 }
 </script>

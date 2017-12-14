@@ -18,7 +18,7 @@ import ProjectsList from '@/pages/projectsManager/projectsList';  // 项目管�
 import ProjectsListDetails from '@/pages/projectsManager/projectsListDetails';  // 项目管理
 import AcceptanceData from '@/pages/projectsManager/acceptanceData';  // 验收资料
 import AfterInfomation from '@/pages/projectsManager/afterInformation';  // 售后信息
-import ConstructionLog from '@/pages/projectsManager/constructionLog';  // 施工日志
+/*import ConstructionLog from '@/pages/projectsManager/constructionLog';  // 施工日志*/
 import VerifyDetails from '@/pages/projectsManager/VerifyDetails';//验收项目详情
 
 /**
@@ -80,7 +80,7 @@ export default new Router({
       component: Homes,
       children: [
         { path: "ProjectsList", name: '项目列表', component: ProjectsList },
-        { path: "ConstructionLog", name: '施工日志', component: ConstructionLog },
+       /* { path: "ConstructionLog", name: '施工日志', component: ConstructionLog },*/
         { path: "AcceptanceData", name: '验收资料', component: AcceptanceData },
         { path: "AfterInfomation", name: '售后信息', component: AfterInfomation },
         { path: '/ProjectsListDetails/:id', name: 'ProjectsListDetails', component: ProjectsListDetails },

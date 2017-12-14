@@ -249,9 +249,7 @@
                 projectName:this.projectname
                }
               Derive(params).then(res=>{
-
-                console.log(params)
-                console.log(res)
+               window.open(res)
               })
              },
             },
