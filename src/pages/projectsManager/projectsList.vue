@@ -9,7 +9,7 @@
     :data="projectData"
      stripe
      border
-    style="width: 100%">
+     width='100%'>
       <el-table-column
         prop="ProjectName"
         label="项目名称"
@@ -24,17 +24,18 @@
       <el-table-column
         prop="CustomerPhone"
         label="客户电话"
-        width="280">
+        width="200">
       </el-table-column>
       <el-table-column
         prop="ProjectStaDate"
         label="项目计划时间"
-        width='240'
+        width='200'
         >
       </el-table-column>
       <el-table-column
         prop="ProjectStates"
         label="项目状态"
+        
         >
         <template slot-scope="scope" v-if='projectData[scope.$index].ProjectStates.length > 0'>
           <span class='projectBeyondSpan' v-for='item in projectData[scope.$index].ProjectStates' :key='item.ProjectCode' >{{item.State}}</span>
@@ -42,7 +43,8 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="350">
+        width='200'
+        >
         <template slot-scope="scope">
         <el-button type="primary" size="small" @click='routerToDetails(scope.$index)'>项目详情</el-button>
         <el-button type="primary" size="small" @click='Editingpermissions(scope.$index)'>人员分配</el-button>

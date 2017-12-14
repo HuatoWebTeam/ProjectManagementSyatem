@@ -10,52 +10,25 @@
   	</el-header>
   	<el-container>
   		<el-aside width='185px'>
-	  		<el-menu router 
+	  		<el-menu  
 			  :default-active="$route.path"
 			  ref='HomeMenu'
 			  text-color='#fff'
 			  :default-openeds='defaultMenuOpened'
-			  :unique-opened='true'
+			  unique-opened
+			  router
 			  @open='openMenu'>
 	  			<template v-for="(item,idx) in routersUrl" v-if='!item.hidden'>
 	  				<el-submenu :key='idx' :index='String(idx)' >
 	  					<template slot='title'>{{item.InterfaceName}} </template>
 	  					<el-menu-item v-for='(childrenRoute, key) in item.ConnectionList' 
 						  :index='"/Homes"+childrenRoute.ConnectionUrl'
-						  :route='"/Homes"+childrenRoute.ConnectionUrl'
-						  :key='"/Homes"+childrenRoute.ConnectionUrl'>
+						  :key='childrenRoute.ConnectionUrl'>
 	  						{{childrenRoute.ConnectionName}}
 	  					</el-menu-item>
 	  				</el-submenu>
 	  			</template>
 	  		</el-menu>
-			<!-- <el-menu
-			:unique-opened='true'
-			default-active='1-1'
-			>
-				
-				<el-submenu index='1'>
-					<template slot='title'>一</template>
-					<el-submenu-item index='1-1'>
-						导航一
-					</el-submenu-item>
-					
-				</el-submenu>
-				<el-submenu index='2'>
-					<template slot='title'>一</template>
-					<el-submenu-item index='2-1'>
-						导航二
-					</el-submenu-item>
-					
-				</el-submenu>
-				<el-submenu index='3'>
-					<template slot='title'>一</template>
-					<el-submenu-item index='3-1'>
-						导航三
-					</el-submenu-item>
-					
-				</el-submenu>
-			</el-menu> -->
 			<footer class='asideFooter'>
 				<span class='changePass' @click='openUpdatePass'>修改密码</span>
 				<span class='layout' @click='userLayout'>退出<i class="fa fa-sign-out" aria-hidden="true"></i></span>
@@ -88,13 +61,19 @@
 				</span>
 			</el-dialog>
 	  	</el-aside>
-	  	<el-main>
-			  <!-- 保存组件的状态 -->
-			  <keep-alive>
-				  <router-view @updateSubMenu='updateSubMenu'/>
-			  </keep-alive>
-	  		
-	  	</el-main>
+		  
+		<el-main>
+			<!-- <div v-bar style='height: 100%'> -->
+				<!-- <div> -->
+					<!-- 保存组件的状态 -->
+					<keep-alive>
+						<router-view @updateSubMenu='updateSubMenu'/>
+					</keep-alive>
+				<!-- </div> -->
+			<!-- </div> -->
+		</el-main>
+			  
+	  	
   	</el-container>
   	
   </el-container>
@@ -137,7 +116,8 @@ export default {
 					{  required: true, message: '请输入确认密码', trigger: 'blur' },
 					{  validator: checkNewPass, trigger: 'blur' }
 				]
-			}
+			},
+			defaultActiveURL: ''
 			
 		}
 	},
@@ -156,14 +136,17 @@ export default {
 		},
 		getMenuFoucs(){
 			let path = this.$route.path;
-			// console.log(path);
-			// console.log(this.routersUrl)
+			console.log(path);
+			console.log(this.routersUrl)
 			for(let key of Object.keys(this.routersUrl)) {
 				// console.log(key);
 				// console.log(this.routersUrl[key]);
 				for(let idx of this.routersUrl[key].ConnectionList) {
 					if (path == "/Homes" + idx.ConnectionUrl) {
 						this.defaultMenuOpened = [key];
+						this.defaultActiveURL = String("/Homes" + idx.ConnectionUrl);
+						console.log(key)
+						console.log(this.defaultActiveURL)
 						break;
 					}
 				}
@@ -225,6 +208,7 @@ export default {
 				this.routersUrl = res;
 				if(this.$route.path == '/Homes') {
 					this.$router.push('/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl);
+					// this.defaultActiveURL = '/Homes' + this.routersUrl[0].ConnectionList[0].ConnectionUrl;
 					//$('.el-submenu.is-opened').children('.el-menu').children('li:first').addClass('is-active');
 				}
 				
@@ -252,7 +236,7 @@ export default {
 	.el-container.is-vertical {
 		height: 100%;
 		min-width: 1280px;
-		min-height: 768px;
+		// min-height: 768px;
 		.el-header {
 			line-height: 65px;
 			//padding: 0 20px 0 0;

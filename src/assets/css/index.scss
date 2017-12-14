@@ -59,3 +59,22 @@
     }
   }
 }
+
+///  项目详情的分页
+.myOrderPagination {
+    float: right;
+    padding-top: 3px;
+    .el-pagination button {
+        border: 1px solid #ccc;
+        width: 8px;
+        min-width: 20px;
+        padding: 0 3px;
+        height: 20px;
+
+    }
+    .el-pagination .btn-next {
+      padding-left: 3px;
+      margin-left: 10px;
+    }
+    
+}
