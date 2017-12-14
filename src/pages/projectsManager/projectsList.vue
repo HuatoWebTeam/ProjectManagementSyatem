@@ -321,11 +321,6 @@ export default {
                pageSize: this.pageSize,
               }
           ProjectManage(parms).then( res => {//项目列表
-             console.log("liebiao22222")
-              console.log(res)
-              if(res[0].IsTrue==0){//请求过来判定是不是有权限添加项目!如果没有权限添加项目就把添加按钮给隐藏了.
-                this.add=false;
-              }
               this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
               this.projectData=[]; 
               for(let item of res[0].DataList){

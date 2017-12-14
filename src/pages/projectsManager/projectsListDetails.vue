@@ -173,7 +173,6 @@ export default {
               {name: null, url: null, title: '监理报告'},          // 监理报告
               {name:null, url:null, title: '验收文本'},         // 验收文本
               {name: null, url:null, title: '审核报告'}            // 审核报告
-
           ],
           afterData: [],        // 售后数据
           afterNumber: null,    // 售后详情条数
