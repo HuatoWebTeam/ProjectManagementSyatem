@@ -244,7 +244,7 @@
                 console.log(res);
                  this.$message.success('上传成功!');
               }, 
-            Intooutfile(){//导出验收材料
+            Intooutfile(){//导出验收资料.
                var params={
                 projectName:this.projectname
                }
