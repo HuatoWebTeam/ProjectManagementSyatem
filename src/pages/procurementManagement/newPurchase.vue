@@ -6,39 +6,38 @@
    <el-col :span='24' class="NewProcurement">
 	   <div class="lineItem">
 	   	   <div  class="projectItem">
-		    <el-form :inline="true" class="demo-form-inline" :label-position="labelPosition" label-width="150px" status-icon :rules="purchasetRules" ref="purchasetRulessuccess" >
-			    	 <el-form-item label="所属项目:">		
+		    <el-form :inline="true" class="demo-form-inline" :label-position="labelPosition" label-width="150px" status-icon :rules="rules" ref="purchasetRulessuccess" >
+			    	 <el-form-item label="所属项目:"  prop='selectvalue'>		
 						  <el-select v-model="selectvalue" placeholder="请选择">
 						    <el-option
 						      v-for="item in options"
 						      :key="item.value"
 						      :label="item.label"
 						      :value="item.value"
-						      prop='selectvalue'>
+						     >
 						    </el-option>
 						  </el-select>
 					   </el-form-item>
-			          <el-form-item label="交货截至日期:">
+			          <el-form-item label="交货截至日期:" prop="ExpirationDate">
 					         <el-date-picker
 						      v-model="ExpirationDate"
 						      type="date"
 						      value-format="yyyy-MM-dd"
 						      placeholder="选择日期"
-						      prop="ExpirationDate"
-						          >
+						       >
 						    </el-date-picker>
 					  </el-form-item>
 			        <div class="requestnote">
 				          <el-form-item label="申请单编号:">
 						     <el-input v-model="PurchaseCode" disabled="disabled"></el-input>
 						  </el-form-item>
-				           <el-form-item label="申请人:">
-						     <el-input v-model="LoginName" prop="LoginName"></el-input>
+				           <el-form-item label="申请人:" prop="LoginName">
+						     <el-input v-model="LoginName" ></el-input>
 						  </el-form-item>
 				     </div>
 			        <div class="pushTitle">
-				           <el-form-item label="订单标题:">
-						     <el-input v-model="PurchaseTitle" prop="PurchaseTitle"></el-input>
+				           <el-form-item label="订单标题:" prop="PurchaseTitle">
+						     <el-input v-model="PurchaseTitle"></el-input>
 						   </el-form-item> 
 			        </div>
 		            <div class="ChoseStock">
@@ -152,34 +151,6 @@
 export default {
      data() {
      	  //提交时候验证表格!
-        var  checkselectvalue=(rule,value,callback)=>{
-        	if(value === ''){
-        		 callback(new Error('选择项目'));
-        	}
-        	callback();
-        }
-        var  checkExpirationDate=(rule,value,callback)=>{
-        	if(value === ''){
-        		 callback(new Error('选择日期'));
-        	}
-        	callback();
-        }
-        var checkLoginName=(rule,value,callback)=>{
-        	if(value === ''){
-        		 callback(new Error('选择申请人'));
-        	}
-        	callback();
-        }
-        var  checkPurchaseTitle=(rule,value,callback)=>{
-        	if(value === ''){
-        		 callback(new Error('选择订单标题'));
-        	}
-        	callback();
-        }
-       
-  
-           
-
       return {
       	inputNumber:'',
       	dialogTableVisible:false,
@@ -197,18 +168,18 @@ export default {
         LoginName:'', //申请人
         multipleSelection:[], // 备货选中数据
         tableDataList:[],
-        purchasetRules:{
+        rules:{
           selectvalue:[
-                 { validator: checkselectvalue, trigger: 'blur' }
+                 { required: true, message: '选择项目名称', trigger: 'change' }
                 ],
           ExpirationDate:[
-                 { validator: checkExpirationDate, trigger: 'blur' }
+                 {type: 'date', required: true, message: '请选择时间', trigger: 'change' }
                 ],
           LoginName:[
-                 { validator: checkLoginName, trigger: 'blur' }
+                 {required: true, message: '申请人不能为空', trigger: 'blur' }
                 ],
           PurchaseTitle:[
-                 { validator: checkPurchaseTitle, trigger: 'blur' }
+                 { required: true, message: '申请人不能为空', trigger: 'blur' }
                 ],
           }  
       }
@@ -277,7 +248,6 @@ export default {
             IssueOrder(){//发送订单内容给后台!
 		          let purchase={}//定义发送给后台的内容,*/
 		       	  let SlaveList=[]//存发送给后台的物料列表
-              
                purchase={
                     ProjectCode:this.selectvalue,
                     PurchaseCode:this.PurchaseCode,
@@ -290,26 +260,27 @@ export default {
          var parms={
                   purchase:purchase
               }
-           InsertPurchase(parms).then(res=>{
-	                   //传给后台发送的值!
-	                if(res==1){
-	                  this.$message({
-	                    type:'success',
-	                    message:'新建成功'
-	                  });
-	                  this.jurisdiction=false;
-	                  /*this.$refs['purchasetRulessuccess'].resetFields()*/
-	                 }else{
-	                  this.$message({
-	                    type:'error',
-	                    message:"新建失败"
-	                    })
-	                  }	
-	                })
+         this.$refs['purchasetRulessuccess'].validate((valid)=>{
+                if(valid){
+	                InsertPurchase(parms).then(res=>{
+		                   //传给后台发送的值!
+		                if(res==1){
+		                  this.$message({
+		                    type:'success',
+		                    message:'新建成功'
+		                  });
+		                  this.jurisdiction=false;
+		                  /*this.$refs['purchasetRulessuccess'].resetFields()*/
+		                 }
+		            })
 
-
-               console.log("发给后台的内容菜单")
-               	console.log(purchase)
+                }else{
+                  return false;
+                    console.log("发给后台的内容菜单")
+                    console.log(purchase)
+                }
+         })   
+             
             }
    },
 
