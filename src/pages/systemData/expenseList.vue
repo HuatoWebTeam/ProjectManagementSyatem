@@ -51,16 +51,15 @@
       </template>
     </el-table-column>
   </el-table>
-      <div class="block">
-        <span class="demonstration"></span>
-        <el-pagination
+    <div class="myPagination"><!-- 组件翻页 -->
+      <el-pagination
+          background
           layout="prev, pager, next"
-          :total="totalNumber"
+          :total="totalNumber" 
           :page-size='pageSize'
-          @current-change='pageIndexChange'
-          >
-        </el-pagination>
-     </div>
+          @current-change='pageIndexChange'>
+      </el-pagination>
+    </div>
   </el-col>
   <el-dialog
    :visible.sync="AddText" 

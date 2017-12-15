@@ -77,8 +77,8 @@
 	  title="新建售后"
 	  :visible.sync="dialogVisible"
 	  width="35%">
-	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo>
-	  <el-form-item label="项目名称">
+	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo :rules="rules" ref="ruleForm">
+	  <el-form-item label="项目名称" prop="selectvalue">
          <el-select v-model="formInfo.selectvalue" placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -152,15 +152,18 @@ export default {
         pageIndex:1,
         pageSize:10,
         formInfo:{
-        selectvalue: '',//下拉选择框
-        filename:'',
-        AfterSaleFlieName:'',//售后外派单文件名
-        AfterSaleFlieUrl:'',
-        InWarrantyFlieName:'', //维修换货单文件名
-        InWarrantyFlieUrl:'',
-        ExpirationDateFlieName:'', //需求单文件名
-        ExpirationDateFlieUrl:'',
+            selectvalue: '',//下拉选择框
+            filename:'',
+            AfterSaleFlieName:'',//售后外派单文件名
+            AfterSaleFlieUrl:'',
+            InWarrantyFlieName:'', //维修换货单文件名
+            InWarrantyFlieUrl:'',
+            ExpirationDateFlieName:'', //需求单文件名
+            ExpirationDateFlieUrl:'',
          },
+        rules:{
+          selectvalue:[{required:true, message:'请选择项目', trigger: 'change'} ]
+        },
          fileAdd:'/AfterSaleManage/RelicUpload',
          ProjectName:"",
          afterSale:[],
@@ -246,7 +249,8 @@ export default {
                    var parms={
                         afterSale:this.formInfo
                    }
-                  InsertAfterSale(parms).then(res=>{
+                this.$refs['ruleForm'].validate((valid)=>{
+                        InsertAfterSale(parms).then(res=>{
                                 console.log(parms)
                                     if(res==1){
                                   this.$message({
@@ -254,14 +258,9 @@ export default {
                                     message:'新建成功'
                                   });
                                   this.dialogVisible=false;
-                                 }else{
-                                    this.$message({
-                                      type:'error',
-                                      message:'新建失败'
-                                    })
-
                                  }
                               })
+                   })
                },
         linkAfterSale(index){
                      window.open(this.tableData[index].AfterSaleFlieUrl)//链接绑定

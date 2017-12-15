@@ -23,12 +23,11 @@
       <el-table-column
         prop="CustomerPhone"
         label="客户电话"
-        width="280">
+       >
       </el-table-column>
       <el-table-column
         prop="ProjectStaDate"
         label="项目计划时间"
-        width='240'
         >
       </el-table-column>
       <el-table-column
@@ -69,8 +68,7 @@ export default {
 	            pageSize: 10,
 	            pageIndex:1,
 	            projectData:[],
-	            totalNumber:null,//总条数      
-               
+	            totalNumber:null,//总条数        
              }
         },
        methods:{

@@ -3,8 +3,8 @@
   <el-col :span='24'  class="main_heard">
    <div class="procurment_title">备货信息管理 </div>
       <div class="seck">
-      		<span class="project_name">项目</span>
-          <el-input  placeholder="请输入搜索内容" v-model="condition"  class="seack_input" ></el-input>
+      		<span class="project_name">查询条件</span>
+          <el-input  placeholder="请输入编号或名称" v-model="condition"  class="seack_input" ></el-input>
            <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser" size="medium">搜索</el-button>
            <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
        </div>
@@ -354,6 +354,17 @@ export default {
 .el-button{
   padding: 8px 2px ;
 }
+.stock_but{
+  width: 60px;
+}
+.seack_input{
+  width: 200px;
+  position: absolute;
+}
+
+.seack_button{
+  margin-left: 220px;
+}
 </style>
 <style type="text/css">
    .el-icon{
@@ -363,16 +374,7 @@ export default {
 	background: #f2f2f2;
 }
 
-.stock_but{
-  width: 60px;
-}
-.seack_input{
-  width: 200px;
-  position: absolute;
-}
-.seack_button{
-  margin-left: 220px;
-}
+
 .el-table__header-wrapper {
   .el-table__header {
     .cell {
