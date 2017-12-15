@@ -81,7 +81,7 @@
         <el-form-item label="客户电话:" prop="CustomerPhone">
           <el-input v-model="projectInfo.CustomerPhone" ></el-input>
         </el-form-item>
-        <el-form-item label="合同金额:" prop="ContractAmount">
+        <el-form-item label="合同金额:" prop="ContractAmount" >
           <el-input v-model="projectInfo.ContractAmount" ></el-input>
         </el-form-item>
         <el-form-item label="项目负责人:"  prop="ProjectPrincipal">
@@ -323,6 +323,7 @@ export default {
           ProjectManage(parms).then( res => {//项目列表
               this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
               this.projectData=[]; 
+              console.log(res)
               for(let item of res[0].DataList){
                 this.projectData.push(item)//遍历出来的数组放进去
               }

@@ -73,7 +73,7 @@
        >       
 		<el-form :label-position="labelPosition" label-width="80px" :model="stocklInfo" status-icon :rules="stockaddRules" ref='stockaddRule'>
 		  <el-form-item label="编码:" >
-		    <el-input v-model="stocklInfo.StockCode" ></el-input>
+		    <el-input v-model="stocklInfo.StockCode"  disabled="disabled"></el-input>
 		  </el-form-item>
 		  <el-form-item label="名称:" prop="MaterialsName">
 		    <el-input v-model="stocklInfo.MaterialsName" ></el-input>
@@ -141,10 +141,10 @@ export default {
 
 		return{
       labelPosition: 'right',
-
+     
     //进入页面清空
       stocklInfo:{
-        StockCode:'',
+        StockCode: Date.parse( new Date())/1000,
         MaterialsName:'',
         Describe:'',
         PurchaseLocation:'',
@@ -224,7 +224,7 @@ export default {
         scockeditClose(){
             //关闭对话框清空数据
           this.stocklInfo={
-            StockCode:'',
+            StockCode: Date.parse( new Date())/1000,
             MaterialsName:'',
             Describe:'',
             PurchaseLocation:'',

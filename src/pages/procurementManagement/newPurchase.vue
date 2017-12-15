@@ -30,7 +30,7 @@
 					  </el-form-item>
 			        <div class="requestnote">
 				          <el-form-item label="申请单编号:">
-						     <el-input v-model="PurchaseCode"></el-input>
+						     <el-input v-model="PurchaseCode" disabled="disabled"></el-input>
 						  </el-form-item>
 				           <el-form-item label="申请人:">
 						     <el-input v-model="LoginName" prop="LoginName"></el-input>
@@ -176,6 +176,10 @@ export default {
         	}
         	callback();
         }
+       
+  
+           
+
       return {
       	inputNumber:'',
       	dialogTableVisible:false,
@@ -185,7 +189,8 @@ export default {
       	labelPosition:'right',//表格字体靠右显示!
         selectvalue: '',//下拉选择框
         totalNumber:'',
-    	PurchaseCode:"",//申请单编号!
+         PurchaseCode :Date.parse( new Date())/1000,
+    	/*PurchaseCode:"",//申请单编号!*/
     	ProjectCode:'',//项目名称
         PurchaseTitle:'',//采购标题
         ExpirationDate:'',//截至日期
