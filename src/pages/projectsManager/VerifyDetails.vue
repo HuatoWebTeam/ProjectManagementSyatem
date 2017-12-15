@@ -212,9 +212,9 @@
                  }                                                
                })
               },
-              exportAcceptData (url) {   // 导出验收资料
+              exportAcceptData (url) {   // 下载验收资料
                           console.log(url)
-                          window.open(url)
+                         window.open(url)
                         },
              routerGoBack() {//点击上一页.返回路由上一页
                          this.$router.go(-1);
@@ -244,14 +244,22 @@
                 console.log(res);
                  this.$message.success('上传成功!');
               }, 
-            Intooutfile(){
+            Intooutfile(){//导出验收材料
                var params={
                 projectName:this.projectname
                }
               Derive(params).then(res=>{
-               window.open(res)
-              })
-             },
+                  if(res=="文件路径不存在"){
+                         this.$message({
+                                    type:'error',
+                                    message:'文件路径不存在'
+                                  });
+                     }else{
+                        console.log(res)
+                        window.open(res)
+                     }
+                 })
+              },
             },
             mounted(){
                 console.log(this.$route.params.id)

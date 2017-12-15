@@ -98,6 +98,7 @@
 			    suffix-icon="el-icon-search"
 			    v-model="condition"
 			    class="sousuo"
+			    @keyup="show"
 			    >
 			  </el-input>
 			  <el-table
@@ -158,20 +159,15 @@ export default {
         condition:'',
         tableStockData:[],
       	labelPosition:'right',//表格字体靠右显示!
-       
         totalNumber:'',
-
         ruleForm:{
             selectvalue: '',//下拉选择框
 	        PurchaseCode :Date.parse( new Date())/1000,
-	      
-	    	/*PurchaseCode:"",//申请单编号!*/
 	    	ProjectCode:'',//项目名称
 	        PurchaseTitle:'',//采购标题
 	        ExpirationDate:'',//截至日期
 	        LoginName:'', //申请人
         },
-
         multipleSelection:[], // 备货选中数据
         tableDataList:[],
         rules:{
@@ -192,6 +188,12 @@ export default {
       }
     },
    methods:{
+         show(ev){  
+                   if(ev.keyCode == 13){  
+                           this.Getuser();//调用备货列表显示!  
+                           console.log("121212")
+                        }  
+                    }, 
 		toggleSelection(rows,inx) {//点击函数回调选中的
 			if (rows) {
 				rows.forEach(row => {
@@ -207,8 +209,7 @@ export default {
        getprojectmange(){
           var parms={//传的参数,项目下拉框!
                pageIndex: 10000,
-               pageSize:10000
-               
+               pageSize:10000   
               }
            ProjectManage(parms).then( res => {//项目列表
               let options=[]; 

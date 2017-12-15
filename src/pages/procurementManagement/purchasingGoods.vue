@@ -66,7 +66,6 @@
       title="添加备货"
       :visible.sync="dialogVisible"
        width="36%"    
-      :before-close="handleClose"
        class="scockedit"
         @close='scockeditClose'
         @open='scockeditOpen'
@@ -156,7 +155,7 @@ export default {
          stockData:[],//定义数组存
          total:null,
          totalNumber:null,
-         pageSize: 6,
+         pageSize: 10,
          pageIndex:1,
          condition:'',
          isAdd: true, //ture  为添加用户,false为修改 
@@ -180,13 +179,6 @@ export default {
        }
 	},
    methods:{//需要用到的方法
-         handleClose(done) {
-           this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-             })
-            .catch(_ => {});
-      },
         Getuser(){//备货管理列表方法
           console.log(this.pageIndex, this.pageSiz)
            var  params={//传递的参数

@@ -115,7 +115,7 @@ export default {
               staDate:'',
               endDate:'',
               pageIndex:1,
-              pageSize:1,
+              pageSize:10,
               totalNumber:null,
               tablepending: [],
               FileUrl:'',
