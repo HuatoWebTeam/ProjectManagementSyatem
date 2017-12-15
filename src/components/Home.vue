@@ -121,13 +121,6 @@ export default {
 			
 		}
 	},
-	// beforeRouteEnter(to, from, next){
-	// 	console.log(to);
-	// 	GetJurisdictionData().then(res => {
-	// 		//next({path: '/Homes' + res[0].ConnectionList[0].ConnectionUrl});
-	// 	})
-		
-	// },
 	methods: {
 		openMenu(index, path) {
 			console.log(index, path);

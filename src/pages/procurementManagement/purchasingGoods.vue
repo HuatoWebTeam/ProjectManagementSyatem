@@ -1,5 +1,5 @@
 <template>
-<el-row>
+<el-row >
   <el-col :span='24'  class="main_heard">
    <div class="procurment_title">备货信息管理 </div>
       <div class="seck">
@@ -354,6 +354,17 @@ export default {
 .el-button{
   padding: 8px 2px ;
 }
+
+</style>
+<style type="text/css" lang='scss'>
+   .el-icon{
+   display: none;
+}
+.el-dialog__header{
+	background: #f2f2f2;
+}
+
+
 .stock_but{
   width: 60px;
 }
