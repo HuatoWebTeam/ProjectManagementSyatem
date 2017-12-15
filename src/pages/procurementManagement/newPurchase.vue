@@ -6,9 +6,9 @@
    <el-col :span='24' class="NewProcurement">
 	   <div class="lineItem">
 	   	   <div  class="projectItem">
-		    <el-form :inline="true" class="demo-form-inline" :label-position="labelPosition" label-width="150px" status-icon :rules="rules" ref="purchasetRulessuccess" >
+		    <el-form :model="ruleForm" :inline="true" class="demo-form-inline" :label-position="labelPosition" label-width="150px"  :rules="rules" ref="purchasetRulessuccess" >
 			    	 <el-form-item label="所属项目:"  prop='selectvalue'>		
-						  <el-select v-model="selectvalue" placeholder="请选择">
+						  <el-select v-model="ruleForm.selectvalue" placeholder="请选择">
 						    <el-option
 						      v-for="item in options"
 						      :key="item.value"
@@ -20,7 +20,7 @@
 					   </el-form-item>
 			          <el-form-item label="交货截至日期:" prop="ExpirationDate">
 					         <el-date-picker
-						      v-model="ExpirationDate"
+						      v-model="ruleForm.ExpirationDate"
 						      type="date"
 						      value-format="yyyy-MM-dd"
 						      placeholder="选择日期"
@@ -28,16 +28,16 @@
 						    </el-date-picker>
 					  </el-form-item>
 			        <div class="requestnote">
-				          <el-form-item label="申请单编号:">
-						     <el-input v-model="PurchaseCode" disabled="disabled"></el-input>
+				          <el-form-item label="申请单编号:" prop='PurchaseCode'>
+						     <el-input v-model="ruleForm.PurchaseCode" disabled="disabled"></el-input>
 						  </el-form-item>
 				           <el-form-item label="申请人:" prop="LoginName">
-						     <el-input v-model="LoginName" ></el-input>
+						     <el-input v-model="ruleForm.LoginName" ></el-input>
 						  </el-form-item>
 				     </div>
 			        <div class="pushTitle">
 				           <el-form-item label="订单标题:" prop="PurchaseTitle">
-						     <el-input v-model="PurchaseTitle"></el-input>
+						     <el-input v-model="ruleForm.PurchaseTitle"></el-input>
 						   </el-form-item> 
 			        </div>
 		            <div class="ChoseStock">
@@ -158,14 +158,20 @@ export default {
         condition:'',
         tableStockData:[],
       	labelPosition:'right',//表格字体靠右显示!
-        selectvalue: '',//下拉选择框
+       
         totalNumber:'',
-         PurchaseCode :Date.parse( new Date())/1000,
-    	/*PurchaseCode:"",//申请单编号!*/
-    	ProjectCode:'',//项目名称
-        PurchaseTitle:'',//采购标题
-        ExpirationDate:'',//截至日期
-        LoginName:'', //申请人
+
+        ruleForm:{
+            selectvalue: '',//下拉选择框
+	        PurchaseCode :Date.parse( new Date())/1000,
+	      
+	    	/*PurchaseCode:"",//申请单编号!*/
+	    	ProjectCode:'',//项目名称
+	        PurchaseTitle:'',//采购标题
+	        ExpirationDate:'',//截至日期
+	        LoginName:'', //申请人
+        },
+
         multipleSelection:[], // 备货选中数据
         tableDataList:[],
         rules:{
@@ -173,8 +179,9 @@ export default {
                  { required: true, message: '选择项目名称', trigger: 'change' }
                 ],
           ExpirationDate:[
-                 {type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                 { required: true, message: '请选择时间', trigger: 'change' }
                 ],
+
           LoginName:[
                  {required: true, message: '申请人不能为空', trigger: 'blur' }
                 ],
@@ -249,12 +256,12 @@ export default {
 		          let purchase={}//定义发送给后台的内容,*/
 		       	  let SlaveList=[]//存发送给后台的物料列表
                purchase={
-                    ProjectCode:this.selectvalue,
-                    PurchaseCode:this.PurchaseCode,
-                    PurchaseTitle:this.PurchaseTitle,
-                    ExpirationDate:this.ExpirationDate,
-                    DeliveryDate:this.ExpirationDate,
-                    LoginName:this.LoginName,
+                    ProjectCode:this.ruleForm.selectvalue,
+                    PurchaseCode:this.ruleForm.PurchaseCode,
+                    PurchaseTitle:this.ruleForm.PurchaseTitle,
+                    ExpirationDate:this.ruleForm.ExpirationDate,
+                    DeliveryDate:this.ruleForm.ExpirationDate,
+                    LoginName:this.ruleForm.LoginName,
                     SlaveList:this.tableDataList
                }
          var parms={
@@ -264,13 +271,15 @@ export default {
                 if(valid){
 	                InsertPurchase(parms).then(res=>{
 		                   //传给后台发送的值!
+		                   console.log(res)
 		                if(res==1){
 		                  this.$message({
 		                    type:'success',
 		                    message:'新建成功'
 		                  });
 		                  this.jurisdiction=false;
-		                  /*this.$refs['purchasetRulessuccess'].resetFields()*/
+		                  this.$refs['purchasetRulessuccess'].resetFields()//清空表单
+		                  this.tableDataList=[]//清空table
 		                 }
 		            })
 
