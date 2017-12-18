@@ -194,7 +194,15 @@ export default {
         var params = { projectName: this.allData.ProjectName }
         ExportZipFile(params).then(res => {
             console.log(res);
-            window.open(res);
+            if(res == '文件路径不存在') {
+                this.$message({
+                    type: 'error',
+                    message: '文件不存在!!!'
+                })
+            } else {
+                window.open(res);
+            }
+            
         })
       },
       exportAcceptData (url) {   // 导出验收资料

@@ -130,7 +130,8 @@ export default {
 	   /* display: inline-block; */
 	    margin-right: 80px;
 	    float: right;
-	}
+  }
+
 </style>
 <style type="text/css">
 .el-input__inner{
@@ -152,13 +153,7 @@ export default {
 	.el-button [class*=el-icon-]+span{
 		margin-left: 3px;
 	}
-.project_name{
-	font-size: 16px;
-	font-family:"Hiragino Sans GB";
-	 display: inline-block;
-    margin-top: 20px;
-    margin-bottom:20px;
-}
+
 .projectSelect{
     width: calc(100% - 40px);
     height: calc(100% - 90px);

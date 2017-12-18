@@ -354,7 +354,9 @@ export default {
 .el-button{
   padding: 8px 2px ;
 }
-
+.seack_input.el-input {
+  width: 200px;
+}
 </style>
 <style type="text/css" lang='scss'>
    .el-icon{
