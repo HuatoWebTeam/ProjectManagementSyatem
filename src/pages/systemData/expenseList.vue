@@ -102,13 +102,12 @@ export default {
       AddText:false,
       condition:'', 
       pageIndex:1,
-      pageSize:2,
+      pageSize:10,
       tableData: [],
       totalNumber:null,
       TextActionURL:'/AmountManage/RelicUpload',
       upLoadName: '',
       reimburseCode:''
-
     }
   },
       methods: {//报销列表显示
@@ -150,13 +149,11 @@ export default {
               handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
                 },
-  
             DownloadFile(index){
                  var parms={
                           reimburseCode:this.tableData[index].ReimburseCode
                        };
                     window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
-                
              },
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
@@ -171,7 +168,6 @@ export default {
            }
    }
 </script>
-
 <style scoped>
 .Reimbursement{
    height: 50px;
@@ -187,21 +183,16 @@ export default {
     background: #fff;
     border: 1px solid #ccc; 
     text-align: center;
-
 }
-
 .projectSelect{
     width: calc(100% - 40px);
     height: calc(100% - 90px);
     margin: 20px 20px 0px 20px;  
 }
-
 .el-button{
   font-size: 12px;
   padding:8px 2px;
 }
-
-
 </style>
 <style type="text/css">
   
