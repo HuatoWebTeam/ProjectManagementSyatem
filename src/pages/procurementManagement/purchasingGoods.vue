@@ -384,7 +384,7 @@ export default {
       margin-left: 220px;
     }
 
-}
+
 </style>
 <style type="text/css" lang='scss'>
    .el-icon{
