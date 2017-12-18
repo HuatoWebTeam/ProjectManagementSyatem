@@ -41,6 +41,7 @@
    <el-col :span='24' class="PendingOrdermain">
          <el-table
 		    :data="tablepending"
+		    stripe
 		    border
 		    style="width: 100%">
 		    <el-table-column
@@ -121,6 +122,7 @@ export default {
               totalNumber:null,
               tablepending: [],
               FileUrl:'',
+              stripe:true,
 	       }
 	     },
        methods:{

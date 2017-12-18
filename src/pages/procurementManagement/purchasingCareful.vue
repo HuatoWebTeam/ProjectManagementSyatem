@@ -42,6 +42,7 @@
          <el-table
 		    :data="tablepending"
 		    border
+		    stripe
 		    style="width: 100%">
 		    <el-table-column
 		      prop="PurchaseCode"
@@ -106,6 +107,7 @@
 export default {
        data(){
           return{
+          	  stripe:true,
               options:[],//请求过来项目列表!
            	  selectvalue:'',//下拉框选择的值
            	  startvalue:'',//日期开始的值,

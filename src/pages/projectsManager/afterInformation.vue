@@ -16,6 +16,7 @@
   </el-col>
   <el-col :span='24' class="tableList">
   	    <el-table
+        stripe
 		    :data="tableData"
 		    border
 		    style="width: 100%">

@@ -52,6 +52,7 @@
 		  <el-table
 		    :data="tableDataList"
 		    border
+		    stripe
 		    height='400'
 		    style="width: 100%" >
 			    <el-table-column
@@ -154,6 +155,7 @@ export default {
      data() {
      	  //提交时候验证表格!
       return {
+      	 stripe:true,
       	inputNumber:'',
       	dialogTableVisible:false,
         options:[],

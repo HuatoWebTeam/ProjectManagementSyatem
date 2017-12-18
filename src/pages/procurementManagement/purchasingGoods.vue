@@ -140,7 +140,7 @@ export default {
 
 		return{
       labelPosition: 'right',
-     
+       stripe:true,
     //进入页面清空
       stocklInfo:{
         StockCode: Date.parse( new Date())/1000,

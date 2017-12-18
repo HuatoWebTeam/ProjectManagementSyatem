@@ -34,6 +34,7 @@
     <el-col :span='24'  class="NewProcurementList">
      <div class="tableStock">
       <el-table
+        stripe
         :data="tableDataList"
         border
         height='400'
@@ -80,6 +81,7 @@
 export default {
   data() {
       return {
+            stripe:true,
             tableDataList:[],
             PurchaseCode:"",//申请单编号!
             ProjectCode:'',//项目名称
