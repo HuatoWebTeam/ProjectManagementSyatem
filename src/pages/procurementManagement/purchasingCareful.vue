@@ -168,7 +168,12 @@ export default {
                            PurchaseTitle:item.PurchaseTitle,
                            LoginName:item.LoginName,
                            ProjectCode:item.ProjectCode,
-                           ExpirationDate:item.ExpirationDate.replace("0:00:00","")
+                           ExpirationDate:item.ExpirationDate.replace("0:00:00",""),
+                           FileName:item.FileName,
+                           FileUrl:item.FileUrl,
+                           SignInFileName:item.SignInFileName,
+                           SignInFileUrl:item.SignInFileUrl
+
 	           	 		})
 	           	 	}
 	           	 	console.log(this.tablepending)

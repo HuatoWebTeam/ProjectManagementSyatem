@@ -157,6 +157,8 @@ export default {
 							PurchaseCode:item.PurchaseCode,
 							PurchaseTitle:item.PurchaseTitle,
 							LoginName:item.LoginName,
+							FileUrl:item.FileUrl,
+							FileName:item.FileName,
 							ExpirationDate:item.ExpirationDate.replace('0:00:00',''),	
 						})
 					}
