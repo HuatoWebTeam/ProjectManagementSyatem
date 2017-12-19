@@ -159,6 +159,7 @@ export default {
 							LoginName:item.LoginName,
 							FileUrl:item.FileUrl,
 							FileName:item.FileName,
+							ProjectCode:item.ProjectCode,
 							ExpirationDate:item.ExpirationDate.replace('0:00:00',''),	
 						})
 					}
@@ -166,10 +167,7 @@ export default {
 					})
 				},
 				Link(index){//点击下载时候下载相应的文档!
-					FileUrl:this.FileUrl;
-						for(let i=0; i<this.totalNumber;i++){
-										FileUrl:window.open(this.tablepending[index].FileUrl)
-						} 	
+					window.open(this.tablepending[index].FileUrl)			
 				},
 				pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
 						this.pageIndex = pageIndex;//传当前页面     
@@ -179,12 +177,15 @@ export default {
 					this.$router.push({name:'Details', params: {id:this.tablepending[index].PurchaseCode}})
 				}
            
-       },
+          },
        mounted(){
        	     this.getprojectmange();//调用方法.项目名称显示!
        	     this.GetUntreated();//得到待处理订单的列表!
-       }
-}
+             },
+      deactivated() {//调用销毁//每次进入页面的时候刷新页面.
+			this.$destroy(true);
+		 }
+      }
 </script>
 
 <style scoped lang='scss'>

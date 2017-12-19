@@ -270,7 +270,7 @@ export default {
         linkExpira(index){
           window.open(this.tableData[index].InWarrantyFlieUrl)
         },
-        InWarranty(index){
+        linkInWarranty(index){
           window.open(this.tableData[index].ExpirationDateFlieUrl)
         },
         pageIndexChange(index) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
@@ -296,10 +296,12 @@ export default {
        margin: 20px ;
       }
       .tableList{
-      width: calc(100% - 40px);
-      height: calc(100% - 90px);
-      margin:0px 20px 20px 20px ;
-      text-align: center;
+        width: calc(100% - 40px);
+        height: calc(100% - 90px);
+        margin:0px 20px 20px 20px ;
+        text-align: center;
+        background: #Fff;
+        border: 1px solid #ccc;
       }
       .AfterSales{
           float: right;
