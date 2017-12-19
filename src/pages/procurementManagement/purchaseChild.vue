@@ -1,6 +1,6 @@
 <template>
-   <el-row>
-       <el-col :span='24' class="NewConstruction" >
+   <el-row  class="Orderdetail myContainer">
+       <el-col :span='24' class="title" >
        <div class="procurment_title">采购订单详情 </div>
    </el-col>
    <el-col :span='24' class="NewProcurement">
@@ -101,7 +101,7 @@ export default {
              this.PurchaseCode=res.PurchaseCode,
              this.ProjectCode=res.ProjectCode,
              this.PurchaseTitle=res.PurchaseTitle,
-             this.ExpirationDate=res.ExpirationDate,
+             this.ExpirationDate=res.ExpirationDate.replace("0:00:00",""),
              this.LoginName=res.LoginName
              for(let item of res.SlaveList){
                 this.tableDataList.push(item )
@@ -111,7 +111,7 @@ export default {
   },
 
   mounted() {
-    console.log("chuanid")
+      console.log("chuanid")
       console.log(this.$route.params.id)
       this.particulars()//调用
   },
@@ -121,57 +121,50 @@ export default {
 }
 </script>
 <style scoped lang='scss'>
-.NewConstruction{
-    height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
+.Orderdetail{
+    .NewProcurement{
+        width: calc(100% - 40px);
+        height: calc(100% - 90px);
+        margin: 20px;
+        background: #fff;
+        border: 1px solid #ccc; 
+    }
+    .NewProcurementList{
+      margin:0px 20px 20px 20px;
+      background: #fff;
+        border: 1px solid #ccc; 
+        width: calc(100% - 40px);
+        height: calc(100% - 90px);
+        text-align: center;
+    }
+      .projectItem{
+        margin-left: 14px;
+        margin-top: 30px;
+      }
+    .el-input, .el-input--mini, .el-input--suffix{
+      width: 300px;
+      
+    }
+    .numberInput{
+      width: 50px;
+      height:30px;
+      text-align: center;
+      border-radius: 4px;
+      border:1px solid #dbdbdb;
+    }
+    .numberInput[data-v-2b23ff4a] {
+        width: 50px;
+        height: 37px;
+    }
+    .numberInput[data-v-2b23ff4a][data-v-2b23ff4a] {
+        width: 50px;
+        /*height: 28px;*/
+        outline: none;
+        border-radius: 4px;
+        border: none;
+        border: 1px solid #dbdbdb;
+    }
 }
-.NewProcurement{
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 20px;
-    background: #fff;
-    border: 1px solid #ccc; 
-}
-.NewProcurementList{
-  margin:0px 20px 20px 20px;
-  background: #fff;
-    border: 1px solid #ccc; 
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    text-align: center;
-}
-  .projectItem{
-    margin-left: 14px;
-    margin-top: 30px;
-  }
-.el-input, .el-input--mini, .el-input--suffix{
-  width: 300px;
-  
-}
-.numberInput{
-  width: 50px;
-  height:30px;
-  text-align: center;
-  border-radius: 4px;
-  border:1px solid #dbdbdb;
-}
-.numberInput[data-v-2b23ff4a] {
-    width: 50px;
-    height: 37px;
-}
-.numberInput[data-v-2b23ff4a][data-v-2b23ff4a] {
-    width: 50px;
-    /*height: 28px;*/
-    outline: none;
-    border-radius: 4px;
-    border: none;
-    border: 1px solid #dbdbdb;
-}
-
-
 </style>
 
 

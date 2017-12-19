@@ -1,6 +1,6 @@
 <template>
-<el-row>
-    <el-col :span='24' class="Information">
+<el-row  class="Information myContainer">
+    <el-col :span='24' class="title">
      <div class="procurment_title">售后信息管理</div>
    </el-col>
   <el-col :span='24' class='InformationCheck'>
@@ -131,8 +131,8 @@
     </el-form-item>
 	</el-form>
 	  <span slot="footer" class="dialog-footer">
-	    <el-button @click="dialogVisible = false">取 消</el-button>
-	    <el-button type="primary" @click="Addfile">确 定</el-button>
+	    <el-button size='small' @click="dialogVisible = false">取 消</el-button>
+	    <el-button size='small' type="primary" @click="Addfile">确 定</el-button>
 	  </span>
 </el-dialog>
   </el-col>
@@ -288,49 +288,44 @@ export default {
 }
 </script>
 
-<style scoped>
-    .Information{
-    height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
+<style scoped lang='scss'>
+.Information{
+      .InformationCheck{
+       width: calc(100% - 40px);
+       height: calc(100% - 90px);
+       margin: 20px ;
+      }
+      .tableList{
+      width: calc(100% - 40px);
+      height: calc(100% - 90px);
+      margin:0px 20px 20px 20px ;
+      text-align: center;
+      }
+      .AfterSales{
+          float: right;
+      }
+    .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
-    .InformationCheck{
-     width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 20px ;
+      .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 178px;
+      height: 78px;
+      line-height: 178px;
+      text-align: center;
     }
-    .tableList{
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin:0px 20px 20px 20px ;
-    text-align: center;
+    .avatar {
+      width: 178px;
+      height: 78px;
+      display: block;
     }
-    .AfterSales{
-        float: right;
-    }
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-    .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 78px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 78px;
-    display: block;
-  }
-
+  
+ }
 </style>
 <style type="text/css">
 .upload-demo{

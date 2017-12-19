@@ -1,25 +1,37 @@
 <template>
- <el-row>
- <el-col :span='24'  class="projectList">
+ <el-row class='projectDetails myContainer'>
+ <el-col :span='24'  class="title">
      <div class="procurment_title">验收资料管理  
             <el-button type="primary" size='mini'   @click='routerGoBack'>返回上一页</el-button>
             <el-button type="primary" size="mini" class="ExportData" @click="Intooutfile">导出数据</el-button>
        </div>
  </el-col>
- <el-col :span='24' class="projectData">
-     <div class="projectleft">
-         <div class="projectname"><strong>{{projectname}}</strong></div>
-         <div>
-            <span>项目负责人:</span>{{ProjectPrincipal}}<span>联系电话:</span>{{UserPhone}}
-            <span>客户名称:</span>{{CustomerName}}<span>客户电话:</span>{{CustomerPhone}}
-         </div>
-         <div><span>开工日期:</span>{{ProjectStaDate}}<span>结束日期:</span>{{ScheduledTime}}</div>
-     
-     </div>
-     <div class="projectright">
-            <div v-for='item in ProjectStates' :key='item.ProjectCode'  class=" Extended">{{item.State}}</div>
-     </div>    
-</el-col>
+        <el-col :span='24' class='prejectInfo'>
+            <el-col :span='8' class='projectInfoContainer'>
+                <div class='projectName'> {{projectname }}</div>
+                <div class='projectPersonnel'>
+                    <span>项目负责人：{{ProjectPrincipal }}</span>
+                </div>
+                <div class='projectDate'>
+                    <span>联系电话：{{UserPhone }}</span>
+                </div>
+            </el-col>
+            <el-col :span='12' class='projectInfoContainer'>
+                <div class='projectInfoDetail'>
+                    <span>项目信息：</span>
+                    <div class='infoDetails'>
+                        客户名称：{{ CustomerName }}, 客户电话： {{ CustomerPhone }}
+                    </div>
+                    <div class='Projectdate'>
+                        项目启动时间: {{ ProjectStaDate }}, 预计结束时间: {{ ScheduledTime }}
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span='4' class='projectInfoContainer'>
+                <span class='projectState' v-for='item in ProjectStates' :key='item.Code' >{{ item.State }}</span>
+            </el-col>
+            
+        </el-col>
 <el-col :span="24" class="AcceptanceMaterial">
     <template v-for='(item,idx) in acceptData' >
         <div class="AddTextorientation">
@@ -91,8 +103,8 @@
                          this.projectname=res.DataList.ProjectName;
                          this.ProjectPrincipal=res.DataList.ProjectPrincipal;
                          this.UserPhone=res.DataList.UserPhone;
-                         this.ProjectStaDate=res.DataList.ProjectStaDate;
-                         this.ScheduledTime=res.DataList.ScheduledTime;
+                         this.ProjectStaDate=res.DataList.ProjectStaDate.replace('0:00:00','');
+                         this.ScheduledTime=res.DataList.ScheduledTime.replace('0:00:00','');
                          this.CustomerName=res.DataList.CustomerName;
                          this.CustomerPhone=res.DataList.CustomerPhone;
                          this.ProjectStates=res.DataList.ProjectStates;  
@@ -214,7 +226,7 @@
               },
               exportAcceptData (url) {   // 下载验收资料
                           console.log(url)
-                         window.open(url)
+                          window.open(url)
                         },
              routerGoBack() {//点击上一页.返回路由上一页
                          this.$router.go(-1);
@@ -270,15 +282,9 @@
 			     }
  	 }
  </script>
-<style scoped>
-  .projectList{
-     height: 50px;
-     line-height: 50px;
-     padding-left: 20px;
-     background:#fff;
-     box-shadow: 0px 2px 1px #888888;
-      }
-    .projectList  .procurment_title .el-button{
+<style scoped lang='scss'>
+  .projectDetails{ 
+    .title  .procurment_title .el-button{
       float: right;
       margin-top:10px;
       margin-right: 50px;
@@ -286,7 +292,7 @@
     .ExportData{
       margin-right: 50px;
     }
-    .projectData{
+    .prejectInfo{
       width: calc(100% - 40px);
       height: calc(100% - 90px);
       height: 120px;
@@ -294,28 +300,7 @@
       background: #FFF;
       border: 1px solid #ccc;
     }
-   .projectleft{
-    display: inline-block;
-    width:75%;
-   
-   }
-   .projectname{
-      padding-left:10px;
 
-   }
- .projectleft div{
-      margin: 10px 0px 10px 0px;
- }
-   .projectright{
-      float: right;
-    display: inline-block;
-    width: 20%;
-   }
-   .projectleft span{
-      display: inline-block;
-      margin-right: 10px;
-      margin-left: 10px;
-   }
   .Extended{
       width: 100px;
       height: 35px;
@@ -345,15 +330,16 @@
       text-align: center;
       line-height: 80px;
     }
-  .upload-demo{
-    height: 100%;
-  }
- .projectshow{
-  overflow: hidden;
-  text-decoration:underline;
-  color: blue;
-  height: 20px;
-  cursor: pointer;
+    .upload-demo{
+      height: 100%;
+    }
+     .projectshow{
+      overflow: hidden;
+      text-decoration:underline;
+      color: blue;
+      height: 20px;
+      cursor: pointer;
+     }
  }
 </style>
 <style type="text/css">

@@ -234,8 +234,6 @@ export default {
               // 售后总条数
               this.afterNumber = res.DataList.AfterSaleCount;
               this.afterData = res.DataList.AfterSaleList;
-
-
               let acceptanceInfo = res.DataList.RidrTableList;
               for(let item of acceptanceInfo) {
                     switch (item.FlieType) {
@@ -429,37 +427,7 @@ export default {
                     margin-bottom: 3px;
                     background: url('../../assets/img/projectsBeyond.png') no-repeat;
                     background-size: 100% 100%;
-                }
-                .projectInfoContainer {
-                    padding: 15px 20px;
-                    .projectName {
-                        font-size: 16px; 
-                        color: #333;
-                    }
-                    .projectPersonnel {
-                        padding: 10px 0;
-                        span {
-                            margin-right: 20px;
-                        }
-                    }
-                    .projectDate span {
-                        margin-right: 20px;
-                    }
-                    .projectInfoDetail {
-                        span {
-                            font-size: 16px;
-                        }
-                        .infoDetails {
-                            padding: 15px 0px 15px 45px;
-                        }
-                        .Projectdate {
-                            padding-left: 20px;
-                        }
-                    }
-                }
-                
-                
-                
+                }    
             }
             .goodsOrders {
                 margin-top: 10px;

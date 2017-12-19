@@ -1,6 +1,6 @@
 <template>
-<el-row>
-   <el-col :span='24' class="NewConstruction" >
+<el-row class="NewConstruction myContainer">
+   <el-col :span='24' class="title" >
        <div class="procurment_title">新建采购订单 </div>
    </el-col>
    <el-col :span='24' class="NewProcurement">
@@ -94,15 +94,14 @@
    <el-col :span=24  class="dialogTable">
 	   	<el-dialog title="备货选择" :visible.sync="dialogTableVisible">
 	   		    <el-input
-			    size="mini"
-			    placeholder="请输入物料编号或名称"
-			    suffix-icon="el-icon-search"
-			    v-model="condition"
-			    class="sousuo"
-			 
-			    @keyup.enter="show"
-			    >
-			  </el-input>
+				    size="mini"
+				    placeholder="请输入物料编号或名称"
+				    suffix-icon="el-icon-search"
+				    v-model="condition"
+				    class="sousuo"
+				    @keyup.enter.native="search()"
+				    >
+			    </el-input>
 			  <el-table
 			   filter-change='filters'
 			  	ref="multipleTable"
@@ -155,7 +154,7 @@ export default {
      data() {
      	  //提交时候验证表格!
       return {
-      	 stripe:true,
+      	stripe:true,
       	inputNumber:'',
       	dialogTableVisible:false,
         options:[],
@@ -191,7 +190,7 @@ export default {
       }
     },
    methods:{
-         show(){       
+         search(){       
 	           this.Getuser();//调用备货列表显示!  
 	           console.log("121212")    
                     }, 
@@ -305,74 +304,69 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .NewConstruction{
-    height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
-}
-.NewProcurement{
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 20px;
-    background: #fff;
-    border: 1px solid #ccc; 
-}
-.NewProcurementList{
-	margin:0px 20px 20px 20px;
-	background: #fff;
-    border: 1px solid #ccc; 
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    text-align: center;
-}
-  .projectItem{
-    margin-left: 14px;
-    margin-top: 30px;
-  }
-   .dialogTable{
-   	text-align: center;
-   }
-   .ChoseStock{
-  	margin-left: 146px;
-    margin-top: 10px;
-    margin-bottom: 26px;
-    }
-.footer{
-	float: right;
-	margin-right: 40px;
-}
-.el-input, .el-input--mini, .el-input--suffix{
-	width: 300px;
-	
-}
-.el-dialog__header{
-	background: #f2f2f2;
-}
-.el-select{
-	width: 300px;
-}
-.numberInput{
-	width: 50px;
-	height:30px;
-	text-align: center;
-}
-.numberInput[data-v-2b23ff4a] {
-    width: 50px;
-    height: 37px;
-}
-.numberInput[data-v-2b23ff4a][data-v-2b23ff4a] {
-    width: 50px;
-    /*height: 28px;*/
-    outline: none;
-    border-radius: 4px;
-    border: none;
-    border: 1px solid #dbdbdb;
-}
-.sousuo{
-	margin-bottom: 20px;
+		.NewProcurement{
+		    width: calc(100% - 40px);
+		    height: calc(100% - 90px);
+		    margin: 20px;
+		    background: #fff;
+		    border: 1px solid #ccc; 
+		}
+		.NewProcurementList{
+			margin:0px 20px 20px 20px;
+			background: #fff;
+		    border: 1px solid #ccc; 
+		    width: calc(100% - 40px);
+		    height: calc(100% - 90px);
+		    text-align: center;
+		}
+		  .projectItem{
+		    margin-left: 14px;
+		    margin-top: 30px;
+		  }
+		   .dialogTable{
+		   	text-align: center;
+		   }
+		   .ChoseStock{
+		  	margin-left: 146px;
+		    margin-top: 10px;
+		    margin-bottom: 26px;
+		    }
+		.footer{
+			float: right;
+			margin-right: 40px;
+		}
+		.el-input, .el-input--mini, .el-input--suffix{
+			width: 300px;
+			
+		}
+		.el-dialog__header{
+			background: #f2f2f2;
+		}
+		.el-select{
+			width: 300px;
+		}
+		.numberInput{
+			width: 50px;
+			height:30px;
+			text-align: center;
+		}
+		.numberInput[data-v-2b23ff4a] {
+		    width: 50px;
+		    height: 37px;
+		}
+		.numberInput[data-v-2b23ff4a][data-v-2b23ff4a] {
+		    width: 50px;
+		    /*height: 28px;*/
+		    outline: none;
+		    border-radius: 4px;
+		    border: none;
+		    border: 1px solid #dbdbdb;
+		}
+		.sousuo{
+			margin-bottom: 20px;
+		}
 }
 </style>
 <style type="text/css">

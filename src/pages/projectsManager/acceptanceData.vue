@@ -1,6 +1,6 @@
 <template>
-<el-row>
-   <el-col :span='24' class="projectList">
+<el-row class="projectList myContainer">
+   <el-col :span='24' class="title">
     <div class="procurment_title">验收资料-项目列表  </div>
   </el-col>
     <el-col :span='24' class="projectDataList">
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column
         prop="ProjectStaDate"
-        label="项目计划时间"
+        label="项目启动时间"
         >
       </el-table-column>
       <el-table-column
@@ -81,7 +81,14 @@ export default {
 		              this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
 		              this.projectData=[]; 
 		              for(let item of res[0].DataList){
-		                this.projectData.push(item)//遍历出来的数组放进去
+		                this.projectData.push({
+                      ProjectName:item.ProjectName,
+                      ProjectPrincipal:item.ProjectPrincipal,
+                      CustomerPhone:item.CustomerPhone,
+                      ProjectStaDate:item.ProjectStaDate.replace('0:00:00',''),
+                      ProjectStates:item.ProjectStates,
+                      ProjectCode:item.ProjectCode
+                    })//遍历出来的数组放进去
 		              }
 		          })
 		        },
@@ -100,30 +107,24 @@ export default {
 }
 </script>
       
-<style scoped>
+<style scoped lang='scss'>
     .projectList{
-		   height: 50px;
-		   line-height: 50px;
-		   padding-left: 20px;
-		   background:#fff;
-		   box-shadow: 0px 2px 1px #888888;
-		}
-    .projectDataList{
-        width: calc(100% - 40px);
-        height: calc(100% - 90px);
-	     margin: 20px;
-	     background: #fff;
-	     border: 1px solid #ccc;
-	     text-align: center;
-        }
-     .projectBeyondSpan{
-     	display: inline-block;
-     	width: 100px;
-     	height: 40px;
-     	color: red;
-     	line-height: 40px;
-     	font-size: 18px;
-     	background: url(../../assets/img/projectsBeyond.png) no-repeat;
-     }
-
+      .projectDataList{
+          width: calc(100% - 40px);
+          height: calc(100% - 90px);
+  	      margin: 20px;
+  	      background: #fff;
+  	      border: 1px solid #ccc;
+  	      text-align: center;
+          }
+       .projectBeyondSpan{
+       	display: inline-block;
+       	width: 100px;
+       	height: 40px;
+       	color: red;
+       	line-height: 40px;
+       	font-size: 18px;
+       	background: url(../../assets/img/projectsBeyond.png) no-repeat;
+       }
+   }
 </style>

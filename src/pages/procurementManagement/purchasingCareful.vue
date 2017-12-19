@@ -1,6 +1,6 @@
 <template>
-<el-row>
-  <el-col :span='24' class="PendingOrder">
+<el-row class='PendingOrder myContainer'>
+  <el-col :span='24' class="title">
     <div class="procurment_title">已处理订单</div>
   </el-col>
       <el-col :span='24' class="PendingOrderheader">
@@ -71,11 +71,19 @@
 		    </el-table-column>
 		    <el-table-column
 		      label="供货详说明">
-		  <template slot-scope="scope">
-	          <a  @click="Link(scope.$index)"  class="underline">
-					  {{tablepending[scope.$index].FileName}}	 
-			   </a>
-	      </template>
+			  <template slot-scope="scope">
+		          <a  @click="Link(scope.$index)"  class="underline">
+						  {{tablepending[scope.$index].FileName}}	 
+				  </a>
+		      </template>
+		    </el-table-column>
+		    <el-table-column
+		      label="签收单">
+			  <template slot-scope="scope">
+		          <a  @click="SignLink(scope.$index)"  class="underline">
+						  {{tablepending[scope.$index].SignInFileName}}	 
+				  </a>
+		      </template>
 		    </el-table-column>
 		    <el-table-column
 		      prop="name"
@@ -130,7 +138,6 @@ export default {
 	               pageSize:10000
 	              }
 	           ProjectManage(parms).then( res => {//项目列表
-	           	 console.log(res)
 	              let options=[]; 
 	              options=this.options
 	              for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
@@ -156,7 +163,13 @@ export default {
 	           	 	this.totalNumber=res[0].TotalNumber
 	           	 	console.log(this.totalNumber) 
 	           	 	for(let item of res[0].DataList){
-	           	 		this.tablepending.push(item)
+	           	 		this.tablepending.push({
+                           PurchaseCode:item.PurchaseCode, 
+                           PurchaseTitle:item.PurchaseTitle,
+                           LoginName:item.LoginName,
+                           ProjectCode:item.ProjectCode,
+                           ExpirationDate:item.ExpirationDate.replace("0:00:00","")
+	           	 		})
 	           	 	}
 	           	 	console.log(this.tablepending)
 	           	 })
@@ -167,6 +180,9 @@ export default {
 	           Link(index){//点击下载时候下载相应的文档!
                         window.open(this.tablepending[index].FileUrl)//链接绑定
 	           },
+               SignLink(index){
+                     window.open(this.tablepending[index].SignInFileUrl) 
+               },
 	           pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
                  this. GetUntreated()//重新获取一边当前的
@@ -179,33 +195,28 @@ export default {
 }
 </script>
 
-<style scoped>
-  .PendingOrder{
-	    height: 50px;
-	    line-height: 50px;
-	    padding-left: 20px;
-	    background:#fff;
-	    box-shadow: 0px 2px 1px #888888;
-     }
+<style scoped lang="scss">
+ .PendingOrder{ 
    .PendingOrdermain{
-    margin:0px 20px 20px 20px;
-	background: #fff;
-    border: 1px solid #ccc; 
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    text-align: center;
-    }
+	    margin:0px 20px 20px 20px;
+		background: #fff;
+	    border: 1px solid #ccc; 
+	    width: calc(100% - 40px);
+	    height: calc(100% - 90px);
+	    text-align: center;
+	    }
 
-    .PendingOrderheader{
-    	margin: 20px;
-        /*min-width: 1474px;*/
-    }
-    .underline{
-    	text-decoration: underline;
-    	color: blue;
-    	cursor:Pointer;
-    }
-    .el-pagination{
-    	text-align: center;
+	    .PendingOrderheader{
+	    	margin: 20px;
+	        /*min-width: 1474px;*/
+	    }
+	    .underline{
+	    	text-decoration: underline;
+	    	color: blue;
+	    	cursor:Pointer;
+	    }
+	    .el-pagination{
+	    	text-align: center;
+	    }
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
-<el-row>
-   <el-col :span='24' class="AttendanceCheck" >
+<el-row class='AttendanceCheck myContainer'>
+   <el-col :span='24' class="title">
        <div class="procurment_title">考勤统计 </div>
    </el-col>
  <el-col :span="24" class="projectSelect">
@@ -68,7 +68,7 @@ export default {
                for(let i=0;i<res[0].DataList.length;i++){
 	                   projectData.push({
 	                         projectName:res[0].DataList[i].ProjectName,
-	                         projectDate:res[0].DataList[i].ProjectStaDate,
+	                         projectDate:res[0].DataList[i].ProjectStaDate.replace("0:00:00",""),
 	                         ListsSigningIns: []
 	                   }) 
 	                  /*   projectData[i].ListsSigningIns.push()*/
@@ -98,14 +98,10 @@ export default {
 }
 </script>
 
-<style type="text/css"scoped >
+<style scoped  lang='scss'>
 .AttendanceCheck{
-   height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
-}
+
+
 .entry_block{
 	background: #f2f2f2;
 }
@@ -124,19 +120,22 @@ export default {
 }
 .el-button{
 	font-size: 12px;
-	padding:8px 2px;
+	padding:8px 10px;
 }
 .procurment_start_time{
 	   /* display: inline-block; */
 	    margin-right: 80px;
 	    float: right;
   }
+/*.projectSelect,.el-button, .el-button--primary, span{
+      padding:8px 10px;
+     }*/
 
+
+}
 </style>
 <style type="text/css">
-.el-input__inner{
-		height: 30px;
-	}
+
 .el-collapse-item__arrow{
 	margin-right:56px;
 }

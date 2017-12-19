@@ -93,3 +93,31 @@ html, body {
   width: 100%;
   height: 100%;
 }
+//项目信息显示,详情显示的头部.
+.projectInfoContainer {
+    padding: 15px 20px;
+    .projectName {
+        font-size: 16px; 
+        color: #333;
+    }
+    .projectPersonnel {
+        padding: 10px 0;
+        span {
+            margin-right: 20px;
+        }
+    }
+    .projectDate span {
+        margin-right: 20px;
+    }
+    .projectInfoDetail {
+        span {
+            font-size: 16px;
+        }
+        .infoDetails {
+            padding: 15px 0px 15px 45px;
+        }
+        .Projectdate {
+            padding-left: 40px;
+        }
+    }
+}

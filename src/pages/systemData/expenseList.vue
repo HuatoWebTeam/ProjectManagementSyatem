@@ -1,6 +1,6 @@
 <template>
-<el-row>
-   <el-col :span='24' class="Reimbursement">
+<el-row class='Reimbursement myContainer'>
+   <el-col :span='24' class="title">
      <div class="procurment_title">报销管理</div>
    </el-col>
    <el-col :span="24" class="projectSelect">
@@ -9,7 +9,7 @@
           <el-input placeholder="请输入查询项目" v-model="condition" ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="small" icon="el-icon-search" @click='expenses' >查询</el-button>
+          <el-button type="primary"  icon="el-icon-search" @click='expenses'>查询</el-button>
         </el-form-item>
       </el-form>
    </el-col>
@@ -121,7 +121,13 @@ export default {
                       this.totalNumber=res.TotalNumber
                        this.tableData=[];
                        for(let item of res.DataList){
-                             this.tableData.push(item)
+                             this.tableData.push({
+                              ProjectName:item.ProjectName,
+                              Date:item.Date.replace("0:00:00",''),
+                              LoginName:item.LoginName,
+                              Money:item.Money,
+                              ReimburseCode:item.ReimburseCode
+                             })
                         }
                         console.log(res)
                   })   
@@ -168,56 +174,43 @@ export default {
            }
    }
 </script>
-<style scoped>
+<style scoped lang='scss'>
 .Reimbursement{
-   height: 50px;
-   line-height: 50px;
-   padding-left: 20px;
-   background:#fff;
-   box-shadow: 0px 2px 1px #888888;
-}
-.main_heard{
-     width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 0px 20px 20px 20px;
-    background: #fff;
-    border: 1px solid #ccc; 
-    text-align: center;
-}
-.projectSelect{
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 20px 20px 0px 20px;  
-}
-.el-button{
-  font-size: 12px;
-  padding:8px 2px;
+  .main_heard{
+       width: calc(100% - 40px);
+      height: calc(100% - 90px);
+      margin: 0px 20px 20px 20px;
+      background: #fff;
+      border: 1px solid #ccc; 
+      text-align: center;
+    }
+    .projectSelect{
+        width: calc(100% - 40px);
+        height: calc(100% - 90px);
+        margin: 20px 20px 0px 20px;  
+    }
+    .el-button{
+      font-size: 12px;
+     }
+     .el-button, .el-button--primary, span{
+      padding:8px 10px;
+     }
 }
 </style>
 <style type="text/css">
-  
-  .el-input__inner{
-    height: 30px;
+  .upload-demo{
+    display: inline-block;
   }
-
-.seek{
-  margin-top:20px;
-  margin-bottom:20px;
-}
-.upload-demo{
-  display: inline-block;
-}
-.el-upload-dragger{
-   height: 100%;
+  .el-upload-dragger{
+     height: 100%;
+      width: 100%;
+  }
+  .el-upload, .el-upload--text{
     width: 100%;
-}
-.el-upload, .el-upload--text{
-  width: 100%;
-   height: 100%;
-}
-.upload-demo{
-  width: 100%;
-   height: 100%;
-}
-
+     height: 100%;
+  }
+  .upload-demo{
+    width: 100%;
+    height: 100%;
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
-<el-row>
-  <el-col :span='24' class="PendingOrder">
+<el-row class="PendingOrder myContainer">
+  <el-col :span='24' class="title">
     <div class="procurment_title">待处理订单</div>
   </el-col>
       <el-col :span='24' class="PendingOrderheader">
@@ -83,11 +83,9 @@
 		      width="180">
 		 <template slot-scope="scope">
 	       <el-button type="primary" size="small" @click='Editingpermissions(scope.$index)'>详情</el-button>
-				 
 	      </template>
 		    </el-table-column>
 	    </el-table>
-	
          <div class="myPagination"><!-- 组件翻页 -->
 	        <el-pagination
 	          background
@@ -98,11 +96,8 @@
 	          >
 	        </el-pagination>
 	      </div>
-
-   </el-col>
-    
+   </el-col>  
 </el-row>
-
 </template>
 <script>
 	import{ProjectManage,GetPurchaseProcessed}from'@/api/api'//引进api
@@ -158,7 +153,12 @@ export default {
 					this.totalNumber=res[0].TotalNumber
 					console.log(this.totalNumber) 
 					for(let item of res[0].DataList){
-						this.tablepending.push(item)
+						this.tablepending.push({
+							PurchaseCode:item.PurchaseCode,
+							PurchaseTitle:item.PurchaseTitle,
+							LoginName:item.LoginName,
+							ExpirationDate:item.ExpirationDate.replace('0:00:00',''),	
+						})
 					}
 					console.log(this.tablepending)
 					})
@@ -185,31 +185,25 @@ export default {
 }
 </script>
 
-<style scoped>
-  .PendingOrder{
-	    height: 50px;
-	    line-height: 50px;
-	    padding-left: 20px;
-	    background:#fff;
-	    box-shadow: 0px 2px 1px #888888;
-     }
-   .PendingOrdermain{
-    margin:0px 20px 20px 20px;
-	background: #fff;
-    border: 1px solid #ccc; 
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    text-align: center;
-    }
+<style scoped lang='scss'>
+  .PendingOrder{  
+	   .PendingOrdermain{
+	    margin:0px 20px 20px 20px;
+		background: #fff;
+	    border: 1px solid #ccc; 
+	    width: calc(100% - 40px);
+	    height: calc(100% - 90px);
+	    text-align: center;
+	    }
 
-    .PendingOrderheader{
-    	margin: 20px;
-        /*min-width: 1474px;*/
-    }
-    .underline{
-    	text-decoration: underline;
-    	color: blue;
-    	cursor:Pointer;
-    }
-
+	    .PendingOrderheader{
+	    	margin: 20px;
+	        /*min-width: 1474px;*/
+	    }
+	    .underline{
+	    	text-decoration: underline;
+	    	color: blue;
+	    	cursor:Pointer;
+	    }
+   }
 </style>

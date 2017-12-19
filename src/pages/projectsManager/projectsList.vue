@@ -1,8 +1,8 @@
 
 <template>
-<el-row>
-  <el-col :span='24' class="projectList">
-    <div class="procurment_title">项目经理-项目列表  <el-button size="small" class="add_project" type="primary"  @click="addproject" v-show="add">添加项目</el-button></div>
+<el-row class="projectList myContainer">
+  <el-col :span='24' class="title">
+    <div class="procurment_title">项目经理-项目列表  <el-button size="small" class="add_project" type="primary"  @click="addproject" v-show="show">添加项目</el-button></div>
   </el-col>
   <el-col :span='24' class="projectDataList">
    <el-table
@@ -28,8 +28,7 @@
       </el-table-column>
       <el-table-column
         prop="ProjectStaDate"
-        label="项目计划时间"
-       
+        label="项目启动时间"
         >
       </el-table-column>
       <el-table-column
@@ -47,7 +46,7 @@
         >
         <template slot-scope="scope">
         <el-button type="primary" size="small" @click='routerToDetails(scope.$index)'>项目详情</el-button>
-        <el-button type="primary" size="small" @click='Editingpermissions(scope.$index)'>人员分配</el-button>
+        <el-button type="primary"  v-show="show" size="small" @click='Editingpermissions(scope.$index)'>人员分配</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -89,24 +88,27 @@
         </el-form-item>
         <el-form-item label="项目启动时间" prop="ProjectStaDate"> 
                 <el-date-picker
-                  v-model="projectInfo.ProjectStaDate"
-                  type="date"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
+                   v-model="projectInfo.ProjectStaDate"
+                   type="date"
+                   placeholder="选择日期"
+                   value-format="yyyy-MM-dd"
+                  >
                 </el-date-picker>
         </el-form-item>
         <el-form-item label="项目预计结束时间" prop="ScheduledTime">
               <el-date-picker
-                  v-model="projectInfo.ScheduledTime"
-                  type="date"
-                  value-format="yyyy-MM-dd"
-                  placeholder="选择日期">
+                   v-model="projectInfo.ScheduledTime"
+                   type="date"
+                   placeholder="选择日期"
+                   value-format="yyyy-MM-dd"
+                  >
                 </el-date-picker>
+                <!-- // value-format="yyyy-MM-dd" -->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false" class="stock_but">取  消</el-button>
-        <el-button type="primary"  class="projectadd_but" @click='projectadd_but'>确  定</el-button>
+        <el-button size='small' class="stock_but"  @click="dialogVisible = false">取  消</el-button>
+        <el-button size='small'  type="primary"  class="projectadd_but" @click='projectadd_but'>确  定</el-button>
       </span>
     </el-dialog>
   </el-col>
@@ -126,8 +128,8 @@
         :data="data">
       </el-transfer><!-- 穿梭框列表插件 -->
       <span slot="footer" class="dialog-footer">
-        <el-button @click="jurisdiction = false" class="stock_but">取  消</el-button>
-        <el-button type="primary"  class="projectadd_but" @click='setAssignment'>确  定</el-button>
+        <el-button size='small' class="stock_but" @click="jurisdiction = false">取  消</el-button>
+        <el-button size='small' type="primary"  class="projectadd_but" @click='setAssignment'>确  定</el-button>
       </span>
     </el-dialog>
   </el-col>
@@ -139,7 +141,6 @@
    import {ProjectManage,InsertProjectManage,GetUserManageData,AuthorizedList,InsertPersonnelAssignment} from '@/api/api'//引进api
 export default {
     data(){
-  
         //自定义表单--自定义
       var checkprojectName=(rule,value,callback)=>{
         if(value === '') {
@@ -198,15 +199,13 @@ export default {
             projectData:[],
             totalNumber:null,//总条数
             dialogVisible:false,//默认弹框关闭
-            add:true,
+            show:true,
             projectList:{
-              ProjectName:'',//项目名称
-              ProjectPrincipal:'',//项目负责人
-              CustomerPhone:'',//客户电话
-              ProjectStaDate:'',//项目计划时间
-              ProjectStaDate:'',//项目状态
-            /* ProjectStates:[],//项目多种状态*/
-
+                ProjectName:'',//项目名称
+                ProjectPrincipal:'',//项目负责人
+                CustomerPhone:'',//客户电话
+                ProjectStaDate:'',//项目计划时间
+                ProjectStaDate:'',//项目状态
              },
              //定义弹框显示时候的值!
             projectInfo:{
@@ -243,7 +242,7 @@ export default {
                      ]
                 }               
              }
-    },
+          },
       methods:{
         Editingpermissions(idx){//点击对应的!拿到对应的人员分配
            this.ProjectCode = this.projectData[idx].ProjectCode//项目编码
@@ -252,6 +251,7 @@ export default {
         },
         routerToDetails(index) {
           this.$router.push({name: 'ProjectsListDetails', params: { id: this.projectData[index].ProjectCode}});
+          console.log(this.projectData[index])
         },
         permission(){//有权限的列表请求
           var parms={
@@ -262,8 +262,7 @@ export default {
               for(let i=0;i<res[0].TotalNumber;i++){
                 this.valueright.push(res[0].DataList[i].LoginName)
               } 
-              console.log(this.valueright)
-         })
+          })
         },
         //点击确定发送给权限的人给后台
         setAssignment(){
@@ -321,11 +320,24 @@ export default {
                pageSize: this.pageSize,
               }
           ProjectManage(parms).then( res => {//项目列表
+              console.log(res)
+              if(res[0].IsTrue==0){
+                  this.show=false;
+              }else{
+                  this.show=true;
+              }
               this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
               this.projectData=[]; 
               console.log(res)
               for(let item of res[0].DataList){
-                this.projectData.push(item)//遍历出来的数组放进去
+                this.projectData.push({
+                 ProjectName:item.ProjectName,
+                  ProjectPrincipal:item.ProjectPrincipal,
+                  CustomerPhone:item.CustomerPhone,
+                  ProjectStaDate:item.ProjectStaDate.replace(' 0:00:00', ''),
+                  ProjectStates:item.ProjectStates,
+                  ProjectCode:item.ProjectCode
+                })//遍历出来的数组放进去
               }
                 console.log( this.projectData)
                 // console.log(res[0].DataList)
@@ -368,6 +380,7 @@ export default {
                       });
                        this.$refs['projectaddrules'].resetFields()
                         this.dialogVisible=false;//关闭窗口
+                        this.getprojectmange()//是刷新列表
                     }else{
                           this.$message({
                             type:'error',
@@ -384,46 +397,45 @@ export default {
       this.Unprivilegedlist()//调用无权限列表的函数
       this.permission()//调用有权限列表
     }
-
 }
 </script>
 
 <style scoped lang='scss'>
 .projectList{
-    height: 50px;
+/*    height: 50px;
     line-height: 50px;
     padding-left: 20px;
     background:#fff;
-    box-shadow: 0px 2px 1px #888888;
-}
-.projectDataList{
-     width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
-    text-align: center;
-}
-.add_project{
-  display: inline-block;
-	float: right;
-	margin-right: 50px;
-  margin-top: 11px;
-}
-.procurment_title{
-  margin-bottom: 30px;
-}
-.el-date-editor.el-input, .el-date-editor.el-input__inner{
-  width: 100%;
-}
-.el-table .projectBeyondSpan{
-  display: inline-block;
-  width: 100px;
-  height: 40px;
-  color:red;
-  line-height: 40px;
-  font-size: 18px;
-  background: url(../../assets/img/projectsBeyond.png) no-repeat;
-  background-size: 100% 100%;
+    box-shadow: 0px 2px 1px #888888;*/
+    .projectDataList{
+         width: calc(100% - 40px);
+        height: calc(100% - 90px);
+        margin: 20px;
+        background: #fff;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+    .add_project{
+      display: inline-block;
+    	float: right;
+    	margin-right: 50px;
+      margin-top: 11px;
+    }
+    .procurment_title{
+      margin-bottom: 30px;
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+      width: 100%;
+    }
+    .el-table .projectBeyondSpan{
+      display: inline-block;
+      width: 100px;
+      height: 40px;
+      color:red;
+      line-height: 40px;
+      font-size: 18px;
+      background: url(../../assets/img/projectsBeyond.png) no-repeat;
+      background-size: 100% 100%;
+    }
 }
 </style>

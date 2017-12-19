@@ -130,7 +130,7 @@ export default {
       callback();
       };
        var checkprice=(rule,value,callback)=>{
-      if(!(/^[0-9]*$/).test(value) && value !== '') {
+      if(!(/^[0-9]+(.[0-9]+)?$/).test(value) && value !== '') {
         callback(new Error('价格为数字'));
       }else if(value==''){
         callback(new Error('请输入价格'));
@@ -213,14 +213,15 @@ export default {
            this.dialogVisible = true;
         },
         scockeditClose(){
+          this.$refs['stockaddRule'].resetFields();  //清空表单的验证状态
             //关闭对话框清空数据
           this.stocklInfo={
             StockCode: Date.parse( new Date())/1000,
-            MaterialsName:'',
-            Describe:'',
-            PurchaseLocation:'',
-            Uint:'',
-            Price:''
+            MaterialsName:null,
+            Describe:null,
+            PurchaseLocation:null,
+            Uint:null,
+            Price:null
              }
          },
          addstock(){//点击添加货物时候调用函数!
@@ -248,6 +249,7 @@ export default {
                                });
                                this.$refs['stockaddRule'].resetFields()
                                this.dialogVisible=false;//关闭窗口
+                               this.Getuser();//刷新列表
                             }else{
                                 this.$message({
                                 type:'error',
@@ -271,6 +273,7 @@ export default {
                               });
                               this.$refs['stockaddRule'].resetFields();
                               this.dialogVisible = false;
+                               this.Getuser()//刷新列表
                             } else if (res ==2) {
                                this.$message({
                                 type: 'error',
