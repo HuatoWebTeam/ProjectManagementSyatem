@@ -308,7 +308,7 @@ export default {
    .projectStockList{
         text-align: center;
      }
-      .procurment_title{
+    .procurment_title{
     	font-size: 16px;
     	font-family: "Microsoft YaHei";
       font-weight: bold;
@@ -344,7 +344,7 @@ export default {
 }
 </style>
 <style type="text/css" lang='scss'>
-   .el-icon{
+.el-icon{
    display: none;
 }
 .el-dialog__header{
