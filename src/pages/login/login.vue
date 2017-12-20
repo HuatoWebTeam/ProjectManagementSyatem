@@ -1,6 +1,10 @@
 <template>
   <el-row class='loginContainer'>
-    <el-col :span='24'>
+    <el-col :span='24' >
+        <div class="loginheaderlogo"><div class="huatotitle">华图项目管理系统</div></div>  
+
+     </el-col> 
+    <el-col :span='24' class='loginmain'>
       <el-form label-width="80px" :model='userLogin' :rules='loginRules' ref='loginForm' >
         <el-form-item label="用户名" prop='userName' :error='showError' >
           <el-input v-model="userLogin.userName" @change='showError = null'></el-input>
@@ -14,11 +18,8 @@
       </el-form>
     </el-col>
   </el-row>
- 
 </template>
-
 <script>
-
 import { userLogin } from '@/api/api';
 import axios from 'axios';
 import qs from 'qs';
@@ -79,24 +80,44 @@ export default {
 
 <style scoped lang='scss'>
   .loginContainer {
-    height: 100%;
+     height: 100%;
+      .loginheaderlogo{
+         height: 100px;
+         background: url(../../assets/img/title.png) no-repeat;
+         background-position: center center;
+        margin-right: 120px;
+         text-align: center;
+      }
+     .huatotitle{
+            display: inline-block;
+            font-size: 30px;
+           line-height: 100px;
+           margin-left:530px;
+           
+        }   
+
+
+     .loginmain{
+          position: relative;
+          height: 100%;
+          background: url(../../assets/img/backmain.png) no-repeat;
+          background-size:cover;
+     }
     .el-col {
-      height: 100%;
-      position: relative;
-      .el-form {
-        position: absolute;
-        width: 300px;
-        height: 200px;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        margin: auto;
-        .submitBtn {
-          width: 100%;
+        .el-form {
+          position: absolute;
+          width: 300px;
+          height: 200px;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          margin: auto;
+          .submitBtn {
+            width: 100%;
+          }
         }
       }
-    }
 
   }
 </style>

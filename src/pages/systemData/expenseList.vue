@@ -75,7 +75,7 @@
       :on-error="errorfile"
       :action="TextActionURL"
       :name='upLoadName'
-      accpet='xlsx'
+       accpet='xlsx'
       :auto-upload="false"
       :on-success="fileSuccess"
       :limit="1">
@@ -138,7 +138,9 @@ export default {
               fileSuccess(res) {
                 console.log(res);
                   this.$refs['uploadFile'].clearFiles();
+                  this.$message.success('上传成功!');
                   this.AddText=false;  
+                   this.expenses()//列表刷新
               },
               errorfile(res){
                   if(res==0){

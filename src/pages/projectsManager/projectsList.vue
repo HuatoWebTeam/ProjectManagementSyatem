@@ -167,6 +167,8 @@ export default {
       var checkContractAmount=(rule,value,callback)=>{
         if(value === '') {
           callback(new Error('金额不能为空'));
+        }else if(value !== '' && !(/^[0-9]+(.[0-9]{1,3})?$/).test(value)){
+          callback(new Error('请输入正确金额'))
         }
         callback();
       };
@@ -281,7 +283,7 @@ export default {
                  if(res==1){
                   this.$message({
                     type:'success',
-                    message:'授权成功'
+                    message:'授权成功',
                   })
                   this.jurisdiction=false;
                  }else{
@@ -290,7 +292,8 @@ export default {
                     message:"授权失败"
                   })
                  }
-            })         
+            })     
+             this.getprojectmange()//授权成功后,刷新一下列表    
         },
         Unprivilegedlist(){//
             var parms={
@@ -320,7 +323,6 @@ export default {
                pageSize: this.pageSize,
               }
           ProjectManage(parms).then( res => {//项目列表
-              console.log(res)
               if(res[0].IsTrue==0){
                   this.show=false;
               }else{
@@ -378,7 +380,7 @@ export default {
                         type:'success',
                         message:'添加成功'
                       });
-                       this.$refs['projectaddrules'].resetFields()
+                        this.$refs['projectaddrules'].resetFields()
                         this.dialogVisible=false;//关闭窗口
                         this.getprojectmange()//是刷新列表
                     }else{
@@ -396,7 +398,11 @@ export default {
       this.getprojectmange();//调用函数列表
       this.Unprivilegedlist()//调用无权限列表的函数
       this.permission()//调用有权限列表
-    }
+    },
+      deactivated() {
+    this.$destroy(true);
+  }
+
 }
 </script>
 

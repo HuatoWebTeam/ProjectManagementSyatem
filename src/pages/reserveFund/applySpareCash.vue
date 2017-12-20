@@ -17,7 +17,6 @@
                 :key='item.value'
                 :value='item.value'
                 :label='item.label'>
-                  
               </el-option>
             </el-select>
           </el-form-item>
@@ -32,7 +31,6 @@
             type='datetime'
              placeholder='请选择日期' 
              v-model='formData.chooseDate'>
-
             </el-date-picker>
           </el-form-item>
           <el-form-item label='申请描述：' prop='describe' >

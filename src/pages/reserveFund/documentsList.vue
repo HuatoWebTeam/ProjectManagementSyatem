@@ -207,6 +207,7 @@ export default {
     uploadImgBtn() {
       console.log(this.fileList);
       this.$refs['imgUpload'].submit();
+      this.getDocumentList()//调用列表刷新
     },
     beforeUplpad(file) {
       console.log(file);

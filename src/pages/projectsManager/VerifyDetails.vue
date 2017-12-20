@@ -237,12 +237,6 @@
                closeAddText(){//关闭添加弹框
                 this.AddTextdialog=false;
                 },
-            submitUpload() {//提交给数据库
-
-                  console.log(this.$refs['uploadFile'])    
-
-                this.$refs['uploadFile'].submit();
-              },
              handleRemove(file, fileList) {//删除
                   console.log(file, fileList);
                 },
@@ -255,6 +249,7 @@
              fileSuccess(res) {
                 console.log(res);
                  this.$message.success('上传成功!');
+                 this.GetprojectDeail()//成功的时候调用显示的的页面,刷新
               }, 
             Intooutfile(){//导出验收资料.
                var params={

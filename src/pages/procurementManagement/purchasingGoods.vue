@@ -5,7 +5,7 @@
       <div class="seck">
       		<span >查询条件</span>
           <el-input  placeholder="请输入编号或名称" v-model="condition"  class="seack_input" ></el-input>
-           <el-button type="primary" icon="el-icon-search" class="seack_button" @click="Getuser" size="medium">搜索</el-button>
+           <el-button type="primary" size="small" icon="el-icon-search" class="seack_button" @click="Getuser">搜索</el-button>
            <el-button size="small" class="add_choice" type="primary"  @click="addstock">添加备货</el-button>
        </div>
   </el-col>
@@ -70,7 +70,7 @@
         @close='scockeditClose'
         @open='scockeditOpen'
        >       
-		<el-form :label-position="labelPosition" label-width="80px" :model="stocklInfo" status-icon :rules="stockaddRules" ref='stockaddRule'>
+		<el-form :label-position="labelPosition" label-width="80px" :model="stocklInfo" status-icon :rules="stockaddRules" ref='stockaddRule' class="elform">
 		  <el-form-item label="编码:" >
 		    <el-input v-model="stocklInfo.StockCode"  disabled="disabled"></el-input>
 		  </el-form-item>
@@ -331,17 +331,21 @@ export default {
         border: 1px solid #ccc;
         margin-top: 100px;
     }
+    .elform{
+      width: 95%;
+    }
  }
 
 .el-dialog__body{
  padding: 50px 0px 50px 0px;
 }
 .el-button{
-  padding: 8px 2px ;
+  padding: 8px 12px ;
 }
 .seack_input.el-input {
   width: 200px;
 }
+
 </style>
 <style type="text/css" lang='scss'>
 .el-icon{
@@ -378,13 +382,9 @@ export default {
     .stock_but{
       width: 60px;
     }
-    .seack_input{
-      width: 200px;
-      position: absolute;
-    }
 
     .seack_button{
-      margin-left: 220px;
+      margin-left:16px;
     }
 
 

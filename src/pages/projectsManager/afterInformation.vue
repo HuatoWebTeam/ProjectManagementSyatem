@@ -86,7 +86,7 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                  prop='selectvalue'>
+                    >
                 </el-option>
         </el-select>
 	  </el-form-item>
@@ -144,6 +144,12 @@
   import{GetAfterSaleData,Upload,InsertAfterSale,ProjectManage}from'@/api/api'//引进列表
 export default {
     data(){
+      var checkprojectname=(rule,value,callback)=>{
+        if (value ===''){
+          callback(new Error('工程名称不能为空'))
+        }
+        callback();
+      }
     	return{
     		dialogVisible:false,
         totalNumber:null,
@@ -162,13 +168,16 @@ export default {
             ExpirationDateFlieName:'', //需求单文件名
             ExpirationDateFlieUrl:'',
          },
-        rules:{
-          selectvalue:[{required:true, message:'请选择项目', trigger: 'change'} ]
-        },
          fileAdd:'/AfterSaleManage/RelicUpload',
          ProjectName:"",
          afterSale:[],
+         rules:{
+             selectvalue:[
+                {validator: checkprojectname, trigger: 'blur'}
+             ]  
+          }
         }
+
     },
      methods:{
         DataList(){//列表请求显示!
@@ -191,19 +200,17 @@ export default {
              },
      EmptyData(){
              this.formInfo={
-             selectvalue: '',//下拉选择框
-             filename:'',
-             AfterSaleFlieName:'',//售后外派单文件名
-             AfterSaleFlieUrl:'',
-             InWarrantyFlieName:'', //维修换货单文件名
-             InWarrantyFlieUrl:'',
-             ExpirationDateFlieName:'', //需求单文件名
-             ExpirationDateFlieUrl:'',
+                 selectvalue: '',//下拉选择框
+                 filename:'',
+                 AfterSaleFlieName:'',//售后外派单文件名
+                 AfterSaleFlieUrl:'',
+                 InWarrantyFlieName:'', //维修换货单文件名
+                 InWarrantyFlieUrl:'',
+                 ExpirationDateFlieName:'', //需求单文件名
+                 ExpirationDateFlieUrl:'',
            }
          this.dialogVisible=true;
      },
-
-
        getprojectmange(){
           var parms={//传的参数,项目下拉框!
                pageIndex: 10000,
@@ -259,6 +266,9 @@ export default {
                                     message:'新建成功'
                                   });
                                   this.dialogVisible=false;
+                                 this.DataList()//函数调用.
+                                 }else{
+                                    console.log(res)
                                  }
                               })
                    })
