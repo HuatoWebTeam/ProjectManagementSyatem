@@ -190,8 +190,6 @@ export default {
               GetstockManage(params).then(res => {
                 console.log(res)
                 this.totalNumber=res[0].TotalNumber;
-                console.log("yema")
-                console.log(this.totalNumber)
                 this.stockData=[];
                 for(let item of res[0].DataList){//遍历列表
                   this.stockData.push(item);//遍历出来的别表添加进去
@@ -203,12 +201,12 @@ export default {
             this.isAdd = false;//如果是编辑就为false
             console.log(this.stockData)
             this.stocklInfo = {
-            StockCode: this.stockData[idx].StockCode,             // 序号
-            MaterialsName: this.stockData[idx].MaterialsName,  // 名称
-            Describe: this.stockData[idx].Describe,        //描述     
-            PurchaseLocation: this.stockData[idx].PurchaseLocation,       // 采购地点
-            Uint: this.stockData[idx].Uint,             // 单位
-            Price: this.stockData[idx].Price,            // 单价
+              StockCode: this.stockData[idx].StockCode,             // 序号
+              MaterialsName: this.stockData[idx].MaterialsName,  // 名称
+              Describe: this.stockData[idx].Describe,        //描述     
+              PurchaseLocation: this.stockData[idx].PurchaseLocation,       // 采购地点
+              Uint: this.stockData[idx].Uint,             // 单位
+              Price: this.stockData[idx].Price,            // 单价
           };
            this.dialogVisible = true;
         },

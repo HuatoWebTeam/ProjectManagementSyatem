@@ -122,7 +122,7 @@ export default {
               AppliedAmount: this.formData.amocntNumber,
               AppliedDate:this.timeFormatter(this.formData.chooseDate),
               Remark:this.formData.describe
-            }
+             }
           };
           InsertPettyCash(params).then(res => {
             console.log(res);
@@ -143,9 +143,6 @@ export default {
           return false;
         }
       })
-      
-      
-
     },
     timeFormatter(value){
       var date = new Date(value);

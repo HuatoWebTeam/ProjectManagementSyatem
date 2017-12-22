@@ -72,7 +72,7 @@ export const PaddingData = () => {
        // 用户权限配置-----  获取成员已有的权限
 export const GetJurisdictionUserNameData = (params) => {
          return axios
-           .get("/UserManage/GetJurisdictionUserNameData", {params: params})
+           .get("/UserManage/GetJurisdictionUserNameData", params)
            .then(res => res.data);
        };   
        // 用户权限配置----- 提交权限数据 
@@ -142,6 +142,12 @@ export const AfterTheDetails = params => {
     return axios
     .post("/ProjectManage/InsertProjectManage",params)
     .then(res=>res.data)
+  }
+ //项目编辑接口
+export const ProjectEdit=(params)=>{
+       return axios
+       .post("/ProjectManage/UpdateProjectManage",params)
+       .then(res => res.data)
   }
    //项目有权限的人操作请求
     export const AuthorizedList=(params)=>{

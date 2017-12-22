@@ -1,21 +1,32 @@
 <template>
   <el-row class='loginContainer'>
     <el-col :span='24' >
-        <div class="loginheaderlogo"><div class="huatotitle">华图项目管理系统</div></div>  
-
+        <div class="loginheaderlogo"><div class="huatotitle">华图项目管理系统</div></div>
      </el-col> 
     <el-col :span='24' class='loginmain'>
-      <el-form label-width="80px" :model='userLogin' :rules='loginRules' ref='loginForm' >
-        <el-form-item label="用户名" prop='userName' :error='showError' >
-          <el-input v-model="userLogin.userName" @change='showError = null'></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop='userPass' :error='showError'>
-          <el-input type='password' v-model="userLogin.userPass" @change='showError = null'></el-input>
-        </el-form-item>
-        <el-form-item >
-          <el-button type='primary' @click='onSubmit' class='submitBtn' >登录</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="projectRight"></div>
+      <div class="projectLeft">
+          <el-form label-width="80px" :model='userLogin' :rules='loginRules' ref='loginForm' >
+            <el-form-item  prop='userName' :error='showError' >
+              <div>
+                <div class="uesricon"></div>
+              <el-input v-model="userLogin.userName" @change='showError = null' placeholder='用户名' class="placeholderpadding"></el-input>
+              </div>
+            </el-form-item>
+
+            <el-form-item  prop='userPass' :error='showError'>
+                <div>
+                 <div class="passwordicon"></div>
+                 <el-input type='password' v-model="userLogin.userPass" @change='showError = null' placeholder="密码" class="placeholderpadding"></el-input>
+               </div>
+             </el-form-item>
+            <el-form-item >
+              <el-button type='primary' @click='onSubmit' class='submitBtn' >登录</el-button>
+            </el-form-item>
+          </el-form>
+      </div>
+      <div class="projectbuttom"></div>
+      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 2.0.1</div>
     </el-col>
   </el-row>
 </template>
@@ -80,39 +91,92 @@ export default {
 
 <style scoped lang='scss'>
   .loginContainer {
+     min-width: 670px;
      height: 100%;
       .loginheaderlogo{
-         height: 100px;
-         background: url(../../assets/img/title.png) no-repeat;
-         background-position: center center;
-        margin-right: 120px;
-         text-align: center;
+           height: 100px;
+           background: url(../../assets/img/title.png) no-repeat;
+           background-position: center center;
+           margin-right: 120px;
+           text-align: center;
       }
      .huatotitle{
-            display: inline-block;
-            font-size: 30px;
+           position: absolute;
+           display: inline-block;
+           font-size: 30px;
            line-height: 100px;
-           margin-left:530px;
-           
+           margin-left:150px;   
         }   
-
-
      .loginmain{
-          position: relative;
+          position:relative;
           height: 100%;
           background: url(../../assets/img/backmain.png) no-repeat;
-          background-size:cover;
+          background-size:cover;      
      }
+    .projectRight{
+      position: absolute;
+      background: url(../../assets/img/backgroundpic.png) no-repeat;
+      z-index: 9999;
+      width: 450px;
+      height: 450px;
+      top: 40%;
+      margin-top: -200px;
+      left: 30%;
+      background-size: 100%;
+    }
+    .projectLeft{
+      position: absolute;
+      background: url(../../assets/img/Shape9.png) no-repeat;
+      width: 450px;
+      height: 450px;
+      top: 40%;
+      margin-top: -200px;
+      left: 60%;
+      background-size: 100%;
+      z-index: 9999;
+    }
+  .projectbuttom{
+    position: absolute;
+     background: url(../../assets/img/background.png) no-repeat;
+     width:100%;
+     height:100%;
+    background-size: contain;
+    top: 61%;
+  }
+ .Copyright{
+  position: absolute;
+  font-size: 20px;
+  top: 80%;
+  left: 41%;
+ }
+
+.uesricon{
+  width: 40px;
+   height: 40px;
+   border-bottom: 0px;
+   border-top:0px;
+  border-right: 1px solid #d8dce5;
+  position: absolute;
+  z-index: 9999;
+   background: url(../../assets/img/user.png) no-repeat 8px  8px ;
+}
+.passwordicon{
+   width: 40px;
+   height: 40px;
+   border-bottom: 0px;
+   border-top:0px;
+   border-right: 1px solid #d8dce5;
+   position: absolute;
+   z-index: 9999;
+   background: url(../../assets/img/password.png) no-repeat 8px  8px ;
+}
     .el-col {
+
         .el-form {
           position: absolute;
-          width: 300px;
+          width: 370px;
           height: 200px;
-          top: 0;
-          right: 0;
-          left: 0;
-          bottom: 0;
-          margin: auto;
+           top: 25%;
           .submitBtn {
             width: 100%;
           }
@@ -120,4 +184,16 @@ export default {
       }
 
   }
+
+
+</style>
+<style type="text/css" lang="scss">
+    
+    .placeholderpadding {
+      .el-input__inner{ 
+       padding: 0 52px;
+      }
+    }
+      
+   /* margin-left: 40px;*/
 </style>

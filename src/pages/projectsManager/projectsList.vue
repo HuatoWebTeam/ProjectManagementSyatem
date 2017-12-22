@@ -18,13 +18,13 @@
       <el-table-column
         prop="ProjectPrincipal"
         label="项目负责人"
-        width='160'
+        width='100'
         >
       </el-table-column>
       <el-table-column
         prop="CustomerPhone"
         label="客户电话"
-        width="200">
+        width="160">
       </el-table-column>
       <el-table-column
         prop="ProjectStaDate"
@@ -42,11 +42,12 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width='300'
+        width='400'
         >
         <template slot-scope="scope">
         <el-button type="primary" size="small" @click='routerToDetails(scope.$index)'>项目详情</el-button>
         <el-button type="primary"  v-show="show" size="small" @click='Editingpermissions(scope.$index)'>人员分配</el-button>
+         <el-button type="primary" v-show="editshow" size="small" @click='RevampProject(scope.$index)'>项目编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,10 +63,9 @@
   </el-col>
   <el-col :span='24'>
     <el-dialog
-      title="添加备货"
+      title="添加项目"
       :visible.sync="dialogVisible"
        width="26%"    
-    
        class="projectedit"
         @close='projecteditClose'
         @open='projecteditOpen'
@@ -108,7 +108,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size='small' class="stock_but"  @click="dialogVisible = false">取  消</el-button>
-        <el-button size='small'  type="primary"  class="projectadd_but" @click='projectadd_but'>确  定</el-button>
+        <el-button size='small'  type="primary"    @click='projectadd_but'>确  定</el-button>
       </span>
     </el-dialog>
   </el-col>
@@ -129,16 +129,14 @@
       </el-transfer><!-- 穿梭框列表插件 -->
       <span slot="footer" class="dialog-footer">
         <el-button size='small' class="stock_but" @click="jurisdiction = false">取  消</el-button>
-        <el-button size='small' type="primary"  class="projectadd_but" @click='setAssignment'>确  定</el-button>
+        <el-button size='small' type="primary"   @click='setAssignment'>确  定</el-button>
       </span>
     </el-dialog>
   </el-col>
 </el-row>
-
 </template>
-
 <script>
-   import {ProjectManage,InsertProjectManage,GetUserManageData,AuthorizedList,InsertPersonnelAssignment} from '@/api/api'//引进api
+   import {ProjectManage,InsertProjectManage,GetUserManageData,AuthorizedList,InsertPersonnelAssignment,ProjectEdit} from '@/api/api'//引进api
 export default {
     data(){
         //自定义表单--自定义
@@ -152,11 +150,9 @@ export default {
         if(value === '') {
           callback(new Error('客户名称不能为空'));
         }
-        callback();
+        callback(); 
       };
       var checkCustomerPhone = (rule, value, callback) => {
-        //console.log(value);
-        //console.log((/^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0|1|2|3|4|5|6|7|8|9])\d{8}$/).test(value));
         if(value !== '' && !(/^(13[0-9]|14[5|7|9]|15[0|1|2|3|5|6|7|8|9]|17[0|6|7|8]|18[0|1|2|3|4|5|6|7|8|9])\d{8}$/).test(value)) {
           callback(new Error('请输入正确的联系电话'));
         } else if (value == '') {
@@ -190,7 +186,6 @@ export default {
         }
         callback();
       };
-
       return{
             data:[],
             valueright:[],//权限分配,右边显示的数组
@@ -202,6 +197,8 @@ export default {
             totalNumber:null,//总条数
             dialogVisible:false,//默认弹框关闭
             show:true,
+            editshow:false,
+            isAdd:true,
             projectList:{
                 ProjectName:'',//项目名称
                 ProjectPrincipal:'',//项目负责人
@@ -251,6 +248,7 @@ export default {
            this.jurisdiction=true;//点击
            this.permission()//调用函数列表请求
         },
+
         routerToDetails(index) {
           this.$router.push({name: 'ProjectsListDetails', params: { id: this.projectData[index].ProjectCode}});
           console.log(this.projectData[index])
@@ -310,7 +308,7 @@ export default {
                     })
                   }
           })
-        },    
+        }, 
         personnelAssignmentClose(){
           //关闭穿梭框
         },
@@ -323,28 +321,34 @@ export default {
                pageSize: this.pageSize,
               }
           ProjectManage(parms).then( res => {//项目列表
+              console.log("项目列表")
+               console.log(res)
               if(res[0].IsTrue==0){
                   this.show=false;
-              }else{
-                  this.show=true;
+              }else if (res[0].IsTrue==2){
+                  this.editshow=true;
               }
               this.totalNumber=res[0].TotalNumber//把请求的页码赋值过来
               this.projectData=[]; 
               console.log(res)
               for(let item of res[0].DataList){
                 this.projectData.push({
-                 ProjectName:item.ProjectName,
+                  ProjectName:item.ProjectName,
                   ProjectPrincipal:item.ProjectPrincipal,
                   CustomerPhone:item.CustomerPhone,
                   ProjectStaDate:item.ProjectStaDate.replace(' 0:00:00', ''),
                   ProjectStates:item.ProjectStates,
-                  ProjectCode:item.ProjectCode
+                  ProjectCode:item.ProjectCode,
+                  ContractAmount:item.ContractAmount,
+                  CustomerName:item.CustomerName,
+                  ScheduledTime:item.ScheduledTime.replace(' 0:00:00', '')
                 })//遍历出来的数组放进去
               }
                 console.log( this.projectData)
                 // console.log(res[0].DataList)
           })
         },
+
         pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
              this.pageIndex = pageIndex;//传当前页面   
              this.getprojectmange()//换页码时候调用
@@ -354,22 +358,37 @@ export default {
         },
         projecteditClose(){//关闭窗口的时候清空数据,
           this.projectInfo={
-              ProjectName:'',
-              CustomerName:'',
-              CustomerPhone:'',
-              ContractAmount:'',
-              ProjectPrincipal:'',//项目负责人
-              ProjectStaDate:'',//项目启动时间
-              ScheduledTime:''//项目结束时间
+              ProjectName:null,
+              CustomerName:null,
+              CustomerPhone:null,
+              ContractAmount:null,
+              ProjectPrincipal:null,//项目负责人
+              ProjectStaDate:null,//项目启动时间
+              ScheduledTime:null//项目结束时间
           }
         },
         projecteditOpen(){
           //打开时的函数
         },
+     RevampProject(index){//点击编辑的时候赋值过去
+          this.isAdd=false;//编辑的时候关闭添加.
+          this.dialogVisible =true;//点击编辑的时候弹框显示,
+             this.projectInfo={
+                  ProjectName:this.projectData[index].ProjectName,
+                  CustomerName:this.projectData[index].CustomerName,
+                  CustomerPhone:this.projectData[index].CustomerPhone,
+                  ContractAmount:this.projectData[index].ContractAmount,
+                  ProjectPrincipal:this.projectData[index].ProjectPrincipal,//项目负责人
+                  ProjectStaDate:this.projectData[index].ProjectStaDate,//项目启动时间
+                  ScheduledTime:this.projectData[index].ScheduledTime,//项目结束时间
+                  ProjectCode:this.projectData[index].ProjectCode
+              }
+        },
         projectadd_but(){//添加项目//给后台传值
             var parms={
-               projectManage:this.projectInfo//传值往后台
-            } 
+                  projectManage:this.projectInfo//传值往后台
+              } 
+          if (this.isAdd) {
             this.$refs['projectaddrules'].validate((valid) =>{
               if (valid) {
                   InsertProjectManage(parms).then(res=>{
@@ -383,29 +402,58 @@ export default {
                         this.$refs['projectaddrules'].resetFields()
                         this.dialogVisible=false;//关闭窗口
                         this.getprojectmange()//是刷新列表
-                    }else{
-                          this.$message({
-                            type:'error',
-                            message:'添加失败'
+                    } else if (res ==2) {
+                             this.$message({
+                                type: 'error',
+                                message: '项目名重复！！！'
+                              })
+                            }else{
+                            this.$message({
+                              type:'error',
+                              message:'添加失败'
                           })
                         }
-                  })
+                    })
                 }   
-              })
-            }     
-      },
+            })
+           }else{
+              this.$refs['projectaddrules'].validate((valid) => {
+                        console.log(valid)
+                        if(valid) {
+                          console.log(parms);
+                          ProjectEdit(parms).then(res => {
+                           console.log("编辑传的值")
+                           console.log(res)
+                            if(res == 1) {
+                              this.$message({
+                                type: 'success',
+                                message: '修改成功！！！'
+                              });
+                                this.$refs['projectaddrules'].resetFields();
+                                this.dialogVisible = false;
+                                this.getprojectmange()//列表刷新
+                            }else{
+                               this.$message({
+                                 type: 'error',
+                                 message: '编辑失败！！！'
+                               })
+                             }
+                          })
+                      }
+                   })    
+                }
+           }     
+    },
     mounted(){
       this.getprojectmange();//调用函数列表
       this.Unprivilegedlist()//调用无权限列表的函数
       this.permission()//调用有权限列表
     },
       deactivated() {
-    this.$destroy(true);
-  }
-
+           this.$destroy(true);
+     }
 }
 </script>
-
 <style scoped lang='scss'>
 .projectList{
 /*    height: 50px;
