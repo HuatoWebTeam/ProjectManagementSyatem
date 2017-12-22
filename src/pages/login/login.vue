@@ -17,7 +17,7 @@
             <el-form-item  prop='userPass' :error='showError'>
                 <div>
                  <div class="passwordicon"></div>
-                 <el-input type='password' v-model="userLogin.userPass" @change='showError = null' placeholder="密码" class="placeholderpadding"></el-input>
+                 <el-input type='password' v-model="userLogin.userPass" @change='showError = null' placeholder="密码" class="placeholderpadding" ></el-input>
                </div>
              </el-form-item>
             <el-form-item >
@@ -26,7 +26,7 @@
           </el-form>
       </div>
       <div class="projectbuttom"></div>
-      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 2.0.1</div>
+      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.1</div>
     </el-col>
   </el-row>
 </template>
@@ -55,7 +55,8 @@ export default {
       }
     },
     methods: {
-      onSubmit() {
+      onSubmit(ev) {
+        var _this = this;
         this.showError = null;
         let user = {
           name: this.userLogin.userName
@@ -77,14 +78,24 @@ export default {
           }
         })
         
-      }
+      },
+
     },
     mounted() {
+      var _this = this;//代表上面的函数,点击.
       // 获取真实ip
       getIp((ip) => {
         console.log(ip);
         this.userLogin.userIp = ip;
       })
+     $(window).keyup(function(ev){
+        // console.log(ev);
+         if(ev.keyCode == 13){
+           _this.onSubmit();
+        }
+      })
+
+
     }
 }
 </script>
@@ -146,8 +157,8 @@ export default {
  .Copyright{
   position: absolute;
   font-size: 20px;
-  top: 80%;
-  left: 41%;
+  top: 85%;
+  left: 35%;
  }
 
 .uesricon{
