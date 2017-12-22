@@ -149,7 +149,8 @@ export default {
 	               console.log(options)
 	              })
 	           },
-	           GetUntreated(){
+	           GetUntreated(ev){
+	           	var _this=this
                  var parms={
                      projectCode:this.selectvalue,
                      condition:this.condition,
@@ -193,9 +194,16 @@ export default {
                  this. GetUntreated()//重新获取一边当前的
                }   
        },
-       mounted(){
+       mounted(ev){
+       	   var  _this=this
        	     this.getprojectmange();//调用方法.项目名称显示!
        	     this.GetUntreated();//得到待处理订单的列表!
+               $(window).keyup(function(ev){//enetr键快捷搜
+			        // console.log(ev);
+			         if(ev.keyCode == 13){
+			           _this.GetUntreated();
+			        }
+			      })
        }
 }
 </script>

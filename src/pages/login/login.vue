@@ -94,8 +94,6 @@ export default {
            _this.onSubmit();
         }
       })
-
-
     }
 }
 </script>

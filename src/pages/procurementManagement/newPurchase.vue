@@ -99,7 +99,7 @@
 				    suffix-icon="el-icon-search"
 				    v-model="condition"
 				    class="sousuo"
-				    @keyup.enter.native="search()"
+				    @keyup.enter.native="Getuser()"
 				    >
 			    </el-input>
 			  <el-table
@@ -190,9 +190,6 @@ export default {
       }
     },
    methods:{
-         search(){       
-	           this.Getuser();//调用备货列表显示!    
-                    }, 
 		toggleSelection(rows,inx) {//点击函数回调选中的
 			if (rows) {
 				rows.forEach(row => {
@@ -285,8 +282,6 @@ export default {
 
                 }else{
                   return false;
-                    console.log("发给后台的内容菜单")
-                    console.log(purchase)
                 }
          })   
              

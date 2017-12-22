@@ -179,7 +179,8 @@ export default {
        }
 	},
    methods:{//需要用到的方法
-        Getuser(){//备货管理列表方法
+        Getuser(ev){//备货管理列表方法
+          var _this=this;
           console.log(this.pageIndex, this.pageSiz)
            var  params={//传递的参数
                 pageIndex: this.pageIndex,
@@ -294,7 +295,16 @@ export default {
                }
 },
    mounted() {//调用方法获取列表//立马调用
+     var _this=this;
     this.Getuser();
+       $(window).keyup(function(ev){//enetr键快捷搜
+              // console.log(ev);
+               if(ev.keyCode == 13){
+                 _this.Getuser();
+              }
+            })
+
+
     }
 }
 </script>

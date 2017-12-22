@@ -54,7 +54,8 @@ export default {
       }
   },
     methods:{
-    	Attendance(){
+    	Attendance(ev){
+         var _this = this;//代表上面的函数,点击
            var parms={
 		         pageIndex:this.pageIndex,
 		         pageSize:this.pageSize,
@@ -93,7 +94,14 @@ export default {
                } 
     },
     mounted(){
+        var _this = this;//代表上面的函数,点击
       this.Attendance()//调用函数!列表显示!//调用时候加this,因为访问的是局外的函数!
+       $(window).keyup(function(ev){
+        // console.log(ev);
+         if(ev.keyCode == 13){
+           _this.Attendance();
+        }
+      })
     }
 }
 </script>
