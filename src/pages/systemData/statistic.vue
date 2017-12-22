@@ -17,13 +17,13 @@
     <div class="statistic_procurment">
     	<div v-for='item in projectData' class="entry_block" :key='item.projectName'>
     		<div class="procurment_name">项目:{{item.projectName}} <span class="procurment_start_time">项目发起时间:<span class="get_procument_time">{{item.projectDate}}</span></span></div>
-            <el-collapse accordion>
-			  <el-collapse-item>
-			    <template slot="title">
-			      <span>点击查看详情</span><i class="header-icon el-icon-information"></i>
-			    </template>
-			    <div v-for='item in  item.ListsSigningIns' class="CallerInfo">姓名:{{item.LoginName}}  时间:{{item.SigningInDate}}  工作地点:{{item.SigningInAddres}}  </div>
-			  </el-collapse-item>
+        <el-collapse accordion>
+    			   <el-collapse-item>
+    			    <template slot="title">
+    			      <span>点击查看详情</span><i class="header-icon el-icon-information"></i>
+    			    </template>
+    			    <div v-for='item in  item.ListsSigningIns' class="CallerInfo">姓名:{{item.LoginName}}  时间:{{item.SigningInDate}}  工作地点:{{item.SigningInAddres}}  </div>
+    			  </el-collapse-item>
 			</el-collapse>
     	</div>
     </div>
@@ -62,8 +62,6 @@ export default {
 		         projectName:this.projectName
            }
     		GetSigningInData(parms).then(res=>{
-         console.log("列表显示!!!")
-    			console.log(res)
                 let projectData=[];
                 this.totalNumber=res[0].TotalNumber;
                for(let i=0;i<res[0].DataList.length;i++){
@@ -108,8 +106,15 @@ export default {
 
 <style scoped  lang='scss'>
 .AttendanceCheck{
-
-
+/* height: 100%;*/
+   .main_heard{
+      width: calc(100% - 40px);
+      height: calc(100% - 90px);
+      margin: 20px;
+      background: #fff;
+      border: 1px solid #ccc; 
+         }
+  }
 .entry_block{
 	background: #f2f2f2;
 }
@@ -117,38 +122,24 @@ export default {
 	margin-left: 30px;
 }
 .main_heard{
-    width: calc(100% - 40px);
-    height: calc(100% - 90px);
-    margin: 0px 20px 20px 20px;
-    background: #fff;
-    border: 1px solid #ccc; 
-}
-.procurment_name{
-		margin-top:20px;
-}
-.el-button{
-	font-size: 12px;
-	padding:8px 10px;
-}
-.procurment_start_time{
-	   /* display: inline-block; */
-	    margin-right: 80px;
-	    float: right;
+  .procurment_name{
+  		margin-top:20px;
   }
-/*.projectSelect,.el-button, .el-button--primary, span{
-      padding:8px 10px;
-     }*/
-
-
+  .el-button{
+  	font-size: 12px;
+  	padding:8px 10px;
+  }
+  .procurment_start_time{
+  	   /* display: inline-block; */
+  	    margin-right: 80px;
+  	    float: right;
+    }
 }
 </style>
-<style type="text/css">
+<style type="text/css" >
 
 .el-collapse-item__arrow{
 	margin-right:56px;
-}
-.el-collapse-item__arrow:after{
-	/*content:"更多";*/
 }
 .procurment_title{
 	

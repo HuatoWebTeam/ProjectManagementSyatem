@@ -76,6 +76,8 @@
   <el-col :span='24'>
   	<el-dialog
 	  title="新建售后"
+    class="projectedit"
+    @close='projecteditClose'
 	  :visible.sync="dialogVisible"
 	  width="35%">
 	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo :rules="rules" ref="ruleForm">
@@ -98,6 +100,7 @@
           :on-success="filesuccessAssignment"
           :action="fileAdd"
           :name="formInfo.filename"
+          :on-remove='removefile'
           >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -111,6 +114,7 @@
            :name="formInfo.filename"
           :action="fileAdd"
            :on-success="filesuccessrequisition"
+           :on-remove='removefile'
          >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -124,6 +128,7 @@
            :name="formInfo.filename"
           :action="fileAdd"
           :on-success="filesuccessreplacement"
+          :on-remove='removefile'
           >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -194,11 +199,29 @@ export default {
                   for(let item of res.DataList){
                      this.tableData.push(item)
                         }
-                      console.log(this.tableData)
                      })
-
              },
+          projecteditClose(){//关闭窗口的时候清空数据,
+/*             this.formInfo={
+                 selectvalue: '',//下拉选择框
+                 filename:null,
+                 AfterSaleFlieName:'',//售后外派单文件名
+                 AfterSaleFlieUrl:'',
+                 InWarrantyFlieName:'', //维修换货单文件名
+                 InWarrantyFlieUrl:'',
+                 ExpirationDateFlieName:'', //需求单文件名
+                 ExpirationDateFlieUrl:'',
+           }*/
+             this.removefile()
+        }, 
+    
+     removefile(file){
+          console.log(file)
+     },
+
      EmptyData(){
+
+            this.removefile()//qingkong
              this.formInfo={
                  selectvalue: '',//下拉选择框
                  filename:'',
@@ -225,10 +248,10 @@ export default {
                    label:res[0].DataList[i].ProjectName
                   })   
                 }
-               console.log(options)
               })
            },
              filesuccessAssignment(res){//售后外派单
+              console.log("售后外派单文件名")
               console.log(res)
                this.AfterSaleFlieName=res.FileName;
                this.AfterSaleFlieUrl=res.FileUrl

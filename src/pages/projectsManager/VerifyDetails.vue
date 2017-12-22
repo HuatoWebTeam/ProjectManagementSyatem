@@ -237,9 +237,6 @@
                closeAddText(){//关闭添加弹框
                 this.AddTextdialog=false;
                 },
-             handleRemove(file, fileList) {//删除
-                  console.log(file, fileList);
-                },
               errorfile(res){
                   if(res==0){
                      this.$message.error('上传失败!');
@@ -337,15 +334,16 @@
      }
  }
 </style>
-<style type="text/css">
-  .el-upload-dragger{
+<style type="text/css" lang='scss'>
+.projectDetails {
+      .el-upload-dragger{
         width: 100%;
         height: 100%;
       }
     .el-upload{
       width: 100%;
     }
-  .el-upload-list{
-    display: none;
-  }
+   
+}
+
 </style>
