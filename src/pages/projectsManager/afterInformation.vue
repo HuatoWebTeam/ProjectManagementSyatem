@@ -48,8 +48,8 @@
           prop="address"
           label="保修期内(维修换货单)">
              <template slot-scope="scope">
-                <a  @click="linkExpira(scope.$index)"  class="underline">
-                {{tableData[scope.$index].ExpirationDateFlieName}}  
+                <a  @click="linkInWarranty(scope.$index)"  class="underline">
+                {{tableData[scope.$index].InWarrantyFlieName}}  
              </a>
             </template> 
         </el-table-column>
@@ -57,8 +57,8 @@
           prop="address"
           label="保修期内(需求单)">
              <template slot-scope="scope">
-                <a  @click="linkInWarranty(scope.$index)"  class="underline">
-                {{tableData[scope.$index].InWarrantyFlieName}}  
+                <a  @click="linkExpira(scope.$index)"  class="underline">
+                {{tableData[scope.$index].ExpirationDateFlieName}}  
              </a>
             </template>
 
@@ -73,74 +73,77 @@
            @current-change='pageIndexChange'>
         </el-pagination>
       </el-col>
-  <el-col :span='24'>
-  	<el-dialog
-	  title="新建售后"
-    class="projectedit"
-    @close='projecteditClose'
-	  :visible.sync="dialogVisible"
-	  width="35%">
-	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo :rules="rules" ref="ruleForm">
-	  <el-form-item label="项目名称" prop="selectvalue">
-         <el-select v-model="formInfo.selectvalue" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                    >
-                </el-option>
-        </el-select>
-	  </el-form-item>
-	  <el-form-item label="售后外派单" >
-        <el-upload
-          class="upload-demo"
-          drag
-          :limit="1"
-          :on-success="filesuccessAssignment"
-          :action="fileAdd"
-          :name="formInfo.filename"
-          :on-remove='removefile'
-          >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-         </el-upload>
-	  </el-form-item>
-	  <el-form-item label="保修期(维修换货单)" >
-	        <el-upload
-          class="upload-demo"
-          drag
-          :limit="1"
-           :name="formInfo.filename"
-          :action="fileAdd"
-           :on-success="filesuccessrequisition"
-           :on-remove='removefile'
-         >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-         </el-upload>
-	  </el-form-item>
-   <el-form-item label="保修期外(需求单)" >
-           <el-upload
-          class="upload-demo"
+    <el-col :span='24'>
+    	<el-dialog
+  	  title="新建售后"
+      class="projectedit"
+      @close='projecteditClose'
+  	  :visible.sync="dialogVisible"
+  	  width="35%">
+  	<el-form  label-width="100px" class="demo-ruleForm" :model=formInfo :rules="rules" ref="ruleForm">
+  	  <el-form-item label="项目名称" prop="selectvalue">
+           <el-select v-model="formInfo.selectvalue" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                      >
+                  </el-option>
+          </el-select>
+  	  </el-form-item>
+  	  <el-form-item label="售后外派单" >
+          <el-upload
+            class="upload-demo"
             drag
             :limit="1"
-           :name="formInfo.filename"
-          :action="fileAdd"
-          :on-success="filesuccessreplacement"
-          :on-remove='removefile'
-          >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-         </el-upload>
-    </el-form-item>
-	</el-form>
-	  <span slot="footer" class="dialog-footer">
-	    <el-button size='small' @click="dialogVisible = false">取 消</el-button>
-	    <el-button size='small' type="primary" @click="Addfile">确 定</el-button>
-	  </span>
-</el-dialog>
-  </el-col>
+            :on-success="filesuccessAssignment"
+            :action="fileAdd"
+            :name="formInfo.filename"
+            ref="upload"
+            :file-list="fileList"
+            >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+           </el-upload>
+  	  </el-form-item>
+  	  <el-form-item label="保修期(维修换货单)" >
+  	        <el-upload
+            class="upload-demo"
+             drag
+             :limit="1"
+             :name="formInfo.filename"
+             :action="fileAdd"
+             :on-success="filesuccessrequisition"
+             :file-list="fileList"
+              ref="upload"
+              >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+           </el-upload>
+  	  </el-form-item>
+     <el-form-item label="保修期外(需求单)" >
+             <el-upload
+            class="upload-demo"
+              drag
+              :limit="1"
+              :name="formInfo.filename"
+              :action="fileAdd"
+              :on-success="filesuccessreplacement"
+               ref="upload"
+               :file-list="fileList"
+              >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+           </el-upload>
+      </el-form-item>
+  	</el-form>
+  	  <span slot="footer" class="dialog-footer">
+  	    <el-button size='small' @click="dialogVisible = false">取 消</el-button>
+  	    <el-button size='small' type="primary" @click="Addfile">确 定</el-button>
+  	  </span>
+  </el-dialog>
+    </el-col>
 </el-row>
 
 </template>
@@ -162,7 +165,7 @@ export default {
         options:[],
         condition:'',
         pageIndex:1,
-        pageSize:10,
+        pageSize:12,
         formInfo:{
             selectvalue: '',//下拉选择框
             filename:'',
@@ -180,48 +183,38 @@ export default {
              selectvalue:[
                 {validator: checkprojectname, trigger: 'blur'}
              ]  
-          }
+          },
+          fileList: []
         }
 
     },
-     methods:{
-        DataList(){//列表请求显示!
-          this.tableData=[]//调用前清空.
-          var parms={
-                 condition:this.condition,
-                 pageIndex:this.pageIndex,
-                 pageSize:this.pageSize 
-              }
-           GetAfterSaleData(parms).then(res=>{
-            console.log("dayinqingqiuliebiaoxianshi ")
-               console.log(res)
-               this.totalNumber=res.TotalNumber
-                  for(let item of res.DataList){
-                     this.tableData.push(item)
-                        }
-                     })
-             },
-          projecteditClose(){//关闭窗口的时候清空数据,
-/*             this.formInfo={
-                 selectvalue: '',//下拉选择框
-                 filename:null,
-                 AfterSaleFlieName:'',//售后外派单文件名
-                 AfterSaleFlieUrl:'',
-                 InWarrantyFlieName:'', //维修换货单文件名
-                 InWarrantyFlieUrl:'',
-                 ExpirationDateFlieName:'', //需求单文件名
-                 ExpirationDateFlieUrl:'',
-           }*/
-             this.removefile()
-        }, 
-    
-     removefile(file){
-          console.log(file)
-     },
-
-     EmptyData(){
-
-            this.removefile()//qingkong
+    methods:{
+      DataList(){//列表请求显示!
+        var _this=this;
+        this.tableData=[]//调用前清空.
+        var parms={
+               condition:this.condition,
+               pageIndex:this.pageIndex,
+               pageSize:this.pageSize 
+            }
+         GetAfterSaleData(parms).then(res=>{
+          // console.log("dayinqingqiuliebiaoxianshi ")
+             // console.log(res)
+             this.totalNumber=res.TotalNumber
+                for(let item of res.DataList){
+                   this.tableData.push(item)
+                      }
+                   })
+      },
+      projecteditClose(){//关闭窗口的时候清空数据,
+          this.$refs.upload.clearFiles();
+          this.fileList = [];
+      }, 
+/*     waipaidanChange(file,fileList){
+      console.log(file,fileList)
+     },*/
+     EmptyData(){//点击新建
+        // this.removefile()//清空移除文件列的钩子
              this.formInfo={
                  selectvalue: '',//下拉选择框
                  filename:'',
@@ -250,32 +243,29 @@ export default {
                 }
               })
            },
-             filesuccessAssignment(res){//售后外派单
-              console.log("售后外派单文件名")
-              console.log(res)
+       filesuccessAssignment(res,file,fileList){//售后外派单
+              // console.log(res)
                this.AfterSaleFlieName=res.FileName;
-               this.AfterSaleFlieUrl=res.FileUrl
+               this.AfterSaleFlieUrl=res.FileUrl;
              },
-           filesuccessrequisition(res){//保修期维修换货单
+        filesuccessrequisition(res){//保修期维修换货单
                 this.InWarrantyFlieName=res.FileName;
                 this.InWarrantyFlieUrl=res.FileUrl  
-                console.log(res)
            },
-            filesuccessreplacement(res){//保修期/需求单
+        filesuccessreplacement(res){//保修期/需求单
                 this.ExpirationDateFlieName=res.FileName;
                 this.ExpirationDateFlieUrl=res.FileUrl
-                console.log(res)
             },
-           Addfile(){
+       Addfile(){
             let afterSale =[];
                this.formInfo={
-                    ProjectCode:this.formInfo.selectvalue,
-                    AfterSaleFlieName:this.AfterSaleFlieName,
-                    AfterSaleFlieUrl:this.AfterSaleFlieUrl,
-                    InWarrantyFlieName:this.InWarrantyFlieName,
-                    InWarrantyFlieUrl:this.InWarrantyFlieUrl,
-                    ExpirationDateFlieName:this.ExpirationDateFlieName,
-                    ExpirationDateFlieUrl:this.ExpirationDateFlieUrl
+                      ProjectCode:this.formInfo.selectvalue,
+                      AfterSaleFlieName:this.AfterSaleFlieName,
+                      AfterSaleFlieUrl:this.AfterSaleFlieUrl,
+                      InWarrantyFlieName:this.InWarrantyFlieName,
+                      InWarrantyFlieUrl:this.InWarrantyFlieUrl,
+                      ExpirationDateFlieName:this.ExpirationDateFlieName,
+                      ExpirationDateFlieUrl:this.ExpirationDateFlieUrl
                 }
                    var parms={
                         afterSale:this.formInfo
@@ -299,11 +289,10 @@ export default {
         linkAfterSale(index){
                      window.open(this.tableData[index].AfterSaleFlieUrl)//链接绑定
             },
-       
-        linkExpira(index){
+       linkInWarranty(index){
           window.open(this.tableData[index].InWarrantyFlieUrl)
         },
-        linkInWarranty(index){
+         linkExpira(index){
           window.open(this.tableData[index].ExpirationDateFlieUrl)
         },
         pageIndexChange(index) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
@@ -311,12 +300,17 @@ export default {
               this.pageIndex = index;
               this.DataList()   /// 当前页改变时重新加载数据
             }
-       },
-       
+       },      
        mounted(){
-
-           this.DataList()//函数调用.
-           this.getprojectmange()//项目下拉框选择.
+           var _this=this;
+           this.DataList();//函数调用.
+           this.getprojectmange();//项目下拉框选择.
+       $(window).keyup(function(ev){//enetr键快捷搜
+              // console.log(ev);
+               if(ev.keyCode == 13){
+                 _this.DataList();
+              }
+            })
        }
 }
 </script>
@@ -358,8 +352,7 @@ export default {
       width: 178px;
       height: 78px;
       display: block;
-    }
-  
+    }  
  }
 </style>
 <style type="text/css">

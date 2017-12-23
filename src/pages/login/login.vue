@@ -26,7 +26,7 @@
           </el-form>
       </div>
       <div class="projectbuttom"></div>
-      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.1</div>
+      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.2</div>
     </el-col>
   </el-row>
 </template>

@@ -42,14 +42,16 @@
                    drag
                    :action="TextActionURL"
                    :limit="1"
+                   :file-list="fileList"
                    :on-success="fileSuccess"
                    :on-remove="handleRemove"
+                   :on-change='filechange'
                    :name='upLoadName + "#"+item.title'
                    >
                   <i class="el-icon-plus"></i>
                 </el-upload>
             </div>
-              <div class="projectshow"  @click='exportAcceptData(item.url)' v-show='show'>{{item.name}}</div>    
+              <div class="projectshow"  @click='exportAcceptData(item.url)'>{{item.name}}</div>    
         </div>
       </template>
 </el-col>
@@ -74,7 +76,7 @@
                 TextActionURL:'/Business/RelicUpload',
                 linkprojectname:'',
                 linprojectUrl:'',
-                show:true,
+                 fileList: [],
                acceptData: [
                   {name: null, url: null, title: '合同'},   // 合同
                   {name: null, url: null, title: '采购清单'},  // 采购清单
@@ -95,7 +97,7 @@
             	 }
             },
             methods:{
-                 GetprojectDeail(){
+               GetprojectDeail(){
                    var parms={
                         projectCode: this.$route.params.id
                    }
@@ -226,6 +228,12 @@
                  }                                                
                })
               },
+              filechange(file,fileList){
+                console.log("change")
+                console.log(file,fileList)
+              
+
+              },
               exportAcceptData (url) {   // 下载验收资料
                           console.log(url)
                           window.open(url)
@@ -233,11 +241,8 @@
              routerGoBack() {//点击上一页.返回路由上一页
                          this.$router.go(-1);
                         },
-                AddText(){
+               AddText(){
                       this.AddTextdialog=true;//点击的时候文档弹框出来,
-                },
-               closeAddText(){//关闭添加弹框
-                this.AddTextdialog=false;
                 },
               errorfile(res){
                   if(res==0){
@@ -252,13 +257,12 @@
               }, 
                handleRemove(file, fileList) {//移除
                         console.log(file, fileList);
-                        this.show=false;//显示的名字隐藏,
+                          this.fileList = [];
                       },
-
-            Intooutfile(){//导出验收资料.
-               var params={
-                projectName:this.projectname
-               }
+              Intooutfile(){//导出验收资料.
+                 var params={
+                  projectName:this.projectname
+                 }
               Derive(params).then(res=>{
                   if(res=="文件路径不存在"){
                          this.$message({

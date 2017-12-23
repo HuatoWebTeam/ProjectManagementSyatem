@@ -303,8 +303,6 @@ export default {
                  _this.Getuser();
               }
             })
-
-
     }
 }
 </script>
