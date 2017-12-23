@@ -72,7 +72,7 @@ export const PaddingData = () => {
        // 用户权限配置-----  获取成员已有的权限
 export const GetJurisdictionUserNameData = (params) => {
          return axios
-           .get("/UserManage/GetJurisdictionUserNameData", params)
+           .get("/UserManage/GetJurisdictionUserNameData", { params: params })
            .then(res => res.data);
        };   
        // 用户权限配置----- 提交权限数据 

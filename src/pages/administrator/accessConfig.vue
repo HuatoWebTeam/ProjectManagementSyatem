@@ -7,7 +7,6 @@
       <el-col :span='8' class='LeftUserListRadio' >
         <el-radio-group v-model="checkPersonnal" @change='choosePersonnal'>
           <el-radio v-for='item in personnalList' :key='item.UserCode' :label="item.UserName">{{item.UserName}}</el-radio>
-          
         </el-radio-group>
       </el-col>
       <el-col :span='15' class='accessConfigRightUrl'>
@@ -15,16 +14,13 @@
           <div v-for='item in urlList' :key='item.InterfaceCode'>
             <el-col :span='24' class='chooseAccessTitle'>{{item.InterfaceName}}</el-col>
             <el-checkbox v-for='list in item.ConnectionList' :label="list.ConnectionNumber" :key='list.ConnectionNumber'>{{list.ConnectionName}}</el-checkbox>
-            
           </div>
-          
         </el-checkbox-group>
         <el-button type='primary' @click='addAccessConfig' size='mini' class='myBtn' >保存</el-button>
       </el-col>
     </el-col>
   </el-row>
 </template>
-
 <script>
 import { GetUserManageData, PaddingData, GetJurisdictionUserNameData, AddConnectUserRelation } from '@/api/api';
 export default {
@@ -56,7 +52,9 @@ export default {
       //console.log(value);
       var params = { userName: value };
       GetJurisdictionUserNameData(params).then(res => {
-        //console.log(res);
+       console.log("选择人员的事件")
+       console.log(params)
+       console.log(res);
         this.checkUrlList = [];
         for(let item of res) {
           for(let key of item.ConnectionList) {
@@ -78,7 +76,7 @@ export default {
       }
       //console.log(params);
       AddConnectUserRelation(params).then(res => {
-        //console.log(res);
+       console.log(res);
         if (res == 1) {
           this.$message({
             type:'success',
