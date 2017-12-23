@@ -1,7 +1,8 @@
 <template>
    <el-row  class="Orderdetail myContainer">
        <el-col :span='24' class="title" >
-       <div class="procurment_title">采购订单详情 </div>
+       <div class="procurment_title">采购订单详情 <el-button type="primary" size='mini'   @click='routerGoBack'>返回上一页</el-button></div>
+
    </el-col>
    <el-col :span='24' class="NewProcurement">
      <div class="lineItem">
@@ -107,7 +108,12 @@ export default {
                 this.tableDataList.push(item )
              }
           })
-       }
+       },
+    routerGoBack() {//点击上一页.返回路由上一页
+         this.$router.go(-1);
+        },
+
+
   },
 
   mounted() {
@@ -164,6 +170,10 @@ export default {
         border: none;
         border: 1px solid #dbdbdb;
     }
+  .procurment_title button{
+    margin-left: 81%;
+  }
+
 }
 </style>
 

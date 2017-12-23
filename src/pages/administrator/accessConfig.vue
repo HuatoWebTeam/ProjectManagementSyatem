@@ -52,9 +52,6 @@ export default {
       //console.log(value);
       var params = { userName: value };
       GetJurisdictionUserNameData(params).then(res => {
-       console.log("选择人员的事件")
-       console.log(params)
-       console.log(res);
         this.checkUrlList = [];
         for(let item of res) {
           for(let key of item.ConnectionList) {

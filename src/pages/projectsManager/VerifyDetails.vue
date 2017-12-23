@@ -43,12 +43,13 @@
                    :action="TextActionURL"
                    :limit="1"
                    :on-success="fileSuccess"
+                   :on-remove="handleRemove"
                    :name='upLoadName + "#"+item.title'
                    >
                   <i class="el-icon-plus"></i>
                 </el-upload>
             </div>
-              <div class="projectshow"  @click='exportAcceptData(item.url)'  >{{item.name}}</div>    
+              <div class="projectshow"  @click='exportAcceptData(item.url)' v-show='show'>{{item.name}}</div>    
         </div>
       </template>
 </el-col>
@@ -73,6 +74,7 @@
                 TextActionURL:'/Business/RelicUpload',
                 linkprojectname:'',
                 linprojectUrl:'',
+                show:true,
                acceptData: [
                   {name: null, url: null, title: '合同'},   // 合同
                   {name: null, url: null, title: '采购清单'},  // 采购清单
@@ -248,6 +250,11 @@
                  this.$message.success('上传成功!');
                  this.GetprojectDeail()//成功的时候调用显示的的页面,刷新
               }, 
+               handleRemove(file, fileList) {//移除
+                        console.log(file, fileList);
+                        this.show=false;//显示的名字隐藏,
+                      },
+
             Intooutfile(){//导出验收资料.
                var params={
                 projectName:this.projectname
@@ -263,7 +270,7 @@
                         window.open(res)
                      }
                  })
-              },
+              }
             },
             mounted(){
                 console.log(this.$route.params.id)

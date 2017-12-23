@@ -2,6 +2,7 @@
 <el-row class='applySpareContainer myContainer'>
   <el-col :span='24' class='title'>
     备用金申请
+
   </el-col>
   <el-col :span='24' class='applyContentContainer' >
     <div class='setPadding'>
@@ -174,7 +175,7 @@ export default {
       .applySpareContent {
         position: absolute;     
         width: 970px;
-        height: 500px;
+        height:762px;
         top: 0;
         right: 0;
         bottom: 0;

@@ -377,9 +377,6 @@ export default {
     .el-dialog__body{
      padding: 50px 0px 50px 0px;
     }
-    .el-button{
-      padding: 8px 2px ;
-    }
       .el-icon{
        display: none;
     }
