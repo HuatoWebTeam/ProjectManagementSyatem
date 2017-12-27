@@ -15,17 +15,15 @@
    </el-col>
   <el-col :span="24" class="main_heard">
     <div class="statistic_procurment">
-    	<div v-for='item in projectData' class="entry_block" :key='item.projectName'>
-    		<div class="procurment_name">项目:{{item.projectName}} <span class="procurment_start_time">项目发起时间:<span class="get_procument_time">{{item.projectDate}}</span></span></div>
-        <el-collapse accordion>
-    			   <el-collapse-item>
-    			    <template slot="title">
-    			      <span>点击查看详情</span><i class="header-icon el-icon-information"></i>
+        <el-collapse accordion
+         @change="handleChange">
+    			   <el-collapse-item v-for='(item,index) in projectData'  :key='item.projectName' >
+    			    <template slot="title" class="projectStatistic">
+    			      <div class="procurment_name">项目:{{item.projectName}} <span class="procurment_start_time">项目发起时间:<span class="get_procument_time">{{item.projectDate}}</span></span></div>
     			    </template>
     			    <div v-for='item in  item.ListsSigningIns' class="CallerInfo">姓名:{{item.LoginName}}  时间:{{item.SigningInDate}}  工作地点:{{item.SigningInAddres}}  </div>
     			  </el-collapse-item>
 			</el-collapse>
-    	</div>
     </div>
   </el-col>
          <el-col :span='24' class='myPagination'>
@@ -44,13 +42,15 @@ export default {
     data() {
       return {
          SelectCheck:"",//输入时候搜索的值!
-         pageSize:10,
+         pageSize:12,
          pageIndex:1,
          projectName:'', 
          ListsSigningIns:[],
          totalNumber:null, 
 	       projectData:[],
          value: '',
+         accordion:true,
+         CallerShow:true,
       }
   },
     methods:{
@@ -80,22 +80,26 @@ export default {
                              }        
 	               }
                   this.projectData=projectData;
-                  console.log("dayinshuju")
-                  console.log(res[0].DataList.length)
-                   console.log(res[0].TotalNumber)
-                  console.log(this.projectData)
     		})
     	},
     	 pageIndexChange(pageIndex){//翻页监控当前页面发生变化没有! 重新获取列表的页面!~
                  this.pageIndex = pageIndex;//传当前页面     
                  this. Attendance()//重新获取一边当前的
-               } 
+               },
+      handleChange(ev){
+         console.log(ev)
+/*          if(ev[index] !==""){
+            this.CallerShow=false;
+          }else{
+            this.CallerShow=true;
+          } */ 
+      }
+
     },
     mounted(){
         var _this = this;//代表上面的函数,点击
       this.Attendance()//调用函数!列表显示!//调用时候加this,因为访问的是局外的函数!
        $(window).keyup(function(ev){
-        // console.log(ev);
          if(ev.keyCode == 13){
            _this.Attendance();
         }
@@ -114,33 +118,37 @@ export default {
       background: #fff;
       border: 1px solid #ccc; 
          }
-  }
-.entry_block{
-	background: #f2f2f2;
-}
 .el-input__inner{
 	margin-left: 30px;
 }
 .main_heard{
-  .procurment_name{
-  		margin-top:20px;
-  }
-  .el-button{
-  	font-size: 12px;
-  	padding:8px 10px;
-  }
+      .el-button{
+      	font-size: 12px;
+      	padding:8px 10px;
+      }
   .procurment_start_time{
-  	   /* display: inline-block; */
-  	    margin-right: 80px;
-  	    float: right;
-    }
+      	   /* display: inline-block; */
+      	    margin-right: 80px;
+      	    float: right;
+        }
+  }
+  .projectStatistic{
+            display: inline-block;
+            font-size: 16px;
+            font-weight:bold;
+  }
+
 }
 </style>
-<style type="text/css" >
+<style type="text/css"   lang="scss" >
+   .statistic_procurment{
+    .el-collapse-item__arrow{
+          margin-right:56px;
+        }
+    }
 
-.el-collapse-item__arrow{
-	margin-right:56px;
-}
+
+
 .procurment_title{
 	
 	font-size: 16px;

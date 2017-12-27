@@ -98,7 +98,6 @@ export default {
 	           },
               routerToDetails(index){//点击项目详情跳转路由.要在路由router里面配置动态路由
                     this.$router.push({name:'VerifyDetails',params: { id:this.projectData[index].ProjectCode}});  
-                    console.log(this.projectData[index].ProjectCode)
               },
        },
        mounted(){

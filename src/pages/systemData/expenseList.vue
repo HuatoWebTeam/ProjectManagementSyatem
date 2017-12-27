@@ -129,18 +129,16 @@ export default {
                               ReimburseCode:item.ReimburseCode
                              })
                         }
-                        console.log(res)
                   })   
                 },
               submitUpload() {//提交给数据库
                 this.$refs['uploadFile'].submit();
               },
               fileSuccess(res) {
-                console.log(res);
                   this.$refs['uploadFile'].clearFiles();
                   this.$message.success('上传成功!');
                   this.AddText=false;  
-                   this.expenses()//列表刷新
+                  this.expenses()//列表刷新
               },
               errorfile(res){
                   if(res==0){
@@ -155,7 +153,6 @@ export default {
                    console.log(this.upLoadName);
               },
               handleRemove(file, fileList) {//删除
-                  console.log(file, fileList);
                 },
             DownloadFile(index){
                  var parms={

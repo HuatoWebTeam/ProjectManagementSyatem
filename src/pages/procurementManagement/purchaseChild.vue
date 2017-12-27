@@ -97,8 +97,6 @@ export default {
               purchaseCode:this.$route.params.id//通过路由传过来的编码!
                }
           PurchaseSingleInformation(parms).then(res =>{
-               console.log("打印详情的")
-               console.log(res)
              this.PurchaseCode=res.PurchaseCode,
              this.ProjectCode=res.ProjectCode,
              this.PurchaseTitle=res.PurchaseTitle,
@@ -112,13 +110,11 @@ export default {
     routerGoBack() {//点击上一页.返回路由上一页
          this.$router.go(-1);
         },
-
-
   },
 
   mounted() {
-      console.log("chuanid")
-      console.log(this.$route.params.id)
+/*      console.log("chuanid")
+      console.log(this.$route.params.id)*/
       this.particulars()//调用
   },
   deactivated() {

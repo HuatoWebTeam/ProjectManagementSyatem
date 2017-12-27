@@ -30,7 +30,6 @@ export default {
       personnalList: [],     // 全部人员
       checkUrlList: [],      // 选中的权限页面
       urlList: [],           // 右边的页面导航
-
     }
   },
   methods: {

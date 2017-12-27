@@ -13,7 +13,6 @@
               <el-input v-model="userLogin.userName" @change='showError = null' placeholder='用户名' class="placeholderpadding"></el-input>
               </div>
             </el-form-item>
-
             <el-form-item  prop='userPass' :error='showError'>
                 <div>
                  <div class="passwordicon"></div>
@@ -26,7 +25,7 @@
           </el-form>
       </div>
       <div class="projectbuttom"></div>
-      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.2</div>
+      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.3</div>
     </el-col>
   </el-row>
 </template>
@@ -61,7 +60,7 @@ export default {
         let user = {
           name: this.userLogin.userName
         }
-        console.log(this.userLogin);
+      console.log(this.userLogin);
         this.$refs['loginForm'].validate((valid) => {
           if(valid) {
             userLogin(qs.stringify(this.userLogin)).then(res => {
@@ -77,15 +76,13 @@ export default {
             });
           }
         })
-        
       },
-
     },
     mounted() {
       var _this = this;//代表上面的函数,点击.
       // 获取真实ip
       getIp((ip) => {
-        console.log(ip);
+        /*console.log(ip);*/
         this.userLogin.userIp = ip;
       })
      $(window).keyup(function(ev){
@@ -99,110 +96,104 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-  .loginContainer {
-     min-width: 670px;
-     height: 100%;
-      .loginheaderlogo{
-           height: 100px;
-           background: url(../../assets/img/title.png) no-repeat;
-           background-position: center center;
-           margin-right: 120px;
-           text-align: center;
-      }
-     .huatotitle{
-           position: absolute;
-           display: inline-block;
-           font-size: 30px;
-           line-height: 100px;
-           margin-left:150px;   
-        }   
-     .loginmain{
-          position:relative;
-          height: 100%;
-          background: url(../../assets/img/backmain.png) no-repeat;
-          background-size:cover;      
-     }
-    .projectRight{
-      position: absolute;
-      background: url(../../assets/img/backgroundpic.png) no-repeat;
-      z-index: 9999;
-      width: 450px;
-      height: 450px;
-      top: 40%;
-      margin-top: -200px;
-      left: 30%;
-      background-size: 100%;
-    }
-    .projectLeft{
-      position: absolute;
-      background: url(../../assets/img/Shape9.png) no-repeat;
-      width: 450px;
-      height: 450px;
-      top: 40%;
-      margin-top: -200px;
-      left: 60%;
-      background-size: 100%;
-      z-index: 9999;
-    }
-  .projectbuttom{
-    position: absolute;
-     background: url(../../assets/img/background.png) no-repeat;
-     width:100%;
-     height:100%;
-    background-size: contain;
-    top: 61%;
-  }
- .Copyright{
-  position: absolute;
-  font-size: 20px;
-  top: 85%;
-  left: 35%;
- }
-
-.uesricon{
-  width: 40px;
-   height: 40px;
-   border-bottom: 0px;
-   border-top:0px;
-  border-right: 1px solid #d8dce5;
-  position: absolute;
-  z-index: 9999;
-   background: url(../../assets/img/user.png) no-repeat 8px  8px ;
-}
-.passwordicon{
-   width: 40px;
-   height: 40px;
-   border-bottom: 0px;
-   border-top:0px;
-   border-right: 1px solid #d8dce5;
-   position: absolute;
-   z-index: 9999;
-   background: url(../../assets/img/password.png) no-repeat 8px  8px ;
-}
-    .el-col {
-
-        .el-form {
-          position: absolute;
-          width: 370px;
-          height: 200px;
-           top: 25%;
-          .submitBtn {
-            width: 100%;
-          }
+    .loginContainer {
+       min-width: 670px;
+       height: 100%;
+        .loginheaderlogo{
+             height: 100px;
+             background: url(../../assets/img/title.png) no-repeat;
+             background-position: center center;
+             margin-right: 120px;
+             text-align: center;
         }
+       .huatotitle{
+             position: absolute;
+             display: inline-block;
+             font-size: 30px;
+             line-height: 100px;
+             margin-left:150px;   
+          }   
+       .loginmain{
+            position:relative;
+            height: 100%;
+            background: url(../../assets/img/backmain.png) no-repeat;
+            background-size:cover;      
+       }
+      .projectRight{
+        position: absolute;
+        background: url(../../assets/img/backgroundpic.png) no-repeat;
+        z-index: 9999;
+        width: 450px;
+        height: 450px;
+        top: 40%;
+        margin-top: -200px;
+        left: 30%;
+        background-size: 100%;
       }
+      .projectLeft{
+        position: absolute;
+        background: url(../../assets/img/Shape9.png) no-repeat;
+        width: 450px;
+        height: 450px;
+        top: 40%;
+        margin-top: -200px;
+        left: 60%;
+        background-size: 100%;
+        z-index: 9999;
+      }
+      .projectbuttom{
+        position: absolute;
+         background: url(../../assets/img/background.png) no-repeat;
+         width:100%;
+         height:100%;
+        background-size: contain;
+        top: 61%;
+      }
+     .Copyright{
+      position: absolute;
+      font-size: 20px;
+      top: 85%;
+      left: 35%;
+     }
 
-  }
-
-
+    .uesricon{
+      width: 40px;
+       height: 40px;
+       border-bottom: 0px;
+       border-top:0px;
+      border-right: 1px solid #d8dce5;
+      position: absolute;
+      z-index: 9999;
+       background: url(../../assets/img/user.png) no-repeat 8px  8px ;
+    }
+    .passwordicon{
+       width: 40px;
+       height: 40px;
+       border-bottom: 0px;
+       border-top:0px;
+       border-right: 1px solid #d8dce5;
+       position: absolute;
+       z-index: 9999;
+       background: url(../../assets/img/password.png) no-repeat 8px  8px ;
+    }
+    .el-col {
+            .el-form {
+              position: absolute;
+              width: 370px;
+              height: 200px;
+               top: 25%;
+              .submitBtn {
+                width: 100%;
+              }
+            }
+          }
+      }
 </style>
 <style type="text/css" lang="scss">
-    
     .placeholderpadding {
       .el-input__inner{ 
        padding: 0 52px;
       }
-    }
-      
+    } 
    /* margin-left: 40px;*/
 </style>

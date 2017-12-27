@@ -35,7 +35,7 @@
 				       value-format="yyyy-MM-dd">
 				    </el-date-picker>
 			 </el-form-item>
-			  <el-button size="medium" type="primary" @click='GetUntreated'>查询</el-button>
+			  <el-button  size="small" type="primary" @click='GetUntreated'>查询</el-button>
         </el-form>  
        </el-col>
    <el-col :span='24' class="PendingOrdermain">
@@ -146,11 +146,10 @@ export default {
 		               label:res[0].DataList[i].ProjectName
 	                  })   
 	                }
-	               console.log(options)
 	              })
 	           },
 	           GetUntreated(ev){
-	           	var _this=this
+	           	var _this=this;
                  var parms={
                      projectCode:this.selectvalue,
                      condition:this.condition,
@@ -177,7 +176,7 @@ export default {
 
 	           	 		})
 	           	 	}
-	           	 	console.log(this.tablepending)
+	           	 /*	console.log(this.tablepending)*/
 	           	 })
 	           },
              Editingpermissions(index) {//点击详情

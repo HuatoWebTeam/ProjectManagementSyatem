@@ -137,7 +137,6 @@ export default {
       }
       callback();
       };
-
 		return{
       labelPosition: 'right',
        stripe:true,
@@ -187,20 +186,24 @@ export default {
                 pageSize: this.pageSize,
                 condition:this.condition
               }
-              console.log(params);
               GetstockManage(params).then(res => {
-                console.log(res)
                 this.totalNumber=res[0].TotalNumber;
                 this.stockData=[];
                 for(let item of res[0].DataList){//遍历列表
-                  this.stockData.push(item);//遍历出来的别表添加进去
+                  this.stockData.push({
+                   StockCode:item.StockCode,
+                   MaterialsName:item.MaterialsName,
+                   Describe:item.Describe,
+                   PurchaseLocation:item.PurchaseLocation,
+                   Uint:item.Uint,
+                   Price:Number(item.Price).toFixed(2)//保留小数点后两位数
+                  });//遍历出来的别表添加进去
                 }
               })
         },
         stockedituser(idx) {   // 打开编辑用户  找到下标显示对应的值
-            console.log(idx);
             this.isAdd = false;//如果是编辑就为false
-            console.log(this.stockData)
+            /*console.log(this.stockData)*/
             this.stocklInfo = {
               StockCode: this.stockData[idx].StockCode,             // 序号
               MaterialsName: this.stockData[idx].MaterialsName,  // 名称
@@ -229,13 +232,13 @@ export default {
          },
     //打开添加框
           scockeditOpen(){
-               console.log('open'); 
+              /* console.log('open'); */
             },
-            addoredit(){//每次定义组将动态数据的时候需要定义一个变量
+          addoredit(){//每次定义组将动态数据的时候需要定义一个变量
                   var params = {
                     stockManagement:this.stocklInfo    //传的值等于列表的对应的值
                    };
-                   console.log(params);
+                  /* console.log(params);*/
                    if(this.isAdd){//点击按钮的时候判断是添加的新的,还是编辑已有的
                       this.$refs['stockaddRule'].validate((valid) =>{
                        if(valid){
@@ -260,11 +263,11 @@ export default {
                       })
                    }else{ ///编辑更新
                       this.$refs['stockaddRule'].validate((valid) => {
-                        console.log(valid)
+                       /* console.log(valid)*/
                         if(valid) {
                           UpdateStock(params).then(res => {
-                           console.log("编辑传的值")
-                            console.log(res);
+  /*                         console.log("编辑传的值")
+                            console.log(res);*/
                             if(res == 1) {
                               this.$message({
                                 type: 'success',
@@ -281,7 +284,7 @@ export default {
                             }else{
                                this.$message({
                                  type: 'error',
-                                message: '添加失败！！！'
+                                 message: '添加失败！！！'
                                })
                             }
                           })
@@ -293,20 +296,24 @@ export default {
                  this.pageIndex = pageIndex;//传当前页面     
                 this. Getuser()//重新获取一边当前的
                }
-},
-   mounted() {//调用方法获取列表//立马调用
-     var _this=this;
-    this.Getuser();
-       $(window).keyup(function(ev){//enetr键快捷搜
-              // console.log(ev);
-               if(ev.keyCode == 13){
-                 _this.Getuser();
-              }
-            })
-    }
-}
-</script>
+            },
+             mounted() {//调用方法获取列表//立马调用
+               var _this=this;
+              this.Getuser();
+                 $(window).keyup(function(ev){//enetr键快捷搜
+                        // console.log(ev);
+                         if(ev.keyCode == 13){
+                           _this.Getuser();
+                        }
+                      })
+              },
 
+
+
+
+     }
+
+</script>
 <style scoped lang="scss">
 
  .BacklogMangement{

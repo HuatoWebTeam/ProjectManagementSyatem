@@ -121,51 +121,51 @@ export default {
 	       }
 	     },
        methods:{
-	      getprojectmange(){
-	          var parms={//传的参数,项目下拉框!
-	               pageIndex: 10000,
-	               pageSize:10000
-	              }
-	           ProjectManage(parms).then( res => {//项目列表
-	           	 console.log(res)
-	              let options=[]; 
-	              options=this.options
-	              for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
-	                options.push({
-	                   value:res[0].DataList[i].ProjectCode,
-		               label:res[0].DataList[i].ProjectName
-	                  })   
-	                }
-	               console.log(options)
-	              })
-	      },
-		GetUntreated(){
-				var parms={
-						projectCode:this.selectvalue,
-						condition:this.condition,
-						staDate:this.staDate,
-						endDate:this.endDate,
-						pageIndex:this.pageIndex,
-						pageSize:this.pageSize
-				  }
-				GetPurchaseProcessed(parms).then(res=>{
-					this.tablepending=[];
-					this.totalNumber=res[0].TotalNumber
-					console.log(this.totalNumber) 
-					for(let item of res[0].DataList){
-						this.tablepending.push({
-							PurchaseCode:item.PurchaseCode,
-							PurchaseTitle:item.PurchaseTitle,
-							LoginName:item.LoginName,
-							FileUrl:item.FileUrl,
-							FileName:item.FileName,
-							ProjectCode:item.ProjectCode,
-							ExpirationDate:item.ExpirationDate.replace('0:00:00',''),	
-						})
-					}
-					console.log(this.tablepending)
-					})
-				},
+			      getprojectmange(){
+			          var parms={//传的参数,项目下拉框!
+			               pageIndex: 10000,
+			               pageSize:10000
+			              }
+			           ProjectManage(parms).then( res => {//项目列表
+			           	 console.log(res)
+			              let options=[]; 
+			              options=this.options
+			              for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
+			                options.push({
+			                   value:res[0].DataList[i].ProjectCode,
+				               label:res[0].DataList[i].ProjectName
+			                  })   
+			                }
+			          /*     console.log(options)*/
+			              })
+			      },
+				GetUntreated(){
+						var parms={
+								projectCode:this.selectvalue,
+								condition:this.condition,
+								staDate:this.staDate,
+								endDate:this.endDate,
+								pageIndex:this.pageIndex,
+								pageSize:this.pageSize
+						  }
+						GetPurchaseProcessed(parms).then(res=>{
+							this.tablepending=[];
+							this.totalNumber=res[0].TotalNumber
+							/*console.log(this.totalNumber) */
+							for(let item of res[0].DataList){
+								this.tablepending.push({
+									PurchaseCode:item.PurchaseCode,
+									PurchaseTitle:item.PurchaseTitle,
+									LoginName:item.LoginName,
+									FileUrl:item.FileUrl,
+									FileName:item.FileName,
+									ProjectCode:item.ProjectCode,
+									ExpirationDate:item.ExpirationDate.replace('0:00:00',''),	
+								})
+							}
+							/*console.log(this.tablepending)*/
+							})
+						},
 				Link(index){//点击下载时候下载相应的文档!
 					window.open(this.tablepending[index].FileUrl)			
 				},
@@ -178,14 +178,14 @@ export default {
 				}
            
           },
-       mounted(){
-       	     this.getprojectmange();//调用方法.项目名称显示!
-       	     this.GetUntreated();//得到待处理订单的列表!
-             },
-      deactivated() {//调用销毁//每次进入页面的时候刷新页面.
-			this.$destroy(true);
-		 }
-      }
+		       mounted(){
+		       	     this.getprojectmange();//调用方法.项目名称显示!
+		       	     this.GetUntreated();//得到待处理订单的列表!
+		             },
+		      deactivated() {//调用销毁//每次进入页面的时候刷新页面.
+					this.$destroy(true);
+				 }
+       }
 </script>
 
 <style scoped lang='scss'>

@@ -50,11 +50,11 @@
     <el-col :span='24'  class="NewProcurementList">
      <div class="tableStock">
 		  <el-table
-		    :data="tableDataList"
-		    border
-		    stripe
-		    height='400'
-		    style="width: 100%" >
+			    :data="tableDataList"
+			    border
+			    stripe
+			    height='400'
+			    style="width: 100%" >
 			    <el-table-column
 			      prop="StockCode"
 			      label="编号"
@@ -141,7 +141,7 @@
 			    </el-table-column>
 			  </el-table>
 	            <div slot="footer" class="dialog-footer">
-				    <el-button size="small" @click="dialogTableVisible = false">取 消</el-button>
+				    <el-button size="small" @click="EmptyData">取 消</el-button>
 				    <el-button  size="small" type="primary" @click="tableList">确 定</el-button>
 			  </div>
 		</el-dialog>
@@ -200,7 +200,7 @@ export default {
 			}
 		},
 		handleSelectionChange(val) {
-			this.multipleSelection = val;
+			this.multipleSelection = val;//钩子函数,选中的时候的值.
 		},
        getprojectmange(){
           var parms={//传的参数,项目下拉框!
@@ -216,13 +216,13 @@ export default {
 	               label:res[0].DataList[i].ProjectName
                   })   
                 }
-               console.log(options)
+           /*    console.log(options)*/
               })
            },
            StockList(){
            	this.dialogTableVisible=true;
              },
-        Getuser(){//备货管理列表方法
+        Getuser(){//备货管理列表方法//快捷的时候加.native
            var  params={//传递的参数
                 pageIndex: 100000,
                 pageSize: 100000,
@@ -246,10 +246,14 @@ export default {
                      this.multipleSelection[i].Unit=this.multipleSelection[i].Uint
             	}                              
             	this.tableDataList = this.multipleSelection;
-            	console.log(this.tableDataList)
+            	/*console.log(this.tableDataList)*/
         	    this.dialogTableVisible=false;//弹框显示!//点击选中的显示到下面的位置
-         }, 
-            IssueOrder(){//发送订单内容给后台!
+          },
+          EmptyData(){
+          	 this.dialogTableVisible=false;//弹框关闭
+             this.multipleSelectio=[];//取消就清空以前选中的
+           },
+           IssueOrder(){//发送订单内容给后台!
 		          let purchase={}//定义发送给后台的内容,*/
 		       	  let SlaveList=[]//存发送给后台的物料列表
                purchase={
@@ -268,7 +272,7 @@ export default {
                 if(valid){
 	                InsertPurchase(parms).then(res=>{
 		                   //传给后台发送的值!
-		                   console.log(res)
+		                  /* console.log(res)*/
 		                if(res==1){
 		                  this.$message({
 		                    type:'success',
@@ -283,21 +287,18 @@ export default {
                 }else{
                   return false;
                 }
-         })   
-             
-            }
+         })    
+       }
    },
-
    mounted(){
       this.getprojectmange();//调用方法
       this.Getuser();//调用备货列表显示!
-/*       enterToLogin (ev) {
-        ev.keyCode === 13 && this.Getuser()
-    }*/
-   }  
+   },
+   deactivated() {//每次都销毁//不缓存,保证是最新的数据,
+        this.$destroy(true);
+     } 
 }
 </script>
-
 <style scoped lang='scss'>
 .NewConstruction{
 		.NewProcurement{

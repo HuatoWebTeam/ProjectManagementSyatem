@@ -94,9 +94,7 @@
       </el-dialog>
     </el-col>
   </el-row>
- 
 </template>
-
 <script>
 import { GetUserManageData, AddUserManaeg, UpdateUserManaeg, GetSectionData, GetPositionData } from '@/api/api'
 export default {
@@ -269,7 +267,6 @@ export default {
       };
       //console.log(this.personnalInfo);
       this.editPeraonnlInfo = true;
-      
     },
     personnalDialogClose() {    // 关闭弹窗的回调函数
       //console.log('close');
@@ -289,17 +286,14 @@ export default {
       };
     },
     personnalDialogOpen() {     // 弹窗打开的回调
-      //console.log('open');
-      
+      //console.log('open');  
     },
     updateOrAdd() {     // 添加或者编辑成员
       //console.log(this.personnalInfo)
       var params = {
         userManage: this.personnalInfo
       };
-
       if(this.isAdd) {   // 添加
-
         this.personnalInfo.LoginName = this.personnalInfo.UserName;
         this.$refs['personnalRule'].validate((valid) => {
           if(valid) {
@@ -347,17 +341,17 @@ export default {
         })
       }
     },
-    pageIndexChange(pageIndex) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
-      //console.log(pageIndex);
-      this.pageIndex = pageIndex;
-      this.getUserData();      /// 当前页改变时重新加载数据
+      pageIndexChange(pageIndex) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
+        //console.log(pageIndex);
+        this.pageIndex = pageIndex;
+        this.getUserData();      /// 当前页改变时重新加载数据
+      }
+    },
+    mounted() {    // vue 生命周期函数
+      this.getUserData();  // 页面打开加载成员信息
+      this.getSectionInfo();   //获取部门信息
+      this.getPositionInfo();  // 获取职位信息
     }
-  },
-  mounted() {    // vue 生命周期函数
-    this.getUserData();  // 页面打开加载成员信息
-    this.getSectionInfo();   //获取部门信息
-    this.getPositionInfo();  // 获取职位信息
-  }
 }
 </script>
 

@@ -30,7 +30,6 @@
             <el-col :span='4' class='projectInfoContainer'>
                 <span class='projectState' v-for='item in ProjectStates' :key='item.Code' >{{ item.State }}</span>
             </el-col>
-            
         </el-col>
 <el-col :span="24" class="AcceptanceMaterial">
     <template v-for='(item,idx) in acceptData' >
@@ -101,9 +100,7 @@
                    var parms={
                         projectCode: this.$route.params.id
                    }
-                   console.log(parms)
                 Particulars(parms).then( res =>{
-                  console.log(res)
                          this.projectname=res.DataList.ProjectName;
                          this.ProjectPrincipal=res.DataList.ProjectPrincipal;
                          this.UserPhone=res.DataList.UserPhone;
@@ -114,6 +111,7 @@
                          this.ProjectStates=res.DataList.ProjectStates;  
                          this.upLoadName=res.DataList.ProjectName ;// 提交时候的要发项目名称过去        
                          let acceptanceInfo=res.DataList.RidrTableList;
+                         console.log(res)
                  for(let item of acceptanceInfo) {
                     switch (item.FlieType) {
                         case '合同':
@@ -228,14 +226,14 @@
                  }                                                
                })
               },
-              filechange(file,fileList){
+              filechange(idx, file,fileList){
                 console.log("change")
+                 console.log(idx)
                 console.log(file,fileList)
-              
-
+                // this.fileList=[];
+              //   this.fileList[idx].push(file);
               },
               exportAcceptData (url) {   // 下载验收资料
-                          console.log(url)
                           window.open(url)
                         },
              routerGoBack() {//点击上一页.返回路由上一页
@@ -247,17 +245,22 @@
               errorfile(res){
                   if(res==0){
                      this.$message.error('上传失败!');
-                     this. handleRemove()//上传失败直接删除
+                     this.handleRemove()//上传失败直接删除
                   }
               },
              fileSuccess(res) {
-                console.log(res);
                  this.$message.success('上传成功!');
                  this.GetprojectDeail()//成功的时候调用显示的的页面,刷新
               }, 
-               handleRemove(file, fileList) {//移除
-                        console.log(file, fileList);
-                          this.fileList = [];
+              handleRemove(file) {//移除除去显示的上面的名称
+                 var fileName=file.response.FileUrl
+                  console.log(fileName)
+                /* console.log(file.response.FileUrl)*/
+/*                    if("fileName:contains(合同)"){
+                            this.acceptData[0].name=null;
+                            console.log("888888")
+                        }*/
+                       
                       },
               Intooutfile(){//导出验收资料.
                  var params={
@@ -270,14 +273,13 @@
                                     message:'文件路径不存在'
                                   });
                      }else{
-                        console.log(res)
                         window.open(res)
                      }
                  })
               }
             },
             mounted(){
-                console.log(this.$route.params.id)
+/*                console.log(this.$route.params.id)*/
                 this.GetprojectDeail()//立马调用函数.
             },
             deactivated() {//每次都销毁//不缓存,保证是最新的数据,

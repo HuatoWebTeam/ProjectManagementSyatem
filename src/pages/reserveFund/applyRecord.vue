@@ -21,6 +21,10 @@
         prop='LoginName'>
       </el-table-column>
       <el-table-column
+        label='项目名称'
+        prop='ProjectName'>
+      </el-table-column>
+      <el-table-column
         label='申请金额'
         width='150px'
         prop='AppliedAmount'>

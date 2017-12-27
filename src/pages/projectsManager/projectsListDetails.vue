@@ -185,15 +185,12 @@ export default {
           afterpageSize: 6,     // 
           afterpageIndex: 1,
           projectCode: null 
-
-
       }
   },
   methods: {
       exportData() {   // 导出数据
         var params = { projectName: this.allData.ProjectName }
         ExportZipFile(params).then(res => {
-            console.log(res);
             if(res == '文件路径不存在') {
                 this.$message({
                     type: 'error',
@@ -206,7 +203,6 @@ export default {
         })
       },
       exportAcceptData (url) {   // 导出验收资料
-        console.log(url)
         window.open(url)
       },
       routerGoBack() {
@@ -220,7 +216,6 @@ export default {
           }
           this.allData = []
           GetProjectTableManage(params).then(res => {
-              console.log(res)
               res.DataList.ProjectStaDate = res.DataList.ProjectStaDate.replace(' 0:00:00', '');
               res.DataList.ScheduledTime = res.DataList.ScheduledTime.replace(' 0:00:00', '');
               res.DataList.ActualTime = res.DataList.ActualTime.replace(' 0:00:00', '');

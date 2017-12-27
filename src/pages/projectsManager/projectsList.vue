@@ -321,8 +321,6 @@ export default {
                pageSize: this.pageSize,
               }
           ProjectManage(parms).then( res => {//项目列表
-              console.log("项目列表")
-               console.log(res)
               if(res[0].IsTrue==0){
                   this.show=false;
               }else if (res[0].IsTrue==2){
@@ -344,7 +342,6 @@ export default {
                   ScheduledTime:item.ScheduledTime.replace(' 0:00:00', '')
                 })//遍历出来的数组放进去
               }
-                console.log( this.projectData)
                 // console.log(res[0].DataList)
           })
         },
@@ -418,7 +415,6 @@ export default {
             })
            }else{
               this.$refs['projectaddrules'].validate((valid) => {
-                        console.log(valid)
                         if(valid) {
                           console.log(parms);
                           ProjectEdit(parms).then(res => {
@@ -456,11 +452,6 @@ export default {
 </script>
 <style scoped lang='scss'>
 .projectList{
-/*    height: 50px;
-    line-height: 50px;
-    padding-left: 20px;
-    background:#fff;
-    box-shadow: 0px 2px 1px #888888;*/
     .projectDataList{
          width: calc(100% - 40px);
         height: calc(100% - 90px);

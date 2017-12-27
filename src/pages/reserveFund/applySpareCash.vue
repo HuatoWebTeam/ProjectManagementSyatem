@@ -109,11 +109,11 @@ export default {
       })
     },
     onSubmit() {
-      console.log(this.formData.checkProject);
+/*      console.log(this.formData.checkProject);
       console.log(this.formData.applicant);
       console.log(this.timeFormatter(this.formData.chooseDate));
       console.log(this.formData.describe);
-      console.log(this.formData.amocntNumber)
+      console.log(this.formData.amocntNumber)*/
       this.$refs['ruleForm'].validate((valid) => {
         if(valid) {
           var params = {

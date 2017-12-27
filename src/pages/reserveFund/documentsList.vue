@@ -19,7 +19,10 @@
       label='申请人'
       width='150px'
       prop='LoginName'>
-
+      </el-table-column>
+       <el-table-column
+        label='项目名称'
+        prop='ProjectName'>
       </el-table-column>
       <el-table-column
         label='申请金额'
@@ -29,7 +32,6 @@
       <el-table-column
         label='申请描述'
         prop='Remark'>
-
       </el-table-column>
       <el-table-column
         label='流程'
@@ -135,13 +137,12 @@ export default {
   },
   methods: {
     getDocumentList() {
-      
       var params = {
         pageIndex: this.pageIndex,
         pageSize: this.pageSize
       };
       GetPettyCash(params).then(res =>{
-        console.log(res);
+        console.log(res)
         this.userPermission = null;
         this.totalNumber = 0;
         this.dataList = [];
@@ -150,7 +151,6 @@ export default {
           this.totalNumber = res[0].TotalNumber;
           this.dataList = res[0].DataList;
         }
-        console.log(this.userPermission);
       })
     },
     pageIndexChange() {
@@ -172,7 +172,6 @@ export default {
       })
     },
     applyApproval(index) {
-      console.log(this.dataList[index]);
       if(this.userPermission == 2) {
         var params = {
           PettyCashCode: this.dataList[index].PettyCashCode,
@@ -194,7 +193,7 @@ export default {
           }
         })
       } else if(this.userPermission == 3) {
-        console.log('管理员')
+        /*console.log('管理员')*/
         this.addVoucher = true;
         this.fileData = {
           PettyCashCode: this.dataList[index].PettyCashCode

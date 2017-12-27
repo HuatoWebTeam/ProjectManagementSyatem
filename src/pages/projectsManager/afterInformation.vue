@@ -186,7 +186,6 @@ export default {
           },
           fileList: []
         }
-
     },
     methods:{
       DataList(){//列表请求显示!
@@ -198,8 +197,6 @@ export default {
                pageSize:this.pageSize 
             }
          GetAfterSaleData(parms).then(res=>{
-          // console.log("dayinqingqiuliebiaoxianshi ")
-             // console.log(res)
              this.totalNumber=res.TotalNumber
                 for(let item of res.DataList){
                    this.tableData.push(item)
@@ -210,9 +207,6 @@ export default {
           this.$refs.upload.clearFiles();
           this.fileList = [];
       }, 
-/*     waipaidanChange(file,fileList){
-      console.log(file,fileList)
-     },*/
      EmptyData(){//点击新建
         // this.removefile()//清空移除文件列的钩子
              this.formInfo={
@@ -244,7 +238,6 @@ export default {
               })
            },
        filesuccessAssignment(res,file,fileList){//售后外派单
-              // console.log(res)
                this.AfterSaleFlieName=res.FileName;
                this.AfterSaleFlieUrl=res.FileUrl;
              },
@@ -281,7 +274,6 @@ export default {
                                   this.dialogVisible=false;
                                  this.DataList()//函数调用.
                                  }else{
-                                    console.log(res)
                                  }
                               })
                    })
@@ -296,7 +288,6 @@ export default {
           window.open(this.tableData[index].ExpirationDateFlieUrl)
         },
         pageIndexChange(index) {    // 当前页改变触发的事件，参数是改变的页码（当前页）
-              //console.log(pageIndex);
               this.pageIndex = index;
               this.DataList()   /// 当前页改变时重新加载数据
             }
