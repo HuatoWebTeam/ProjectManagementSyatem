@@ -65,7 +65,7 @@
 export default {
         data(){
              return{
-	            pageSize: 10,
+	            pageSize: 12,
 	            pageIndex:1,
 	            projectData:[],
 	            totalNumber:null,//总条数        

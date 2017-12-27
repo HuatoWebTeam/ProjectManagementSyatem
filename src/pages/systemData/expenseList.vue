@@ -102,7 +102,7 @@ export default {
       AddText:false,
       condition:'', 
       pageIndex:1,
-      pageSize:10,
+      pageSize:12,
       tableData: [],
       totalNumber:null,
       TextActionURL:'/AmountManage/RelicUpload',

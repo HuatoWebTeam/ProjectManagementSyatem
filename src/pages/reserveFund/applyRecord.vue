@@ -77,7 +77,7 @@ export default {
     return {
       dataLists: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 12,
       totalNumber: 0,
       dialogImgUrl: null,
       dialogPreview: false

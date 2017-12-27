@@ -154,7 +154,7 @@ export default {
          stockData:[],//定义数组存
          total:null,
          totalNumber:null,
-         pageSize: 10,
+         pageSize: 12,
          pageIndex:1,
          condition:'',
          isAdd: true, //ture  为添加用户,false为修改 

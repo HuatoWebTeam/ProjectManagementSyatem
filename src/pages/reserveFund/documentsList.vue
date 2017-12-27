@@ -114,9 +114,7 @@
     </el-dialog>
   </el-col>
 </el-row>
-
 </template>
-
 <script>
 import { GetPettyCash, UpdatePettyCash } from '@/api/api'
 export default {
@@ -124,7 +122,7 @@ export default {
     return {
       dataList: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 12,
       fileList:[],
       imgActionUrl: '/AmountManage/UpdatePettyCash',
       fileData: null,            

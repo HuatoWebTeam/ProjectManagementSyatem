@@ -191,7 +191,7 @@ export default {
             valueright:[],//权限分配,右边显示的数组
             jurisdiction:false,//默认关闭弹框 
             labelPosition: 'right',//表格靠右!字体对齐
-            pageSize: 10,
+            pageSize: 12,
             pageIndex:1,
             projectData:[],
             totalNumber:null,//总条数

@@ -44,7 +44,6 @@
                    :file-list="fileList"
                    :on-success="fileSuccess"
                    :on-remove="handleRemove"
-                   :on-change='filechange'
                    :name='upLoadName + "#"+item.title'
                    >
                   <i class="el-icon-plus"></i>
@@ -97,10 +96,13 @@
             },
             methods:{
                GetprojectDeail(){
+                console.log('-------')
                    var parms={
                         projectCode: this.$route.params.id
                    }
                 Particulars(parms).then( res =>{
+                       console.log(res)
+
                          this.projectname=res.DataList.ProjectName;
                          this.ProjectPrincipal=res.DataList.ProjectPrincipal;
                          this.UserPhone=res.DataList.UserPhone;
@@ -111,7 +113,6 @@
                          this.ProjectStates=res.DataList.ProjectStates;  
                          this.upLoadName=res.DataList.ProjectName ;// 提交时候的要发项目名称过去        
                          let acceptanceInfo=res.DataList.RidrTableList;
-                         console.log(res)
                  for(let item of acceptanceInfo) {
                     switch (item.FlieType) {
                         case '合同':
@@ -202,7 +203,7 @@
                             this.acceptData[12] = {
                                 name: item.FlieName,
                                 url: item.FlieUrl,
-                                title: '安装信息表'
+                                title: '监理报告'
                             }
                             break;
                         case '验收文本':
@@ -226,13 +227,6 @@
                  }                                                
                })
               },
-              filechange(idx, file,fileList){
-                console.log("change")
-                 console.log(idx)
-                console.log(file,fileList)
-                // this.fileList=[];
-              //   this.fileList[idx].push(file);
-              },
               exportAcceptData (url) {   // 下载验收资料
                           window.open(url)
                         },
@@ -250,18 +244,104 @@
               },
              fileSuccess(res) {
                  this.$message.success('上传成功!');
-                 this.GetprojectDeail()//成功的时候调用显示的的页面,刷新
+                 this.GetprojectDeail()//成功的时候调用显示的的页面,刷新*/
               }, 
               handleRemove(file) {//移除除去显示的上面的名称
-                 var fileName=file.response.FileUrl
+                 var fileName=file.response.FileUrl.toString()
                   console.log(fileName)
-                /* console.log(file.response.FileUrl)*/
-/*                    if("fileName:contains(合同)"){
-                            this.acceptData[0].name=null;
-                            console.log("888888")
-                        }*/
-                       
-                      },
+                   if(fileName.indexOf('合同')>-1){
+                      this.acceptData.splice(0, 1, {
+                            name: null,
+                            title: '合同',
+                            url: null
+                           })
+                    }else if(fileName.indexOf('采购清单')>-1){
+                       this.acceptData.splice(1, 1, {
+                            name: null,
+                            title: '采购清单',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('开工申请书')>-1){
+                       this.acceptData.splice(2, 1, {
+                            name: null,
+                            title: '开工申请书',
+                            url: null
+                           })
+                     }
+                     else if(fileName.indexOf('施工组织设计')>-1){
+                       this.acceptData.splice(3, 1, {
+                            name: null,
+                            title: '施工组织设计',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('图纸会审')>-1){
+                       this.acceptData.splice(4, 1, {
+                            name: null,
+                            title: '图纸会审, 设计交流',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('监理日志')>-1){
+                       this.acceptData.splice(5, 1, {
+                            name: null,
+                            title: '监理日志, 工程要记',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('签收单')>-1){
+                       this.acceptData.splice(6, 1, {
+                            name: null,
+                            title: '签收单',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('培训单')>-1){
+                       this.acceptData.splice(7, 1, {
+                            name: null,
+                            title: '培训单',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('竣工报告')>-1){
+                       this.acceptData.splice(8, 1, {
+                            name: null,
+                            title: '竣工报告',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('竣工结算书')>-1){
+                       this.acceptData.splice(9, 1, {
+                            name: null,
+                            title: '竣工结算书',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('竣工图纸')>-1){
+                       this.acceptData.splice(10, 1, {
+                            name: null,
+                            title: '竣工图纸',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('安装信息表')>-1){
+                       this.acceptData.splice(11, 1, {
+                            name: null,
+                            title: '安装信息表',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('监理报告')>-1){
+                       this.acceptData.splice(12, 1, {
+                            name: null,
+                            title: '监理报告',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('验收文本')>-1){
+                       this.acceptData.splice(13, 1, {
+                            name: null,
+                            title: '验收文本',
+                            url: null
+                           })
+                     }else if(fileName.indexOf('审核报告')>-1){
+                       this.acceptData.splice(14, 1, {
+                            name: null,
+                            title: '审核报告',
+                            url: null
+                           })
+                     }         
+              },
               Intooutfile(){//导出验收资料.
                  var params={
                   projectName:this.projectname
