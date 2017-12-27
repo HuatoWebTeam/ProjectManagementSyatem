@@ -311,7 +311,7 @@ export default {
       .InformationCheck{
        width: calc(100% - 40px);
        height: calc(100% - 90px);
-       margin: 20px ;
+       margin:20px 20px 0px 20px ;
       }
       .tableList{
         width: calc(100% - 40px);

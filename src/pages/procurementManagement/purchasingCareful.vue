@@ -125,7 +125,7 @@ export default {
               staDate:'',
               endDate:'',
               pageIndex:1,
-              pageSize:12,
+              pageSize:10,
               totalNumber:null,
               tablepending: [],
               FileUrl:'',
@@ -219,7 +219,7 @@ export default {
 	    }
 
 	    .PendingOrderheader{
-	    	margin: 20px;
+	    	margin: 20px 20px 0px 20px;
 	        /*min-width: 1474px;*/
 	    }
 	    .underline{

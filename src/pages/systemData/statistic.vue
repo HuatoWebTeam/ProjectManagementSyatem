@@ -114,7 +114,7 @@ export default {
    .main_heard{
       width: calc(100% - 40px);
       height: calc(100% - 90px);
-      margin: 20px;
+      margin: 0 20px 20px 20px;
       background: #fff;
       border: 1px solid #ccc; 
          }
@@ -127,17 +127,11 @@ export default {
       	padding:8px 10px;
       }
   .procurment_start_time{
-      	   /* display: inline-block; */
-      	    margin-right: 80px;
+      	    display: inline-block; 
+            width: 200px;
       	    float: right;
         }
   }
-  .projectStatistic{
-            display: inline-block;
-            font-size: 16px;
-            font-weight:bold;
-  }
-
 }
 </style>
 <style type="text/css"   lang="scss" >
@@ -146,7 +140,10 @@ export default {
           margin-right:56px;
         }
     }
-
+.procurment_name{
+             width: 100%;
+            font-size: 16px;
+}
 
 
 .procurment_title{

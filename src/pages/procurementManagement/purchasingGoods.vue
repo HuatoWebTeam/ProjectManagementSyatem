@@ -1,7 +1,9 @@
 <template>
-<el-row class="BacklogMangement">
-  <el-col :span='24'  class="main_heard">
+<el-row class="BacklogMangement  myContainer">
+  <el-col :span='24'  class="title">
    <div class="procurment_title">备货信息管理 </div>
+    </el-col>
+     <el-col :span='24' class="StockInquire" >
       <div class="seck">
       		<span >查询条件</span>
           <el-input  placeholder="请输入编号或名称" v-model="condition"  class="seack_input" ></el-input>
@@ -154,7 +156,7 @@ export default {
          stockData:[],//定义数组存
          total:null,
          totalNumber:null,
-         pageSize: 12,
+         pageSize: 10,
          pageIndex:1,
          condition:'',
          isAdd: true, //ture  为添加用户,false为修改 
@@ -307,12 +309,7 @@ export default {
                         }
                       })
               },
-
-
-
-
      }
-
 </script>
 <style scoped lang="scss">
 
@@ -326,29 +323,20 @@ export default {
     	font-family: "Microsoft YaHei";
       font-weight: bold;
     }
-     .seck{
-        margin-top: 20px;
-      }
-    .main_heard{
-       height: 50px;
-       line-height: 50px;
-       padding-left: 20px;
-       background:#fff;
-       box-shadow: 0px 2px 1px #888888;
-    }
     .projectStockList{
         width: calc(100% - 40px);
         height: calc(100% - 90px);
-        margin: 20px;
+        margin:0px 20px 20px  20px;
         background: #fff;
         border: 1px solid #ccc;
-        margin-top: 100px;
     }
     .elform{
       width: 95%;
     }
+   .StockInquire{
+       margin:20px;
+   }
  }
-
 .el-dialog__body{
  padding: 50px 0px 50px 0px;
 }
@@ -361,14 +349,13 @@ export default {
 
 </style>
 <style type="text/css" lang='scss'>
-.el-icon{
-   display: none;
-}
-.el-dialog__header{
-	background: #f2f2f2;
-}
-
-    .add_people{
+    .el-icon{
+       display: none;
+    }
+    .el-dialog__header{
+    	background: #f2f2f2;
+    }
+   .add_people{
     	display: inline-block;
     	float: right;
     }
@@ -396,22 +383,4 @@ export default {
     .seack_button{
       margin-left:16px;
     }
-
-
-</style>
-<style type="text/css" lang='scss'>
-   .el-icon{
-   display: none;
-}
-.el-dialog__header{
-	background: #f2f2f2;
-}
-.el-table__header-wrapper {
-  .el-table__header {
-    .cell {
-      text-align: center;
-    }
-  }
-  
-}
 </style>
