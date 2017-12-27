@@ -216,7 +216,7 @@ export default {
       render.readAsDataURL(file);
       render.onload = (e) => {
         console.log(e);
-        var result = (e.target.result).replace(/data:image\/png;base64,/, '');
+        var result = (e.target.result).replace(/^.*?,/,'');  // 替换前边的data:image/png(/jpeg);base64
         // formData.append('PettyCashCode', this.fileData.PettyCashCode )
         var params = {
           PettyCashCode: this.fileData.PettyCashCode,
