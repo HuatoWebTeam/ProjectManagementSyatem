@@ -375,11 +375,9 @@ export default {
     .el-dialog__header{
       background: #f2f2f2;
     }
-
     .stock_but{
       width: 60px;
     }
-
     .seack_button{
       margin-left:16px;
     }

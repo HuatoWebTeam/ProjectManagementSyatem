@@ -56,8 +56,8 @@
 					</el-form-item>
 				</el-form>
 				<span slot="footer" class="dialog-footer">
-					<el-button @click="closeUpdatePass">取 消</el-button>
-					<el-button type="primary" @click="updatePass">确 定</el-button>
+					<el-button  size='small' @click="closeUpdatePass">取 消</el-button>
+					<el-button  size='small'  type="primary" @click="updatePass">确 定</el-button>
 				</span>
 			</el-dialog>
 	  	</el-aside>
