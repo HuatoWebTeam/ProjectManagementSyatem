@@ -9,7 +9,7 @@
           <el-input placeholder="请输入查询项目" v-model="condition" ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary"  icon="el-icon-search" @click='expenses'>查询</el-button>
+          <el-button type="primary"  size='small'  icon="el-icon-search" @click='expenses'>查询</el-button>
         </el-form-item>
       </el-form>
    </el-col>
@@ -88,10 +88,8 @@
         <el-button   size="medium" type="primary" @click="submitUpload">确 定</el-button>
       </span>
   </el-dialog>
-</el-row>
- 
+</el-row> 
 </template>
-
 <script>
   import{GetReimburseData,RelicUpload,ExeclReimburseData}from'@/api/api'//引进列表
 
@@ -148,9 +146,7 @@ export default {
               },
               UploadFile(index){
                    this.AddText=true;//点击的时候添加文档弹框显示出来
-                   console.log(this.tableData[index])
                    this.upLoadName = String(this.tableData[index].ReimburseCode);
-                   console.log(this.upLoadName);
               },
               handleRemove(file, fileList) {//删除
                 },
@@ -158,7 +154,7 @@ export default {
                  var parms={
                           reimburseCode:this.tableData[index].ReimburseCode
                        };
-                    window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
+                 window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
              },
               closeAddText(){//关闭添加弹框
                 this.AddText=false;
@@ -170,6 +166,9 @@ export default {
               },
           mounted(){
                  this.expenses()//列表请求显示
+           },
+        deactivated() {//每次都销毁//不缓存,保证是最新的数据,
+              this.$destroy(true);
            }
    }
 </script>
@@ -191,9 +190,9 @@ export default {
     .el-button{
       font-size: 12px;
      }
-     .el-button, .el-button--primary, span{
+/*     .el-button, .el-button--primary, span{
       padding:8px 10px;
-     }
+     }*/
 }
 </style>
 <style type="text/css">

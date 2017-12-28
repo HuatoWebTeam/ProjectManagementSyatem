@@ -12,22 +12,18 @@
         <el-table-column
         prop='UserName'
         label='姓名'>
-
         </el-table-column>
         <el-table-column
         prop='PositionName'
         label='职位'>
-
         </el-table-column>
         <el-table-column
         prop='UserPhone'
         label='联系电话'>
-
         </el-table-column>
         <el-table-column
         prop='UserQq'
         label='QQ'>
-
         </el-table-column>
         <el-table-column
         label='操作'>
@@ -81,15 +77,15 @@
             <el-input  v-model='personnalInfo.confirmPass' :disabled="!isAdd"  placeholder='请输入确认密码'></el-input>
           </el-form-item >
           <el-form-item label='成员状态:' prop='UserState'>
-            <el-select v-model='personnalInfo.UserState' placeholder="请选择成员状态">
+            <el-select v-model='personnalInfo.UserState' placeholder="请选择成员状态" >
               <el-option label='启用成员' :value='1' ></el-option>
               <el-option label='停用成员' :value='0' ></el-option>
             </el-select>
           </el-form-item>
         </el-form>
         <span slot='footer' class='dialogFooter'>
-          <el-button type='primary' @click='updateOrAdd' >确定</el-button>
-          <el-button @click='editPeraonnlInfo = false' >取消</el-button>
+          <el-button   size='small' type='primary' @click='updateOrAdd' >确定</el-button>
+          <el-button  size='small' @click='editPeraonnlInfo = false' >取消</el-button>
         </span>
       </el-dialog>
     </el-col>
@@ -158,7 +154,8 @@ export default {
         }  
     };
     var checkState = (rule, value, callback) => {
-      if(value == '') {
+      console.log(value)
+      if(value == null) {
         callback(new Error('请选择成员状态'));
       }
       callback();
@@ -207,7 +204,8 @@ export default {
         UserPass: '',          // 密码
         confirmPass: '',       // 确认密码
         UserState: ''     // 成员状态
-      }, 
+      },
+      valueState:'', 
       totalNumber: null,
       pageSize: 10,      // 每页的条数
       pageIndex: 1      // 当前页
@@ -222,7 +220,8 @@ export default {
         
       };
       GetUserManageData(params).then(res => {   // 发送请求
-        // console.log(res);
+
+         console.log(res);
         this.totalNumber = res[0].TotalNumber;   //设置总条数
         this.peronnelData = [];            // 清空表格数据
         console.log(this.totalNumber)
@@ -250,7 +249,10 @@ export default {
       this.isAdd = true; //
       this.editPeraonnlInfo = true;
     },
-    UpdateUserData(idx) {   // 打开编辑用户
+    UpdateUserData(idx) {  
+    
+
+     // 打开编辑用户
       //console.log(idx);   // idx 为点击行的索引  
       this.isAdd = false;   //
       this.personnalInfo = {
@@ -295,14 +297,16 @@ export default {
       };
       if(this.isAdd) {   // 添加
         this.personnalInfo.LoginName = this.personnalInfo.UserName;
-        this.$refs['personnalRule'].validate((valid) => {
+       this.$refs['personnalRule'].validate((valid) => {
           if(valid) {
             AddUserManaeg(params).then(res => {
-              //console.log(res);
+             console.log('添加')
+              console.log(res);
               if(res == 1) {
+                console.log(params)
                 this.$message({
                     type: 'success',
-                    message: '添加成功！！！'
+                    message: '添加成功！！！' 
                 });
                 this.$refs['personnalRule'].resetFields();  //清空表单的验证状态
                 this.editPeraonnlInfo = false;
@@ -318,10 +322,12 @@ export default {
         })
       }  else {           // 编辑 更新
         this.$refs['personnalRule'].validate((valid) => {
-          //console.log(valid)
+         console.log(valid)
           if(valid) {
             UpdateUserManaeg(params).then(res => {
-              console.log(res);
+              console.log("编辑的值")
+              console.log(res)
+              console.log(params);
               if(res == 1) {
                 this.$message({
                   type: 'success',

@@ -104,7 +104,10 @@ export default {
            _this.Attendance();
         }
       })
-    }
+    },
+     deactivated() {//每次都销毁//不缓存,保证是最新的数据,
+             this.$destroy(true);
+         }
 }
 </script>
 

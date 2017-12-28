@@ -103,8 +103,8 @@
         <i class="el-icon-plus"></i>
       </el-upload>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeAddVoucher">取 消</el-button>
-        <el-button type="primary" @click="uploadImgBtn">确 定</el-button>
+        <el-button  size="small" @click="closeAddVoucher">取 消</el-button>
+        <el-button  size="small"   type="primary" @click="uploadImgBtn">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
