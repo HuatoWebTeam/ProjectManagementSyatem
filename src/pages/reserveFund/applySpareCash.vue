@@ -2,7 +2,6 @@
 <el-row class='applySpareContainer myContainer'>
   <el-col :span='24' class='title'>
     备用金申请
-
   </el-col>
   <el-col :span='24' class='applyContentContainer' >
     <div class='setPadding'>
@@ -37,9 +36,9 @@
           <el-form-item label='申请描述：' prop='describe' >
             <el-input type='textarea' class='projectDescribe' v-model='formData.describe' ></el-input>
           </el-form-item>
-          <el-form-item >
+           <el-form-item>
             <el-button type='primary' size='small' @click='onSubmit'>提交</el-button>
-          </el-form-item>
+           </el-form-item>
         </el-form>
       </div>
     </div>
@@ -174,12 +173,10 @@ export default {
       position: relative;
       .applySpareContent {
         position: absolute;     
-        width: 970px;
-        height:762px;
-        top: 0;
+        top: 8%;
         right: 0;
         bottom: 0;
-        left: 0;
+        left: 20%;
         margin: auto;
         .el-form-item {
           .el-input {
@@ -187,9 +184,10 @@ export default {
           }
           .projectDescribe {
             height: 200px;
+            width: 500px;
           }
           .el-button {
-            float: right;
+            /*margin-left: 500px;*/
           }
         }
       }

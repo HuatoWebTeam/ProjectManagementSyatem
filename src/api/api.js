@@ -271,3 +271,17 @@ export const GetPettyCash = params => {
       .get("/Business/ExportZipFile",{params:params})
       .then(res=>res.data)
    }
+ //备用金申请领导拒绝功能
+   export const PettyCashSendBack=(params) => {
+       return axios
+      .post("/AmountManage/PettyCashSendBack", params)
+      .then(res => res.data);
+      }; 
+   //编辑重新发起申请
+   export const CashNewRegistration=(params) => {
+       return axios
+      .post("/AmountManage/MyPettyCashNewRegistration", params)
+      .then(res => res.data);
+      }; 
+
+   

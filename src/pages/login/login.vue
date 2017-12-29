@@ -94,7 +94,6 @@ export default {
     }
 }
 </script>
-
 <style scoped lang='scss'>
     .loginContainer {
        min-width: 670px;

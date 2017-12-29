@@ -157,7 +157,6 @@ export default {
       	stripe:true,
       	inputNumber:'',
       	dialogTableVisible:false,
-        options:[],
         condition:'',
         tableStockData:[],
       	labelPosition:'right',//表格字体靠右显示!

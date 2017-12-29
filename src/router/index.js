@@ -38,6 +38,8 @@ import VerifyDetails from '@/pages/projectsManager/VerifyDetails';//验收项目
 import ApplySpareCash from '@/pages/reserveFund/applySpareCash';   // 申请备用金
 import DocumentsList from '@/pages/reserveFund/documentsList';   // 单据列表
 import ApplyRecord from '@/pages/reserveFund/applyRecord';   // 申请记录
+import routerDetails from '@/pages/reserveFund/routerDetails';  //申请编辑
+
 /**
  * systemData  系统资料
  */
@@ -96,7 +98,7 @@ export default new Router({
         { path: "ProcurementBack", name: '采购待办', component: ProcurementBack },
         { path: "PurchaseCare", name: '采购已审', component: PurchaseCare },
         { path: "PurchaseGoods", name: '采购备货', component: PurchaseGoods },
-        { path: 'Details/:id', name: 'Details', component: PurchaseChild }
+        { path: 'Details/:id', name: 'Details', component: PurchaseChild },
       ]
     },
     {
@@ -106,7 +108,8 @@ export default new Router({
       children: [
         { path: "ApplySpareCash", name: '申请备用金', component: ApplySpareCash },
         { path: "DocumentsList", name: '单据列表', component: DocumentsList },
-        { path: "ApplyRecord", name: '申请记录', component: ApplyRecord }
+        { path: "ApplyRecord", name: '申请记录', component: ApplyRecord },
+       { path: "routerDetails/:id", name: 'routerDetails', component: routerDetails },
       ]
     },
     {

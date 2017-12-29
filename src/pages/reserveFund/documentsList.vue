@@ -50,10 +50,9 @@
         <template slot-scope="scope" >
           <img style='width:180px;height:50px;cursor: pointer;' @click='amplification(scope.$index)' :src="dataList[scope.$index].ImgUrl" alt="">
         </template>
-
       </el-table-column>
       <el-table-column 
-        width='150px'
+        width='320'
         label='操作'>
         <template slot-scope="scope" >
           <el-button size='mini' 
@@ -63,6 +62,17 @@
           @click='applyApproval(scope.$index)'>
             申请批准
           </el-button>
+           <el-button  
+             type="primary"
+             size='mini'
+             v-if='dataList[scope.$index].State == 1'
+             v-show="true"  
+             @click='CruelRefused(scope.$index)'
+             >
+             残忍拒绝
+           </el-button> 
+         <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == -1' disabled >已拒绝</el-button>
+         
           <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == 3' disabled >已批准</el-button>
           
         </template>
@@ -112,11 +122,37 @@
       size='tiny'>
       <img width="100%" :src="dialogImgUrl" alt="">
     </el-dialog>
+<el-dialog
+  title="拒绝理由"
+  :visible.sync="refusereason"
+  width="30%"
+  >
+  <el-form>
+    <el-form-item
+      prop='Explain'
+      :rules="rules"
+      :model="refuseInfo"
+      ref="resfuseRule"
+      >
+      <el-input
+        type="textarea"
+        placeholder="请输入内容"
+        class="refusereasonInput"
+        v-model="refuseInfo.Explain"
+       >
+      </el-input>
+    </el-form-item>
+</el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button size='small' @click="Cancel">取 消</el-button>
+    <el-button type="primary" size='small' @click="CashSendBacksub">确 定</el-button>
+  </div>
+</el-dialog>
   </el-col>
 </el-row>
 </template>
 <script>
-import { GetPettyCash, UpdatePettyCash } from '@/api/api'
+import { GetPettyCash, UpdatePettyCash,PettyCashSendBack } from '@/api/api'
 export default {
   data() {
     return {
@@ -131,6 +167,14 @@ export default {
       dialogPreview: false,
       userPermission: null,     // 当前登录的用户 普通 or 领导  or 管理员
       dialogImgUrl: null,
+      refuse:false,//拒绝按钮,,领导批准的时候显示
+      refusereason:false,
+      refuseInfo:{
+         Explain:'',
+      },
+      rules:{
+          Explain:[{ required: true, message: '请填写拒绝理由', trigger: 'blur' }]
+      }
     }
   },
   methods: {
@@ -140,11 +184,13 @@ export default {
         pageSize: this.pageSize
       };
       GetPettyCash(params).then(res =>{
+        console.log('列表')
         console.log(res)
         this.userPermission = null;
         this.totalNumber = 0;
         this.dataList = [];
         if(res[0].TotalNumber !== 0) {
+
           this.userPermission = Number(res[0].IsTrue);
           this.totalNumber = res[0].TotalNumber;
           this.dataList = res[0].DataList;
@@ -169,8 +215,45 @@ export default {
         message: '只能上传一张图片！！！'
       })
     },
+    Cancel(){//取消弹框显示
+        this.refusereason=false;
+    },
+       CruelRefused(index){//拒绝时候弹框显示
+          this.refusereason=true;//打开弹框.
+          this.refuseInfo={
+            PettyCashCode:this.dataList[index].PettyCashCode,
+            Explain:this.dataList[index].Explain
+          }
+          
+    },
+
+
+    CashSendBacksub(){//提交时候发送
+       console.log("按钮")
+        var params={
+            pettyCash:this.refuseInfo
+        }  
+       this.$refs['resfuseRule'].validate((valid) =>{
+            console.log(valid)
+            if(valid){
+             PettyCashSendBack(params).then(res=>{
+              console.log("jujeu")
+                console.log(params)
+                console.log(res)
+             })  
+           }
+    })
+
+
+
+    },
+    
+
+
+
     applyApproval(index) {
       if(this.userPermission == 2) {
+         
         var params = {
           PettyCashCode: this.dataList[index].PettyCashCode,
           PettyCashFile: null
@@ -288,5 +371,12 @@ export default {
       }
     }
   }
+
 }
+</style>
+<style type="text/css" lang='scss'>
+     .el-textarea__inner{
+      height: 160px;
+     }
+
 </style>

@@ -51,6 +51,19 @@
           <img style='width:180px;height:50px;cursor: pointer;' @click='amplification(scope.$index)' :src="dataLists[scope.$index].ImgUrl" alt="">
         </template>
       </el-table-column>
+       <el-table-column
+       label='操作'     
+       >
+            <template slot-scope='scope'>
+               <el-button size='mini'
+                 type='primary' 
+                 @click="Compile(scope.$index)"  
+               >
+                 编辑
+               </el-button>
+
+            </template>
+       </el-table-column>
     </el-table>
     <el-col :span='24' class='myPagination'>
       <el-pagination
@@ -105,7 +118,10 @@ export default {
     amplification(idx) {
       this.dialogImgUrl = this.dataLists[idx].ImgUrl;
       this.dialogPreview = true;
-    }
+    },
+    Compile(index){
+     this.$router.push({name: 'routerDetails', params:{ id:this.dataLists[index].ProjectCode}});
+    },
   },
   mounted() {
     this.getPettyCashList();
