@@ -56,10 +56,12 @@
        >
             <template slot-scope='scope'>
                <el-button size='mini'
-                 type='primary' 
+                 type='primary'
+                 v-if='dataLists[scope.$index].State == -1'
+                  
                  @click="Compile(scope.$index)"  
                >
-                 编辑
+                 审批未通过
                </el-button>
 
             </template>
@@ -120,7 +122,7 @@ export default {
       this.dialogPreview = true;
     },
     Compile(index){
-     this.$router.push({name: 'routerDetails', params:{ id:this.dataLists[index].ProjectCode}});
+          this.$router.push({name: 'routerDetails', params:{ id:this.dataLists[index].PettyCashCode}});
     },
   },
   mounted() {

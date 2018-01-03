@@ -96,7 +96,6 @@
             },
             methods:{
                GetprojectDeail(){
-                console.log('-------')
                    var parms={
                         projectCode: this.$route.params.id
                    }

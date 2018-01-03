@@ -62,19 +62,16 @@
           @click='applyApproval(scope.$index)'>
             申请批准
           </el-button>
-           <el-button  
+            <el-button  
              type="primary"
              size='mini'
              v-if='dataList[scope.$index].State == 1'
-             v-show="true"  
+             v-show='refusebutton'
              @click='CruelRefused(scope.$index)'
              >
              残忍拒绝
            </el-button> 
-         <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == -1' disabled >已拒绝</el-button>
-         
           <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == 3' disabled >已批准</el-button>
-          
         </template>
       </el-table-column>
     </el-table>
@@ -167,7 +164,7 @@ export default {
       dialogPreview: false,
       userPermission: null,     // 当前登录的用户 普通 or 领导  or 管理员
       dialogImgUrl: null,
-      refuse:false,//拒绝按钮,,领导批准的时候显示
+      refusebutton:false,//拒绝按钮,,领导批准的时候显示
       refusereason:false,
       refuseInfo:{
          Explain:'',
@@ -184,17 +181,17 @@ export default {
         pageSize: this.pageSize
       };
       GetPettyCash(params).then(res =>{
-        console.log('列表')
+        console.log('批准列表')
         console.log(res)
         this.userPermission = null;
         this.totalNumber = 0;
         this.dataList = [];
-        if(res[0].TotalNumber !== 0) {
-
+        if(res[0].IsTrue==2){
+           this.refusebutton=true;//等于等到的时候有拒绝的权限.
+         }
           this.userPermission = Number(res[0].IsTrue);
           this.totalNumber = res[0].TotalNumber;
           this.dataList = res[0].DataList;
-        }
       })
     },
     pageIndexChange() {
@@ -226,34 +223,23 @@ export default {
           }
           
     },
-
-
     CashSendBacksub(){//提交时候发送
-       console.log("按钮")
         var params={
             pettyCash:this.refuseInfo
         }  
-       this.$refs['resfuseRule'].validate((valid) =>{
+/*       this.$refs['resfuseRule'].validate((valid) =>{
             console.log(valid)
-            if(valid){
+            if(valid){*/
              PettyCashSendBack(params).then(res=>{
-              console.log("jujeu")
-                console.log(params)
-                console.log(res)
+                  this.getDocumentList()//拒绝时候,刷新列表,重新显示列表,不显示拒绝的,.  
+                  this.refusereason=false;
              })  
-           }
-    })
-
-
-
-    },
+/*           }
+    })*/
+  },
     
-
-
-
     applyApproval(index) {
       if(this.userPermission == 2) {
-         
         var params = {
           PettyCashCode: this.dataList[index].PettyCashCode,
           PettyCashFile: null

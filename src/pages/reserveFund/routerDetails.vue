@@ -1,24 +1,17 @@
 <template>
 <el-row class='applySpareContainer myContainer'>
   <el-col :span='24' class='title'>
+   <div class="procurment_title">
     备用金编辑申请
+    <el-button type="primary" size='mini' @click="routerGoBack" >返回上一页</el-button>
+    </div>
   </el-col>
   <el-col :span='24' class='applyContentContainer' >
     <div class='setPadding'>
       <div class='applySpareContent' >
         <el-form label-width='100px' :model='formData' :rules='rules' ref='ruleForm'>
           <el-form-item label='所属项目：' prop='checkProject' >
-            <el-select
-              placeholder='请选择项目'
-              v-model='formData.checkProject'
-              >
-              <el-option
-                v-for='item in projectList'
-                :key='item.value'
-                :value='item.value'
-                :label='item.label'>
-              </el-option>
-            </el-select>
+             <el-input disabled v-model='formData.checkProject'  ></el-input>
           </el-form-item>
           <el-form-item label='申请人：' prop='applicant' >
             <el-input disabled v-model='formData.applicant' placeholder='请输入申请人' ></el-input>
@@ -28,14 +21,21 @@
           </el-form-item>
           <el-form-item label='申请时间：' required prop='chooseDate'>
             <el-date-picker
+            disabled
             type='datetime'
              placeholder='请选择日期' 
              v-model='formData.chooseDate'>
             </el-date-picker>
           </el-form-item>
+
           <el-form-item label='申请描述：' prop='describe' >
             <el-input type='textarea' class='projectDescribe' v-model='formData.describe' ></el-input>
           </el-form-item>
+         <el-form-item label='拒绝理由：'>
+            <el-input type='textarea' class='projectDescribe'  :disabled="true" v-model='Explain'></el-input>
+          </el-form-item>
+
+
            <el-form-item>
             <el-button type='primary' size='small' @click='onSubmit'>提交</el-button>
            </el-form-item>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { ProjectManage} from '@/api/api'
+import { ProjectManage,GetPettyCashTable,CashNewRegistration} from '@/api/api'
 export default {
   data() {
     var checkAmount = (rule, value, callback) => {
@@ -64,26 +64,22 @@ export default {
     let user = JSON.parse(sessionStorage.getItem('user'));
     return {
       projectList: [],     //所属项目列表
+      PettyCashCode:"",
       formData: {
         checkProject: null,  // 选中的项目
         applicant: user.name,     // 申请人
         amocntNumber: null,
-        chooseDate: new Date(),
-        describe: ''
+        chooseDate: "",
+        describe: '',
       },
+       Explain:'',
       rules: {
-        checkProject: [
-          { type: 'number', required: true, message: '请选择所属项目', trigger: 'change' },
-        ],
         applicant: [
           { required: true, message: '请输入申请人', trigger: 'blur' },
         ],
         amocntNumber: [
           { type: 'number', required: true, message: '请输入申请金额', trigger: 'blur' },
           // { validator: checkAmount, trigger: 'blur' }
-        ],
-        chooseDate: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' },
         ],
         describe: [
           { required: true, message: '请输入申请描述', trigger: 'blur' },
@@ -104,28 +100,35 @@ export default {
             value: item.ProjectCode
           });
         }
-        console.log(res);
+        
       })
     },
+    routerDetal(){
+         var params={
+          PettyCashCode:this.$route.params.id
+        }
+        GetPettyCashTable(params).then(res=>{
+              this.PettyCashCode=res.DataList[0].PettyCashCode,
+              this.formData.checkProject=res.DataList[0].ProjectName,
+              this.formData.amocntNumber=Number(res.DataList[0].AppliedAmount),
+              this.formData.chooseDate=res.DataList[0].AppliedDate,
+              this.formData.describe=res.DataList[0].Remark,
+              this.Explain=res.DataList[0].Explain
+        })
+    },
     onSubmit() {
-/*      console.log(this.formData.checkProject);
-      console.log(this.formData.applicant);
-      console.log(this.timeFormatter(this.formData.chooseDate));
-      console.log(this.formData.describe);
-      console.log(this.formData.amocntNumber)*/
       this.$refs['ruleForm'].validate((valid) => {
         if(valid) {
           var params = {
             pettyCash: {
-              ProjectCode: this.formData.checkProject,
-              LoginName: this.formData.applicant,
               AppliedAmount: this.formData.amocntNumber,
-              AppliedDate:this.timeFormatter(this.formData.chooseDate),
+              PettyCashCode:this.PettyCashCode,
               Remark:this.formData.describe
              }
           };
-          InsertPettyCash(params).then(res => {
+          CashNewRegistration(params).then(res => {
             console.log(res);
+            console.log(params)
             if(res == 1) {
               this.$message({
                 type: 'success',
@@ -148,10 +151,15 @@ export default {
       var date = new Date(value);
       return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     },
+       routerGoBack() {//点击上一页.返回路由上一页
+         this.$router.go(-1);
+        },
+
 
   },
   mounted() {
     this.getProjectList();
+     this.routerDetal();//详情列表.
   },
   deactivated() {
 		this.$destroy(true);
@@ -161,6 +169,9 @@ export default {
 
 <style scoped lang='scss'>
 .applySpareContainer {
+    .procurment_title .el-button{
+         margin-left: 81%;
+    }
   height: 100%;
   .applyContentContainer {
     // width: cacl(100% -40px);
