@@ -57,12 +57,15 @@
             <template slot-scope='scope'>
                <el-button size='mini'
                  type='primary'
-                 v-if='dataLists[scope.$index].State == -1'
-                  
+                 v-if='dataLists[scope.$index].State == -1'  
                  @click="Compile(scope.$index)"  
                >
                  审批未通过
-               </el-button>
+           </el-button>
+          <el-button style='background:#a0a0a0; color:#fff' size='mini'
+           >已批准
+          </el-button>
+
 
             </template>
        </el-table-column>

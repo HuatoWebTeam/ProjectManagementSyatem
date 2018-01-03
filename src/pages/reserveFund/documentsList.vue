@@ -69,7 +69,7 @@
              v-show='refusebutton'
              @click='CruelRefused(scope.$index)'
              >
-             残忍拒绝
+             申请拒绝
            </el-button> 
           <el-button style='background:#a0a0a0; color:#fff' size='mini' v-if='dataList[scope.$index].State == 3' disabled >已批准</el-button>
         </template>
