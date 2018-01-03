@@ -277,6 +277,15 @@ export const GetPettyCash = params => {
       .post("/AmountManage/PettyCashSendBack", params)
       .then(res => res.data);
       }; 
+
+      //申请再次编辑详情
+   export const GetPettyCashTable = params => {
+      return axios
+        .get("/AmountManage/GetPettyCashTable", {
+          params: params
+        })
+        .then(res => res.data);
+    };
    //编辑重新发起申请
    export const CashNewRegistration=(params) => {
        return axios
