@@ -1,7 +1,7 @@
 <template>
    <el-row  class="Orderdetail myContainer">
        <el-col :span='24' class="title" >
-       <div class="procurment_title">采购订单详情 <el-button type="primary" size='mini'   @click='routerGoBack'>返回上一页</el-button></div>
+       <div class="procurment_title">采购订单详情 <el-button type="primary" size='mini'  @click='routerGoBack' >返回上一页</el-button></div>
 
    </el-col>
    <el-col :span='24' class="NewProcurement">
