@@ -63,7 +63,9 @@
                  审批未通过
            </el-button>
           <el-button style='background:#a0a0a0; color:#fff' size='mini'
-           >已批准
+            v-if='dataLists[scope.$index].State !== -1' 
+             disabled
+           >无操作权限
           </el-button>
 
 

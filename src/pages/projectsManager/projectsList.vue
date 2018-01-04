@@ -251,7 +251,7 @@ export default {
 
         routerToDetails(index) {
           this.$router.push({name: 'ProjectsListDetails', params: { id: this.projectData[index].ProjectCode}});
-          console.log(this.projectData[index])
+          console.log(this.projectData[index].ProjectCode)
         },
         permission(){//有权限的列表请求
           var parms={

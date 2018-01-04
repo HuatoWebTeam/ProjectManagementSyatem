@@ -75,7 +75,6 @@
         </template>
       </el-table-column>
     </el-table>
-    
     <el-col :span='24' class='myPagination'>
       <el-pagination
         layout="prev, pager, next"
@@ -84,7 +83,6 @@
         @current-change='pageIndexChange'>
       </el-pagination>
     </el-col>
-
     <el-dialog 
       :visible.sync="addVoucher"
       title='上传打款凭证'
@@ -124,12 +122,9 @@
   :visible.sync="refusereason"
   width="30%"
   >
-  <el-form>
+  <el-form  :model="refuseInfo" :rules="rules" ref="resfuseRule">
     <el-form-item
       prop='Explain'
-      :rules="rules"
-      :model="refuseInfo"
-      ref="resfuseRule"
       >
       <el-input
         type="textarea"
@@ -227,15 +222,16 @@ export default {
         var params={
             pettyCash:this.refuseInfo
         }  
-/*       this.$refs['resfuseRule'].validate((valid) =>{
+     this.$refs['resfuseRule'].validate((valid) =>{
             console.log(valid)
-            if(valid){*/
+            if(valid){
              PettyCashSendBack(params).then(res=>{
                   this.getDocumentList()//拒绝时候,刷新列表,重新显示列表,不显示拒绝的,.  
                   this.refusereason=false;
+                  this.$refs['resfuseRule'].resetFields()
              })  
-/*           }
-    })*/
+           }
+    })
   },
     
     applyApproval(index) {

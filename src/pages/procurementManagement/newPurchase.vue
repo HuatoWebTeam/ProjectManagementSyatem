@@ -14,7 +14,7 @@
 						      :key="item.value"
 						      :label="item.label"
 						      :value="item.value"
-						     >
+						      >
 						    </el-option>
 						  </el-select>
 					   </el-form-item>
@@ -161,6 +161,7 @@ export default {
         tableStockData:[],
       	labelPosition:'right',//表格字体靠右显示!
         totalNumber:'',
+        options:[],
         ruleForm:{
             selectvalue: '',//下拉选择框
 	        PurchaseCode :Date.parse( new Date())/1000,
@@ -201,23 +202,25 @@ export default {
 		handleSelectionChange(val) {
 			this.multipleSelection = val;//钩子函数,选中的时候的值.
 		},
-       getprojectmange(){
-          var parms={//传的参数,项目下拉框!
-               pageIndex: 10000,
-               pageSize:10000   
-              }
-           ProjectManage(parms).then( res => {//项目列表
-              let options=[]; 
+	    getprojectmange(){
+	    	let options=[]
+	          var parms={//传的参数,项目下拉框!
+	               pageIndex: 10000,
+	               pageSize:10000
+	              }
               options=this.options
+	           ProjectManage(parms).then( res => {//项目列表
+	           	 console.log(res)
               for(let i=0;i<res[0].TotalNumber;i++){   //遍历出来的数组放进去
-                options.push({
-                   value:res[0].DataList[i].ProjectName,
-	               label:res[0].DataList[i].ProjectName
-                  })   
-                }
-           /*    console.log(options)*/
-              })
-           },
+	                options.push({
+	                   value:res[0].DataList[i].ProjectCode,
+		               label:res[0].DataList[i].ProjectName
+	                  })   
+	                }
+	              })
+
+	            console.log(this.options)
+	           },
            StockList(){
            	this.dialogTableVisible=true;
              },

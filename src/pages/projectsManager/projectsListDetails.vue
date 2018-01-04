@@ -67,7 +67,7 @@
             <div class='Ordertitle'>
                 施工日志
                 <div class='myOrderPagination'>
-                    <el-pagination
+                <el-pagination
                 layout="prev, next"
                 :total="construNumber"
                 :page-size='construpageSize'
@@ -77,12 +77,13 @@
             </div>
             <div class='goodsContent'>
                 <template v-for='(item, idx) in construData'>
-                    <div :key='idx'>
+                    <div :key='idx' @click='Linkpic(item.FileUrl)' class="projuctment">
                         <span class='ordinalNum '>{{ Number((construpageIndex-1) * construpageSize) + Number(idx + 1) }}. </span>
                         <span class='info'>项目: {{ allData.ProjectName }}</span>
                         <span class='info'>施工详细: {{ item.JobContent }}</span>
                         <!-- <span>规格与型号: {{ item. }}</span> -->
                         <span class='rightDate'>{{ item.AddDate }}</span>
+
                     </div>
                 </template>  
             </div>
@@ -108,12 +109,12 @@
             <div class='Ordertitle'>
                 售后详情
                 <div class='myOrderPagination'>
-                    <el-pagination
-                layout="prev, next"
-                :total="afterNumber"
-                :page-size='afterpageSize'
-                @current-change='afterpageIndexChange'>
-                </el-pagination>
+                  <el-pagination
+                  layout="prev, next"
+                  :total="afterNumber"
+                  :page-size='afterpageSize'
+                  @current-change='afterpageIndexChange'>
+                  </el-pagination>
                 </div>
             </div>
             <div class='acceptance afterInfo'>
@@ -202,6 +203,10 @@ export default {
             
         })
       },
+    Linkpic(url){//点击打开图片
+          window.open(url) 
+          console.log(url)
+        },
       exportAcceptData (url) {   // 导出验收资料
         window.open(url)
       },
@@ -216,6 +221,10 @@ export default {
           }
           this.allData = []
           GetProjectTableManage(params).then(res => {
+                console.log("dayinchuyemian")
+                 console.log(res)
+
+
               res.DataList.ProjectStaDate = res.DataList.ProjectStaDate.replace(' 0:00:00', '');
               res.DataList.ScheduledTime = res.DataList.ScheduledTime.replace(' 0:00:00', '');
               res.DataList.ActualTime = res.DataList.ActualTime.replace(' 0:00:00', '');
@@ -439,6 +448,9 @@ export default {
                     padding: 5px 0;
                     height: 184px;
                     div {
+                       cursor: pointer;
+                       text-decoration: underline;
+                        color: blue;
                         padding: 5px 20px;
                         .info {
                             margin-right: 20px;
@@ -477,6 +489,7 @@ export default {
                         width: 140px;
                         height: 100px;
                         margin: 0 10px 10px 0;
+                       
                         .box {
                             text-align: center;
                             padding: 20px 0 0 0;
@@ -484,6 +497,7 @@ export default {
                             height: 60px;
                             line-height: 20px;
                             overflow: hidden;
+
                             span {
                                 width: 100%;
                                 white-space: normal
