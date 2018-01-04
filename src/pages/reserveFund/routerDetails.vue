@@ -34,8 +34,6 @@
          <el-form-item label='拒绝理由：'>
             <el-input type='textarea' class='projectDescribe'  :disabled="true" v-model='Explain'></el-input>
           </el-form-item>
-
-
            <el-form-item>
             <el-button type='primary' size='small' @click='onSubmit'>提交</el-button>
            </el-form-item>

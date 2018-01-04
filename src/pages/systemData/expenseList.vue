@@ -45,9 +45,15 @@
       <template slot-scope="scope">
             <el-button size="small" type="primary" @click="UploadFile(scope.$index, scope.row)">上传报销报表</el-button>
         <el-button
-          size="mini"
+          size="small"
           type="primary"
+          v-if='tableData[scope.$index].Money !==0'
           @click="DownloadFile(scope.$index, scope.row)">下载报销报表</el-button>
+        <el-button
+         size='small'
+          style='background:#a0a0a0; color:#fff' 
+          v-if='tableData[scope.$index].Money ==0'
+          disabled>暂无报销报表</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -84,8 +90,8 @@
     <div class="el-upload__tip" slot="tip">只能上传xlsx文件，</div>
   </el-upload>
       <span slot="footer" class="dialog-footer">
-        <el-button   size="medium"  @click="closeAddText">取 消</el-button>
-        <el-button   size="medium" type="primary" @click="submitUpload">确 定</el-button>
+        <el-button   size="small"  @click="closeAddText">取 消</el-button>
+        <el-button   size="small" type="primary" @click="submitUpload">确 定</el-button>
       </span>
   </el-dialog>
 </el-row> 
@@ -116,6 +122,7 @@ export default {
                    condition:this.condition
                }
                GetReimburseData(parms).then(res=>{//列表显示请求
+                       console.log(res)
                       this.totalNumber=res.TotalNumber
                        this.tableData=[];
                        for(let item of res.DataList){
@@ -141,7 +148,7 @@ export default {
               errorfile(res){
                   if(res==0){
                      this.$message.error('上传失败!');
-                     this. handleRemove()//上传失败直接删除.
+                     this.handleRemove()//上传失败直接删除.
                   }
               },
               UploadFile(index){
@@ -151,10 +158,12 @@ export default {
               handleRemove(file, fileList) {//删除
                 },
             DownloadFile(index){
-                 var parms={
+                 var params={
                           reimburseCode:this.tableData[index].ReimburseCode
                        };
-                 window.open('/AmountManage/ExeclReimburseData?ReimburseCode=' + this.tableData[index].ReimburseCode)
+                ExeclReimburseData(params).then(res=>{
+                     window.open(res)//下载详细报表
+                })
              },
               closeAddText(){//关闭添加弹框
                 this.AddText=false;

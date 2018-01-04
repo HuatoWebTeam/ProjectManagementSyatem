@@ -176,8 +176,6 @@ export default {
         pageSize: this.pageSize
       };
       GetPettyCash(params).then(res =>{
-        console.log('批准列表')
-        console.log(res)
         this.userPermission = null;
         this.totalNumber = 0;
         this.dataList = [];
