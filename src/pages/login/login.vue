@@ -102,15 +102,14 @@ export default {
              height: 100px;
              background: url(../../assets/img/title.png) no-repeat;
              background-position: center center;
-             margin-right: 120px;
              text-align: center;
         }
        .huatotitle{
              position: absolute;
              display: inline-block;
-             font-size: 30px;
+             font-size: 40px;
              line-height: 100px;
-             margin-left:150px;   
+             margin-left:10%;   
           }   
        .loginmain{
             position:relative;

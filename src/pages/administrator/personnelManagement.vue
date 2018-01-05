@@ -84,8 +84,8 @@
           </el-form-item>
         </el-form>
         <span slot='footer' class='dialogFooter'>
-          <el-button   size='small' type='primary' @click='updateOrAdd' >确定</el-button>
           <el-button  size='small' @click='editPeraonnlInfo = false' >取消</el-button>
+          <el-button   size='small' type='primary' @click='updateOrAdd' >确定</el-button> 
         </span>
       </el-dialog>
     </el-col>
