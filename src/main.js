@@ -5,7 +5,7 @@ import App from './App'
 import VueRouter from 'vue-router'
 import router from './router'
 import 'font-awesome/css/font-awesome.css'
-
+import 'babel-polyfill'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/index.scss';
