@@ -63,7 +63,7 @@
   </el-col>
   <el-col :span='24'>
     <el-dialog
-      title="添加项目"
+       title="项目信息"
       :visible.sync="dialogVisible"
        width="26%"    
        class="projectedit"
@@ -293,7 +293,7 @@ export default {
             })     
              this.getprojectmange()//授权成功后,刷新一下列表    
         },
-        Unprivilegedlist(){//
+        Unprivilegedlist(){//无权限列表请求显示
             var parms={
                 pageIndex: 1,
                 pageSize: 200
@@ -310,9 +310,15 @@ export default {
           })
         }, 
         personnelAssignmentClose(){
-          //关闭穿梭框
+/*          //关闭穿梭框
+           this.data=[];//关闭的时候清空以前的选择.
+           this.valueright=[];*/
+            this.Unprivilegedlist()//刷新
+          this. permission()//刷新
+
         },
         personnelAssignmentOpen(){
+         
         //打开穿梭框函数
        },
         getprojectmange(){
@@ -354,6 +360,7 @@ export default {
           this.dialogVisible =true;
         },
         projecteditClose(){//关闭窗口的时候清空数据,
+          this.$refs['projectaddrules'].resetFields()//清空验证规则
           this.projectInfo={
               ProjectName:null,
               CustomerName:null,
@@ -389,8 +396,6 @@ export default {
             this.$refs['projectaddrules'].validate((valid) =>{
               if (valid) {
                   InsertProjectManage(parms).then(res=>{
-                    console.log("传给")
-                    console.log(parms)
                     if(res==1){
                       this.$message({
                         type:'success',
