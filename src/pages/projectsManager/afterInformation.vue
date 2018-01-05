@@ -139,8 +139,8 @@
       </el-form-item>
   	</el-form>
   	  <span slot="footer" class="dialog-footer">
-  	    <el-button size='small' @click="dialogVisible = false">取 消</el-button>
-  	    <el-button size='small' type="primary" @click="Addfile">确 定</el-button>
+  	    <el-button size='mini' @click="dialogVisible = false">取 消</el-button>
+  	    <el-button size='mini' type="primary" @click="Addfile">确 定</el-button>
   	  </span>
   </el-dialog>
     </el-col>
