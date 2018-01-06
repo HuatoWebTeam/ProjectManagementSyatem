@@ -1,7 +1,7 @@
 <template>
   <el-row class='loginContainer'>
     <el-col :span='24' >
-        <div class="loginheaderlogo"><div class="huatotitle">华图项目管理系统</div></div>
+        <span class="loginheaderlogo"></span><span class="huatotitle">华图项目管理系统</span>
      </el-col> 
     <el-col :span='24' class='loginmain'>
       <div class="projectRight"></div>
@@ -25,7 +25,7 @@
           </el-form>
       </div>
       <div class="projectbuttom"></div>
-      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.3</div>
+      <div class="Copyright">本系统最终解释权©深圳华图测控系统有限公司所有 版本 0.0.4</div>
     </el-col>
   </el-row>
 </template>
@@ -99,17 +99,18 @@ export default {
        min-width: 670px;
        height: 100%;
         .loginheaderlogo{
+              display: inline-block;
              height: 100px;
              background: url(../../assets/img/title.png) no-repeat;
              background-position: center center;
-             text-align: center;
+             width: 20%;
+             margin-left: 35%;
         }
        .huatotitle{
              position: absolute;
              display: inline-block;
              font-size: 40px;
              line-height: 100px;
-             margin-left:10%;   
           }   
        .loginmain{
             position:relative;

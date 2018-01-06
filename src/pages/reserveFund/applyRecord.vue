@@ -10,10 +10,9 @@
       stripe>
       <el-table-column
         label='序列'
-        width='100px'>
-        <template slot-scope="scope">
-          {{ (pageIndex-1) * pageIndex + (scope.$index + 1) }}
-        </template>
+        width='100px'
+        type='index'
+        >
       </el-table-column>
       <el-table-column
         label='申请人'

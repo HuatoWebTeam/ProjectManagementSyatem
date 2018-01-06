@@ -65,7 +65,7 @@ export default {
         pageSize: this.pageSize
       };
       GetLoginLogData(params).then(res => {
-        // console.log(res);
+       console.log(res);
         this.LoginLogData = [];
         this.total = res[0].TotalNumber;
         for (let item of res[0].DataList) {
