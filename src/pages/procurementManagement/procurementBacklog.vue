@@ -178,7 +178,7 @@ export default {
 				}
            
           },
-		       mounted(){
+		     mounted(){
 		       	     this.getprojectmange();//调用方法.项目名称显示!
 		       	     this.GetUntreated();//得到待处理订单的列表!
 		             },

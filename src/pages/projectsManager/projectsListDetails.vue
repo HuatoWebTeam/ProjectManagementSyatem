@@ -221,10 +221,6 @@ export default {
           }
           this.allData = []
           GetProjectTableManage(params).then(res => {
-                console.log("dayinchuyemian")
-                 console.log(res)
-
-
               res.DataList.ProjectStaDate = res.DataList.ProjectStaDate.replace(' 0:00:00', '');
               res.DataList.ScheduledTime = res.DataList.ScheduledTime.replace(' 0:00:00', '');
               res.DataList.ActualTime = res.DataList.ActualTime.replace(' 0:00:00', '');
